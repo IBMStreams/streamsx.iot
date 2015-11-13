@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info:toolkitInfoModel xmlns:common="http://www.ibm.com/xmlns/prod/streams/spl/common" xmlns:info="http://www.ibm.com/xmlns/prod/streams/spl/toolkitInfo">
+  <info:identity>
+    <info:name>com.ibm.streamsx.iotf</info:name>
+    <info:description>Connectivity with IBM Internet of Things Foundation.
+
+IoTF provides a model around devices where devices produce events (for example, sensor data) and subscribe to commands (for example, control instructions, such as reduce maximum rpm for an engine).
+
+Streams applications can use this toolkit to connect to IoTF to  provide real time analytics against all the events from potentially thousands of devices, including sending commands to specific devices based upon the analytics.
+
+See [namespace:com.ibm.streamsx.iotf] for more details.
+</info:description>
+    <info:version>0.1.0</info:version>
+    <info:requiredProductVersion>4.0.0.0</info:requiredProductVersion>
+  </info:identity>
+  <info:dependencies>
+    <info:toolkit>
+      <common:name>com.ibm.streamsx.messaging</common:name>
+      <common:version>2.0.0</common:version>
+    </info:toolkit>
+  </info:dependencies>
+</info:toolkitInfoModel>

@@ -1,0 +1,43 @@
+namespace com.ibm.streamsx.iotf;
+
+/**
+ * JSON type. Matches the standard JSON type used in SPL.
+ */
+type Json = rstring jsonString;
+
+/**
+ * A device event.
+ * * `deviceType` - Type of device that issued the event.
+ * * `deviceId` - Identifier of device that issued the event.
+ * * `eventId` - Event identifier.
+ * * `jsonString` - Event payload in JSON IoTF event format specification.
+ * 
+ * The event payload is a JSON object using
+ * [https://docs.internetofthings.ibmcloud.com/messaging/payload.html|IoTF event format specification]
+ * and thus has two elements:
+ * * `d` - Event data, this is the event data as sent by the device application.
+ * * `ts` - Event timestamp. This is an optional element, if included its value should be a valid ISO8601 encoded timestamp string.
+ * 
+ */
+type DeviceEvent = tuple<rstring deviceType, rstring deviceId, rstring eventId>, Json;
+
+/**
+ * A device status event.
+ * * `deviceType` - Type of device that issued the event.
+ * * `deviceId` - Identifier of device that issued the event.
+ * * `jsonString` - Status ???
+ * 
+ */
+type DeviceStatus = tuple<rstring deviceType, rstring deviceId>, Json;
+
+
+/**
+ * A device command.
+ * * `deviceType` - Type of device the command is for.
+ * * `deviceId` - Identifier of device the command is for.
+ * * `cmdId` - Command identifier.
+ * * `jsonString` - Command data.
+ * 
+ */
+type DeviceCmd = tuple<rstring deviceType, rstring deviceId, rstring cmdId>, Json;
+

@@ -1,0 +1,32 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2015  
+ */
+ 
+ /**
+ * Access device events for the IBM Internet of Things Foundation Quickstart service.
+ * 
+ * [https://quickstart.internetofthings.ibmcloud.com|Quickstart] allows you to
+ * experiment with IoTF without having to register. This namespace contains
+ * an operator [QuickstartDeviceEvents] and an application [Quickstart] to
+ * interact with a single Quickstart device. Thus you can see the IoTF
+ * and Streams integrated concept without having to set up an IoTF service.
+ * 
+ * 
+ * # Using the IoTF Quickstart Device Simulator
+ * 
+ * Follow the instructions at
+ * [https://developer.ibm.com/recipes/tutorials/use-the-simulated-device-to-experience-the-iot-foundation/]
+ * to use the simulator.
+ * 
+ * Compile the [Quickstart] application 
+ * `sc -M com.ibm.streamsx.iotf.quickstart::Quickstart`
+ * 
+ * Submit the Streams application bundle (`.sab` file) to an IBM Streams instance or your
+ * [https://console.ng.bluemix.net/catalog/services/streaming-analytics/|Bluemix Streaming Analytics Service]
+ * setting the submission value `deviceId` to the device id of the simulator. The device id is
+ * at the top right of the simulator.
+ * {../doc/images/iotf_quickstart_simulator.png|IoTF Simulator}
+ */
+
+namespace com.ibm.streamsx.iotf.quickstart ;

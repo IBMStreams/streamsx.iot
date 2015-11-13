@@ -1,0 +1,38 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2015  
+ */
+ namespace com.ibm.streamsx.iotf.apps;
+
+use com.ibm.streamsx.iotf::*;
+
+ /**
+ * Simple application that subscribes to
+ * all events for all devices for an organization.
+ * 
+ * This application is very simple in that it
+ * just produces streams of device events from the
+ * organization. The data may be viewed
+ * using IBM Streams views in Streams Studio
+ * or Streams console. This is intended as a way
+ * to verify connectivity between IoTF and Streams
+ * and explore the events and commands the devices
+ * are producing and consuming
+ * 
+ * Additional functionality may be added in the future.
+ * 
+ * These submission time parameters must be defined:
+ * * `orgId` - IoTF Organization identifier
+ * * `apiKey` - IoTF API key
+ * * `apiToken` - IoTF API Token
+ */
+public composite SimpleAllDevices {
+graph
+        (stream<DeviceStatus> Statuses; stream<DeviceEvent> Events; stream<DeviceCmd> Commands) = AllDevices()
+		{
+			param
+				orgId : getSubmissionTimeValue("orgId");
+				apiKey : getSubmissionTimeValue("apiKey");
+				apiToken : getSubmissionTimeValue("apiToken");
+		}
+}
