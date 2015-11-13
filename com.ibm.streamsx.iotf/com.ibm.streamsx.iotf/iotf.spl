@@ -1,0 +1,51 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2015  
+ */
+ namespace com.ibm.streamsx.iotf;
+
+/**
+ * Composite that produces streams for all devices in an organization.
+ * 
+ * @param orgId IoTF organization identifier.
+ * @param apiKey IoTF application key.
+ * @param apiToken IoTF application authorization token.
+ * 
+ * @output Statuses Device status events
+ * @output Events Device events
+ * @output Commands Device commands events
+ */
+public composite AllDevices(output stream<DeviceStatus> Statuses, stream<DeviceEvent> Events, stream<DeviceCmd> Commands)
+{
+   param
+        expression<rstring> $orgId;
+        expression<rstring> $apiKey;
+        expression<rstring> $apiToken;
+
+	graph
+		
+		stream<DeviceEvent> Events = DeviceEvents()
+		{
+			param
+				orgId : $orgId ;
+				apiKey : $apiKey ;
+				apiToken : $apiToken ;
+		}
+
+		stream<DeviceStatus> Statuses = DeviceStatuses()
+		{
+			param
+				orgId : $orgId ;
+				apiKey : $apiKey ;
+				apiToken : $apiToken ;
+		}
+
+		stream<DeviceCmd> Commands = DeviceCommands()
+		{
+			param
+				orgId : $orgId ;
+				apiKey : $apiKey ;
+				apiToken : $apiToken ;
+		}
+}
+

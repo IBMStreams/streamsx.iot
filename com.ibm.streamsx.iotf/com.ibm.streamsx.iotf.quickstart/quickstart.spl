@@ -1,0 +1,86 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2015  
+ */
+ 
+ namespace com.ibm.streamsx.iotf.quickstart ;
+
+use com.ibm.streamsx.iotf::* ;
+use com.ibm.streamsx.messaging.mqtt::MQTTSource ;
+
+ /**
+ * Quickstart application that subscribes to
+ * a single quickstart device's events.
+ * 
+ * This application is very simple in that it
+ * just produces a stream of events from the
+ * quickstart device. The data may be viewed
+ * using IBM Streams views in Streams Studio
+ * or Streams console. This is intended as a way
+ * to explore IoTF and IBM Streams integration.
+ * 
+ * Additional functionality may be added in the future.
+ * 
+ * The submission time parameter `deviceId` defines the
+ * device being monitored.
+ */
+public composite Quickstart()
+{
+	graph
+		stream<DeviceEvent> DeviceEvents = QuickstartDeviceEvents()
+		{		         
+			param	
+               deviceId: getSubmissionTimeValue("deviceId");
+        }
+}
+
+ /**
+ * Subscribe to a device's events for IoTF quickstart.
+ * 
+ * This operator subscribes to the IoTF MQTT topic:
+ * 
+ * `iot-2/type/+/id/`*deviceId*`/evt/+/fmt/json`
+ * 
+ * @param deviceId Subscribe to a device's events.
+ * 
+ * @output Events Stream of device events.
+ */
+public composite QuickstartDeviceEvents(output stream<DeviceEvent> Events)
+{
+    param
+        expression<rstring> $deviceId;
+	graph
+		stream<RawMsg> RawEvents = QSDeviceTopic()
+		{		         
+			param	
+            topic: "iot-2/type/+/id/" + $deviceId + "/evt/+/fmt/json";
+            }
+            
+       stream<DeviceEvent> Events = Raw2DeviceEvent(RawEvents) {}
+}
+/*
+ * @exclude
+ */
+composite QSDeviceTopic(output Messages)
+{
+    param
+        expression<rstring> $topic;
+	graph
+		stream<RawMsg> Messages = MQTTSource()
+		{
+		    logic state: {
+		      rstring _topic = $topic;
+		      rstring _serverURI = getIotfUri("quickstart");
+		      rstring _clientId = "a:quickstart:" + (rstring) jobID() +"_qst";
+		    }
+		         
+			param
+				topics : _topic ;
+				serverURI: _serverURI;
+				clientID  : _clientId;
+				
+				topicOutAttrName: "topic";
+				dataAttributeName: "jsonString";
+		}
+}
+
