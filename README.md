@@ -1,6 +1,6 @@
 # streamsx.iotf
 
-[http://ibmstreams.github.io/streamsx.iotf/](User Documentation)
+[User Documentation](http://ibmstreams.github.io/streamsx.iotf/)
 
 ## Connectivity with IBM Internet of Things Foundation
 
