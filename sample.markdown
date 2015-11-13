@@ -1,3 +1,6 @@
+---
+title: Sample Application
+---
 # Sample
 
 Testing markdown
