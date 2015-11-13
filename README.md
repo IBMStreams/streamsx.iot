@@ -1,6 +1,6 @@
 # streamsx.iotf
 
-[User Documentation](http://ibmstreams.github.io/streamsx.iotf/)
+[SPLDOC for com.ibm.streamsx.iotf toolkit](http://ibmstreams.github.io/streamsx.iotf/doc/spldoc/html/index.html)
 
 ## Connectivity with IBM Internet of Things Foundation
 
