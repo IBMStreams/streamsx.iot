@@ -1,0 +1,48 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2015  
+ */
+
+namespace com.ibm.streamsx.iotf;
+
+use com.ibm.streamsx.datetime.convert::fromIso8601ToMillis;
+use com.ibm.streamsx.json::JSONToTuple;
+
+/**
+ * Extract event data into an SPL tuple from the JSON.
+ * Extracts the data portion of an IoTF device event into
+ * the output tuple's attributes.
+ *
+ * The event data is the value of the `d` key
+ * in the event's JSON. It is extracted to tuple type
+ * `dataType` in the output tuple. 
+ *
+ * The event's timestamp (`ts` in the JSON) is extracted to
+ * the attribute `eventTs` in the output tuple.
+ * `eventTs` has type `com.ibm.streamsx.datetime.TimeMillis`
+ * representing the number of milliseconds since the 1970/01/01 epoch.
+ *
+ * @param dataType Schema type used to convert the event's data JSON to.
+ *
+ * @input Events Input stream of [DeviceEvent] tuples.
+ * @output EventsWithData Output stream of device events with the timestamp and data extracted into an SPL tuple. Type of the stream is: [DeviceEventTs] `dataType`.
+*/
+public composite DeviceEventExtractData(input stream<DeviceEvent> Events; output EventsWithData) {
+    param type $dataType;
+    
+    graph
+       stream<DeviceEventId, tuple<rstring ts, $dataType d> > FullEvents = JSONToTuple(Events) {
+       }
+       
+       stream<DeviceEventTs, $dataType> EventsWithData = Custom(FullEvents) {
+         logic onTuple FullEvents:
+         {
+              mutable EventsWithData event = {};
+              assignFrom(event, FullEvents);
+              event.eventTs = fromIso8601ToMillis(ts);
+              assignFrom(event, d);
+              
+              submit(event, TupleEvents);
+         }       
+       }
+}
