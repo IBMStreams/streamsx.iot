@@ -8,6 +8,13 @@
 use com.ibm.streamsx.iotf::* ;
 use com.ibm.streamsx.messaging.mqtt::MQTTSource ;
 
+/**
+ * Tuple type that matches the IoTF device simulator event data.
+ * This is used as the `dataType` parameter in an invocation of
+ * [com.ibm.streamsx.iotf::DeviceEventExtractData].
+*/
+type QSData = tuple<float64 temp, float64 humidity, float64 objectTemp>;
+
  /**
  * Quickstart application that subscribes to
  * a single quickstart device's events.
@@ -31,6 +38,11 @@ public composite Quickstart()
 		{		         
 			param	
                deviceId: getSubmissionTimeValue("deviceId");
+        }
+        
+        stream<DeviceEventTs, QSData> DeviceData = DeviceEventExtractData(DeviceEvents) {
+           param
+              dataType: QSData;
         }
 }
 
