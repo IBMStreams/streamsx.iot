@@ -22,7 +22,7 @@
 <div class="body refbody">
 <div class="section">
 <p class="p">
-<a class="xref" href="../toolkits/toolkits.html">Toolkits</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.1.0</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf</a> &gt; types.spl</p>
+<a class="xref" href="../toolkits/toolkits.html">Toolkits</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.2.0</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf</a> &gt; types.spl</p>
 
 </div>
 
@@ -37,16 +37,22 @@
 
       <dd class="dd">
 <ul class="sl simple">
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__Device">Device</a></strong>: A device.
+</li>
+
 <li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceCmd">DeviceCmd</a></strong>: A device command.
 </li>
 
 <li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceEvent">DeviceEvent</a></strong>: A device event.
 </li>
 
-<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceStatus">DeviceStatus</a></strong>: A device status event.
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceEventId">DeviceEventId</a></strong>: A device with event identifier.
 </li>
 
-<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__Json">Json</a></strong>: JSON type.
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceEventTs">DeviceEventTs</a></strong>: A device with event identfier and timestamp.
+</li>
+
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceStatus">DeviceStatus</a></strong>: A device status event.
 </li>
 
 </ul>
@@ -62,19 +68,52 @@
   
 </div>
 
-<div class="section" id="spldoc_compilationunit__type__Json"><h2 class="title sectiontitle splpart">Json</h2>
+<div class="section" id="spldoc_compilationunit__type__Device"><h2 class="title sectiontitle splpart">Device</h2>
   
 </div>
 <div class="section">
 
-<p class="p">JSON type. Matches the standard JSON type used in SPL. 
-</p>
+<div class="p">A device.
+<ul class="ul">
+<li class="li"> <tt class="ph tt">deviceType</tt> - Type of device that issued the event.</li>
+
+<li class="li"> <tt class="ph tt">deviceId</tt> - Identifier of device that issued the event. </li>
+
+</ul>
+
+</div>
 
 </div>
 
 <div class="section">
    <p class="p">
-<tt class="ph tt">Json = rstring jsonString;</tt>
+<tt class="ph tt">Device = tuple&lt;rstring deviceType, rstring deviceId&gt;;</tt>
+   </p>
+
+</div>
+
+<div class="section" id="spldoc_compilationunit__type__DeviceEventId"><h2 class="title sectiontitle splpart">DeviceEventId</h2>
+  
+</div>
+<div class="section">
+
+<div class="p">A device with event identifier.
+<ul class="ul">
+<li class="li"> <tt class="ph tt">deviceType</tt> - Type of device that issued the event.</li>
+
+<li class="li"> <tt class="ph tt">deviceId</tt> - Identifier of device that issued the event.</li>
+
+<li class="li"> <tt class="ph tt">eventId</tt> - Event identifier. </li>
+
+</ul>
+
+</div>
+
+</div>
+
+<div class="section">
+   <p class="p">
+<tt class="ph tt">DeviceEventId = Device, tuple&lt;rstring eventId&gt;;</tt>
    </p>
 
 </div>
@@ -112,7 +151,40 @@
 
 <div class="section">
    <p class="p">
-<tt class="ph tt">DeviceEvent = tuple&lt;rstring deviceType, rstring deviceId, rstring eventId&gt;, Json;</tt>
+<tt class="ph tt">DeviceEvent = DeviceEventId, Json;</tt>
+   </p>
+
+</div>
+
+<div class="section" id="spldoc_compilationunit__type__DeviceEventTs"><h2 class="title sectiontitle splpart">DeviceEventTs</h2>
+  
+</div>
+<div class="section">
+
+<p class="p">A device with event identfier and timestamp. This is used as part of the output schema definition by <a class="xref" href="spl$com.ibm.streamsx.iotf$extract.html#spldoc_compilationunit__composite_operator__DeviceEventExtractData">DeviceEventExtractData</a>.
+</p>
+
+<div class="p">
+<ul class="ul">
+<li class="li"> <tt class="ph tt">deviceType</tt> - Type of device that issued the event.</li>
+
+<li class="li"> <tt class="ph tt">deviceId</tt> - Identifier of device that issued the event.</li>
+
+<li class="li"> <tt class="ph tt">eventId</tt> - Event identifier.</li>
+
+<li class="li"> <tt class="ph tt">eventTs</tt> - Event timestamp extracted from the <tt class="ph tt">ts</tt> key of the JSON event</li>
+
+<li class="li"> payload. <tt class="ph tt">eventTs</tt> has type <tt class="ph tt">com.ibm.streamsx.datetime.TimeMillis</tt> representing the number of milliseconds since the 1970/01/01 epoch. </li>
+
+</ul>
+
+</div>
+
+</div>
+
+<div class="section">
+   <p class="p">
+<tt class="ph tt">DeviceEventTs = DeviceEventId, tuple&lt;TimeMillis eventTs&gt;;</tt>
    </p>
 
 </div>
@@ -138,7 +210,7 @@
 
 <div class="section">
    <p class="p">
-<tt class="ph tt">DeviceStatus = tuple&lt;rstring deviceType, rstring deviceId&gt;, Json;</tt>
+<tt class="ph tt">DeviceStatus = Device, Json;</tt>
    </p>
 
 </div>
@@ -166,7 +238,7 @@
 
 <div class="section">
    <p class="p">
-<tt class="ph tt">DeviceCmd = tuple&lt;rstring deviceType, rstring deviceId, rstring cmdId&gt;, Json;</tt>
+<tt class="ph tt">DeviceCmd = Device, tuple&lt;rstring cmdId&gt;, Json;</tt>
    </p>
 
 </div>
