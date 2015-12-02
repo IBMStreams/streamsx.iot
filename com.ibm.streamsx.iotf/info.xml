@@ -9,8 +9,14 @@ IoTF provides a model around devices where devices produce events (for example, 
 Streams applications can use this toolkit to connect to IoTF to  provide real time analytics against all the events from potentially thousands of devices, including sending commands to specific devices based upon the analytics.
 
 See [namespace:com.ibm.streamsx.iotf] for more details.
+
+This toolkit depends on these toolkits:
+* `com.ibm.streamsx.messaging`
+* `com.ibm.streamsx.json` 
+* `com.ibm.streamsx.datetime`
+
 </info:description>
-    <info:version>0.1.0</info:version>
+    <info:version>0.2.0</info:version>
     <info:requiredProductVersion>4.0.0.0</info:requiredProductVersion>
   </info:identity>
   <info:dependencies>
