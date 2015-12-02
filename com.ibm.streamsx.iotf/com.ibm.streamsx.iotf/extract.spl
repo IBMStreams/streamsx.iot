@@ -42,7 +42,7 @@ public composite DeviceEventExtractData(input stream<DeviceEvent> Events; output
               event.eventTs = fromIso8601ToMillis(ts);
               assignFrom(event, d);
               
-              submit(event, TupleEvents);
+              submit(event, EventsWithData);
          }       
        }
 }
