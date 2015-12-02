@@ -22,8 +22,19 @@
  * resulting stream is of type [DeviceEvent]. The `jsonString` parameter
  * contains the event payload in serialized JSON. The event payload is a JSON object using
  * [https://docs.internetofthings.ibmcloud.com/messaging/payload.html|IoTF event format specification],
- * so that the application specific payload is the value of the `d` key.
+ * so that the application event data is the value of the `d` key.
  * 
+ * The application event data can be extracted into an SPL tuple
+ * using [DeviceEventExtractData]. This operator takes an input stream
+ * of type [DeviceEvent] and produces a stream of type [DeviceEventTs]
+ * augmented with a `dataType` tuple type specified by the application.
+ * Since the application event data might be specific to
+ * the type of the `eventId` or even the combination of `deviceType`
+ * and `eventId` an application may need to use a `Split` operator
+ * between the [DeviceEvents] and multiple [DeviceEventExtractData]
+ * invocations. An example of its use is in the
+ * [com.ibm.streamsx.iotf.quickstart::Quickstart] application.
+ *
  * # Device Status
  * Device status events, such as connect or disconnect, are subscribed to using
  * [DeviceStatuses] which produces a stream of type [DeviceStatus].
