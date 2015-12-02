@@ -26,7 +26,7 @@ public rstring getIotfUri(rstring orgId) {
  * 
  * This operator subscribes to the IoTF MQTT topic:
  * 
- * `iot-2/type/`*devicetType*`/id/`*deviceId*`/evt/`*eventId*`/fmt/json`
+ * `iot-2/type/`*deviceType*`/id/`*deviceId*`/evt/`*eventId*`/fmt/json`
  * 
  * @param orgId IoTF organization identifier.
  * @param apiKey IoTF application key.
@@ -36,7 +36,7 @@ public rstring getIotfUri(rstring orgId) {
  * @param deviceId Subscribe to device events from a specific device. Defaults to `+` for all devices with the specified type.
  * @param eventId Subscribe to device events for a specified identifier. Defaults to `+` for all event identifiers.
  * 
- * @output Events Stream of device events.
+ * @output Events Stream of device events of type [DeviceEvent].
  */
 public composite DeviceEvents(output stream<DeviceEvent> Events)
 {
@@ -97,7 +97,7 @@ public composite Raw2DeviceEvent(input RawEvents; output Events) {
  * 
  * This operator subscribes to the IoTF MQTT topic:
  * 
- * `iot-2/type/`*devicetType*`/id/`*deviceId*`/mon/`
+ * `iot-2/type/`*deviceType*`/id/`*deviceId*`/mon/`
  * 
  * @param orgId IoTF organization identifier.
  * @param apiKey IoTF application key.
@@ -106,7 +106,7 @@ public composite Raw2DeviceEvent(input RawEvents; output Events) {
  * @param deviceType Subscribe to device events from devices of a specific type. Defaults to `+` for all device types.
  * @param deviceId Subscribe to device events from a specific device. Defaults to `+` for all devices with the specified type.
  * 
- * @output Statuses Stream of device status events.
+ * @output Statuses Stream of device status events of type [DeviceStatus].
  */
 public composite DeviceStatuses(output stream<DeviceStatus> Statuses)
 {
@@ -152,7 +152,7 @@ public composite DeviceStatuses(output stream<DeviceStatus> Statuses)
  * 
  * This operator subscribes to the IoTF MQTT topic:
  * 
- * `iot-2/type/`*devicetType*`/id/`*deviceId*`/cmd/`*cmdId*`/fmt/json`
+ * `iot-2/type/`*deviceType*`/id/`*deviceId*`/cmd/`*cmdId*`/fmt/json`
  * 
  * @param orgId IoTF organization identifier.
  * @param apiKey IoTF application key.
@@ -162,7 +162,7 @@ public composite DeviceStatuses(output stream<DeviceStatus> Statuses)
  * @param deviceId Subscribe to device commands for a specific device. Defaults to `+` for all devices with the specified type.
  * @param cmdId Subscribe to device commands for a specified identifier. Defaults to `+` for all command identifiers.
  * 
- * @output Commands Stream of device commands.
+ * @output Commands Stream of device commands of type [DeviceCmd].
  */
 public composite DeviceCommands(output stream<DeviceCmd> Commands)
 {
@@ -249,14 +249,14 @@ composite DeviceTopic(output Messages)
  * 
  * This operator publishes each command to IoTF MQTT topic:
  * 
- * `iot-2/type/`*devicetType*`/id/`*deviceId*`/cmd/`*cmdId*`/fmt/json`
+ * `iot-2/type/`*deviceType*`/id/`*deviceId*`/cmd/`*cmdId*`/fmt/json`
  * 
  * @param orgId IoTF organization identifier.
  * @param apiKey IoTF application key.
  * @param apiToken IoTF application authorization token.
  * @param appId IoTF application identifier for the MQTT client identifier, defaults to *jobId*`_snd`.
  * 
- * @input Commands Stream of device commands.
+ * @input Commands Stream of device commands of type [DeviceCmd].
  */
 public composite SendCommandToDevice(input stream<DeviceCmd> Commands) {
    param
