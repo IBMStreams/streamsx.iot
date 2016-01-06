@@ -25,6 +25,10 @@ type QSData = tuple<float64 temp, float64 humidity, float64 objectTemp>;
  * using IBM Streams views in Streams Studio
  * or Streams console. This is intended as a way
  * to explore IoTF and IBM Streams integration.
+ *
+ * The application defines two views:
+ * * `RawEvents` - JSON device events produced by [com.ibm.streamsx.iotf::DeviceEvents].
+ * * `ExtractedEvents` - [QSData] device events produced by [com.ibm.streamsx.iotf::DeviceEventExtractData].
  * 
  * Additional functionality may be added in the future.
  * 
@@ -34,12 +38,14 @@ type QSData = tuple<float64 temp, float64 humidity, float64 objectTemp>;
 public composite Quickstart()
 {
 	graph
+        @view(name = "RawEvents", port = DeviceEvents, sampleSize = 5, bufferSize = 50)
 		stream<DeviceEvent> DeviceEvents = QuickstartDeviceEvents()
 		{		         
 			param	
                deviceId: getSubmissionTimeValue("deviceId");
         }
-        
+      
+        @view(name = "ExtractedEvents", port = DeviceData, sampleSize = 5, bufferSize = 50)
         stream<DeviceEventTs, QSData> DeviceData = DeviceEventExtractData(DeviceEvents) {
            param
               dataType: QSData;

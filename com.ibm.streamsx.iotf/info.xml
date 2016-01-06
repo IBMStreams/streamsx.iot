@@ -30,7 +30,7 @@ This toolkit depends on these toolkits:
     </info:toolkit>
     <info:toolkit>
       <common:name>com.ibm.streamsx.datetime</common:name>
-      <common:version>[1.1.0,2.0.0)</common:version>
+      <common:version>[1.1.1,2.0.0)</common:version>
     </info:toolkit>
   </info:dependencies>
 </info:toolkitInfoModel>

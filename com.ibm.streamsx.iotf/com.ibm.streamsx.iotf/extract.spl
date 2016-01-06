@@ -9,13 +9,24 @@ use com.ibm.streamsx.datetime.convert::fromIso8601ToMillis;
 use com.ibm.streamsx.json::JSONToTuple;
 
 /**
- * Extract event data into an SPL tuple from the JSON.
+ * Extract application event data into an SPL tuple from the JSON.
  * Extracts the data portion of an IoTF device event into
  * the output tuple's attributes.
  *
- * The event data is the value of the `d` key
+ * The application event data is the value of the `d` key
  * in the event's JSON. It is extracted to tuple type
- * `dataType` in the output tuple. 
+ * `dataType` in the output tuple with the assumption is
+ * is an JSON object.
+ * 
+ * The structure of `dataType` is expected to match JSON schema of the
+ * application event data. A subset of the attributes can be specified as well.
+ * Only those attributes that are present in `dataType` and the application
+ * event data will be converted. All other attributes will be ignored.
+ * If an invalid JSON string is found in the input, the operator will fail.
+ * Null values in JSON arrays are ignored. Null values for all other
+ * attributes will result in default initializled output attributes.
+ * Limitations: BLOB, MAP and COMPLEX attribute types are not supported
+ * in `dataType` and will be ignored.
  *
  * The event's timestamp (`ts` in the JSON) is extracted to
  * the attribute `eventTs` in the output tuple.
