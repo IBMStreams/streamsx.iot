@@ -10,7 +10,7 @@ use com.ibm.streamsx.json::JSONToTuple;
 
 /**
  * Extract application event data into an SPL tuple from the JSON.
- * Extracts the data portion of an IoTF device event into
+ * Extracts the data portion of an device event into
  * the output tuple's attributes.
  *
  * The application event data is the value of the `d` key

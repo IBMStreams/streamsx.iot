@@ -2,11 +2,11 @@
 <info:toolkitInfoModel xmlns:common="http://www.ibm.com/xmlns/prod/streams/spl/common" xmlns:info="http://www.ibm.com/xmlns/prod/streams/spl/toolkitInfo">
   <info:identity>
     <info:name>com.ibm.streamsx.iotf</info:name>
-    <info:description>Connectivity with IBM Internet of Things Foundation.
+    <info:description>Connectivity with IBM Watson IoT Platform.
 
-IoTF provides a model around devices where devices produce events (for example, sensor data) and subscribe to commands (for example, control instructions, such as reduce maximum rpm for an engine).
+IBM Watson IoT Platform provides a model around devices where devices produce events (for example, sensor data) and subscribe to commands (for example, control instructions, such as reduce maximum rpm for an engine).
 
-Streams applications can use this toolkit to connect to IoTF to  provide real time analytics against all the events from potentially thousands of devices, including sending commands to specific devices based upon the analytics.
+Streams applications can use this toolkit to provide real time analytics against all the events from potentially thousands of devices, including sending commands to specific devices based upon the analytics.
 
 See [namespace:com.ibm.streamsx.iotf] for more details.
 

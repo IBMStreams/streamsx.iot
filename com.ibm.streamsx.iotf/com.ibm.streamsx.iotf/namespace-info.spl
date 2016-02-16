@@ -4,15 +4,15 @@
  */
  
  /**
- * Connectivity with IBM Internet of Things Foundation.
+ * Connectivity with IBM Watson IoT Platform.
  * 
- * # Internet of Things Foundation
- * The IBM [https://internetofthings.ibmcloud.com/|Internet of Things Foundation] (IoTF) service lets
+ * # IBM Watson IoT Platform
+ * The IBM [https://internetofthings.ibmcloud.com/|IBM Watson Iot Platform] service lets
  * your IBM Streams applications communicate with and consume data
  * collected by your connected devices, sensors, and gateways.
  * 
  * # Device Events
- * In IoTF devices publish device events that an SPL application can subscribe to
+ * Devices publish device events that an SPL application can subscribe to
  * using [DeviceEvents]. The default is to subscribe to all event identifiers
  * from all device types and ids. The operator is parameterized to allow
  * only subscribing to a specific event id (which is really the type of the event),
@@ -21,7 +21,7 @@
  * The assumption is made that the format of the event is JSON and the
  * resulting stream is of type [DeviceEvent]. The `jsonString` parameter
  * contains the event payload in serialized JSON. The event payload is a JSON object using
- * [https://docs.internetofthings.ibmcloud.com/messaging/payload.html|IoTF event format specification],
+ * [https://docs.internetofthings.ibmcloud.com/messaging/payload.html|event format specification],
  * so that the application event data is the value of the `d` key.
  * 
  * The application event data can be extracted into an SPL tuple
@@ -40,7 +40,7 @@
  * [DeviceStatuses] which produces a stream of type [DeviceStatus].
  * 
  * # Device Commands
- * In IoTF devices can be sent commands, an SPL application can subscribe to
+ * Devices can be sent commands, an SPL application can subscribe to
  * commands being sent to devices using [DeviceCommands]. 
  * The default is to subscribe to all commands identifiers
  * for all device types and ids. The operator is parameterized to allow
@@ -53,7 +53,8 @@
  * 
  * # Connectivity using MQTT
  * 
- * A Streams application using this toolkit connects to to IoTF as an
+ * A Streams application using this toolkit connects to
+ * IBM Watson IoT Platform as an
  * [https://docs.internetofthings.ibmcloud.com/messaging/applications.html|MQTT application]
  * 
  * Each invocation of an operator in this toolkit (e.g. [DeviceEvents], [DeviceStatuses])

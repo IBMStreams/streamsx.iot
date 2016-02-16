@@ -2,18 +2,18 @@
 
 [SPLDOC for com.ibm.streamsx.iotf toolkit](http://ibmstreams.github.io/streamsx.iotf/doc/spldoc/html/index.html)
 
-## Connectivity with IBM Internet of Things Foundation
+## Connectivity with IBM Watson IoT Platform
 
-Provide the ability to have an IBM Streams application easily interact with IoTF, either in Bluemix (Streaming Analytics Service) or on-premises (IBM Streams).
+Provide the ability to have an IBM Streams application easily interact with IBM Watson IoT Platform, either in Bluemix (Streaming Analytics Service) or on-premises (IBM Streams).
 
-## Internet of Things Foundation
-The IBM [Internet of Things Foundation](https://internetofthings.ibmcloud.com/) (IoTF) service lets
+## IBM Watson IoT Platform
+The IBM [Watson IoT Platform](https://internetofthings.ibmcloud.com/) service lets
 your IBM Streams applications communicate with and consume data collected by your
 connected devices, sensors, and gateways.
 
-IoTF provides a model around devices where devices produce events (for example, sensor data)
+IBM Watson IoT Platform provides a model around devices where devices produce events (for example, sensor data)
 and subscribe to commands (for example, control instructions, such as reduce maximum rpm for an engine).
 
-Streams applications can use this toolkit to connect to IoTF to 
+Streams applications can use this toolkit to 
 provide real time analytics against all the events from potentially
 thousands of devices, including sending commands to specific devices based upon the analytics.

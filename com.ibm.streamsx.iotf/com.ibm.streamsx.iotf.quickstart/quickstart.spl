@@ -9,7 +9,7 @@ use com.ibm.streamsx.iotf::* ;
 use com.ibm.streamsx.messaging.mqtt::MQTTSource ;
 
 /**
- * Tuple type that matches the IoTF device simulator event data.
+ * Tuple type that matches the Quickstart device simulator event data.
  * This is used as the `dataType` parameter in an invocation of
  * [com.ibm.streamsx.iotf::DeviceEventExtractData].
 */
@@ -24,7 +24,7 @@ type QSData = tuple<float64 temp, float64 humidity, float64 objectTemp>;
  * quickstart device. The data may be viewed
  * using IBM Streams views in Streams Studio
  * or Streams console. This is intended as a way
- * to explore IoTF and IBM Streams integration.
+ * to explore IBM Watson IoT Platform and IBM Streams integration.
  *
  * The application defines two views:
  * * `RawEvents` - JSON device events produced by [com.ibm.streamsx.iotf::DeviceEvents].
@@ -53,9 +53,9 @@ public composite Quickstart()
 }
 
  /**
- * Subscribe to a device's events for IoTF quickstart.
+ * Subscribe to a device's events for Quickstart.
  * 
- * This operator subscribes to the IoTF MQTT topic:
+ * This operator subscribes to the MQTT topic:
  * 
  * `iot-2/type/+/id/`*deviceId*`/evt/+/fmt/json`
  * 

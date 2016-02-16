@@ -22,16 +22,16 @@ public rstring getIotfUri(rstring orgId) {
 }
  
  /**
- * Subscribe to device events for an IoTF organization.
+ * Subscribe to device events for an IBM Watson IoT Platform organization.
  * 
- * This operator subscribes to the IoTF MQTT topic:
+ * This operator subscribes to the MQTT topic:
  * 
  * `iot-2/type/`*deviceType*`/id/`*deviceId*`/evt/`*eventId*`/fmt/json`
  * 
- * @param orgId IoTF organization identifier.
- * @param apiKey IoTF application key.
- * @param apiToken IoTF application authorization token.
- * @param appId IoTF application identifier for the MQTT client identifier, defaults to *jobId*`_evt`.
+ * @param orgId Organization identifier.
+ * @param apiKey Application key.
+ * @param apiToken Application authorization token.
+ * @param appId Application identifier for the MQTT client identifier, defaults to *jobId*`_evt`.
  * @param deviceType Subscribe to device events from devices of a specific type. Defaults to `+` for all device types.
  * @param deviceId Subscribe to device events from a specific device. Defaults to `+` for all devices with the specified type.
  * @param eventId Subscribe to device events for a specified identifier. Defaults to `+` for all event identifiers.
@@ -93,16 +93,16 @@ public composite Raw2DeviceEvent(input RawEvents; output Events) {
 
 
  /**
- * Subscribe to device status events for an IoTF organization.
+ * Subscribe to device status events for an IBM Watson IoT Platform organization.
  * 
- * This operator subscribes to the IoTF MQTT topic:
+ * This operator subscribes to the MQTT topic:
  * 
  * `iot-2/type/`*deviceType*`/id/`*deviceId*`/mon/`
  * 
- * @param orgId IoTF organization identifier.
- * @param apiKey IoTF application key.
- * @param apiToken IoTF application authorization token.
- * @param appId IoTF application identifier for the MQTT client identifier, defaults to *jobId*`_mon`.
+ * @param orgId Organization identifier.
+ * @param apiKey Application key.
+ * @param apiToken Application authorization token.
+ * @param appId application identifier for the MQTT client identifier, defaults to *jobId*`_mon`.
  * @param deviceType Subscribe to device events from devices of a specific type. Defaults to `+` for all device types.
  * @param deviceId Subscribe to device events from a specific device. Defaults to `+` for all devices with the specified type.
  * 
@@ -148,16 +148,16 @@ public composite DeviceStatuses(output stream<DeviceStatus> Statuses)
 }
 
  /**
- * Subscribe to device commands for an IoTF organization.
+ * Subscribe to device commands for an IBM Watson IoT Platform organization.
  * 
- * This operator subscribes to the IoTF MQTT topic:
+ * This operator subscribes to the MQTT topic:
  * 
  * `iot-2/type/`*deviceType*`/id/`*deviceId*`/cmd/`*cmdId*`/fmt/json`
  * 
- * @param orgId IoTF organization identifier.
- * @param apiKey IoTF application key.
- * @param apiToken IoTF application authorization token.
- * @param appId IoTF application identifier for the MQTT client identifier, defaults to *jobId*`_cmd`.
+ * @param orgId Organization identifier.
+ * @param apiKey Application key.
+ * @param apiToken Application authorization token.
+ * @param appId Application identifier for the MQTT client identifier, defaults to *jobId*`_cmd`.
  * @param deviceType Subscribe to device commands for devices of a specific type. Defaults to `+` for all device types.
  * @param deviceId Subscribe to device commands for a specific device. Defaults to `+` for all devices with the specified type.
  * @param cmdId Subscribe to device commands for a specified identifier. Defaults to `+` for all command identifiers.
@@ -243,18 +243,18 @@ composite DeviceTopic(output Messages)
 }
 
  /**
- * Send commands to devices registered for an IoTF organization.
+ * Send commands to devices registered for an IBM Watson IoT Platform organization.
  * Each tuple is published as a device command to the
  * device specified in the input tuple.
  * 
- * This operator publishes each command to IoTF MQTT topic:
+ * This operator publishes each command to MQTT topic:
  * 
  * `iot-2/type/`*deviceType*`/id/`*deviceId*`/cmd/`*cmdId*`/fmt/json`
  * 
- * @param orgId IoTF organization identifier.
- * @param apiKey IoTF application key.
- * @param apiToken IoTF application authorization token.
- * @param appId IoTF application identifier for the MQTT client identifier, defaults to *jobId*`_snd`.
+ * @param orgId Organization identifier.
+ * @param apiKey Application key.
+ * @param apiToken Application authorization token.
+ * @param appId application identifier for the MQTT client identifier, defaults to *jobId*`_snd`.
  * 
  * @input Commands Stream of device commands of type [DeviceCmd].
  */

@@ -7,9 +7,9 @@
 /**
  * Composite that produces streams for all devices in an organization.
  * 
- * @param orgId IoTF organization identifier.
- * @param apiKey IoTF application key.
- * @param apiToken IoTF application authorization token.
+ * @param orgId Organization identifier.
+ * @param apiKey Application key.
+ * @param apiToken Application authorization token.
  * 
  * @output Statuses Device status events
  * @output Events Device events
