@@ -15,16 +15,16 @@ use com.ibm.streamsx.iotf::*;
  * organization. The data may be viewed
  * using IBM Streams views in Streams Studio
  * or Streams console. This is intended as a way
- * to verify connectivity between IoTF and Streams
+ * to verify connectivity between IBM Watson IoT Platform and IBM Streams
  * and explore the events and commands the devices
  * are producing and consuming
  * 
  * Additional functionality may be added in the future.
  * 
  * These submission time parameters must be defined:
- * * `orgId` - IoTF Organization identifier
- * * `apiKey` - IoTF API key
- * * `apiToken` - IoTF API Token
+ * * `orgId` - Organization identifier
+ * * `apiKey` - API key
+ * * `apiToken` - API Token
  */
 public composite SimpleAllDevices {
 graph
