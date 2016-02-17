@@ -18,6 +18,18 @@ use com.ibm.streamsx.iotf::*;
  * to verify connectivity between IBM Watson IoT Platform and IBM Streams
  * and explore the events and commands the devices
  * are producing and consuming
+ *
+ * The application creates three views to allow you to easily
+ * create View Grids in the Streams console to view the data.
+ * For example here is a screen shot of the console running
+ * this application with grids created against the device
+ * status view bottom left, and the device event view
+ * bottom right.
+ *
+ * {../doc/images/SAD_Console.png|Console}
+ *
+ * *Note that views are sampling so may not show all
+ * device events commands or status.*
  * 
  * Additional functionality may be added in the future.
  * 
@@ -28,6 +40,9 @@ use com.ibm.streamsx.iotf::*;
  */
 public composite SimpleAllDevices {
 graph
+        @view(name = "Events", port = Events, sampleSize = 5, bufferSize = 100)
+        @view(name = "Statuses", port = Statuses, sampleSize = 5, bufferSize = 100)
+        @view(name = "Commands", port = Commands, sampleSize = 5, bufferSize = 100)
         (stream<DeviceStatus> Statuses; stream<DeviceEvent> Events; stream<DeviceCmd> Commands) as IotDevices = AllDevices()
 		{
 			param
