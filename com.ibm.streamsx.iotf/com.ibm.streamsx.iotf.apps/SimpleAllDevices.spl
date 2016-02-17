@@ -28,7 +28,7 @@ use com.ibm.streamsx.iotf::*;
  */
 public composite SimpleAllDevices {
 graph
-        (stream<DeviceStatus> Statuses; stream<DeviceEvent> Events; stream<DeviceCmd> Commands) = AllDevices()
+        (stream<DeviceStatus> Statuses; stream<DeviceEvent> Events; stream<DeviceCmd> Commands) as IotDevices = AllDevices()
 		{
 			param
 				orgId : getSubmissionTimeValue("orgId");
