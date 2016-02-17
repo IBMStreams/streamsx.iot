@@ -86,20 +86,26 @@
     </subant>
   </target>
   <target name="cleansamples">
+  <!--
     <subant target="cleantoolkit" genericantfile="${basedir}/build.xml">
        <dirset dir="samples" includes="*"/>
     </subant>
+  -->
   </target>
 
   <target name="build-all-samples" depends="toolkit">
+  <!--
     <subant target="buildsample" genericantfile="${basedir}/build.xml">
        <dirset dir="samples" includes="*"/>
     </subant>
+    -->
   </target>
   <target name="clean-all-samples">
+  <!--
     <subant target="cleansample" genericantfile="${basedir}/build.xml">
        <dirset dir="samples" includes="*"/>
     </subant>
+    -->
   </target>
 
   <!-- Test targets -->
