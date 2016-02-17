@@ -154,6 +154,7 @@
      <echo message="Tookit to SPLDOC: ${tkdir}"/>
      <exec executable="${streams.install}/bin/spl-make-doc">
         <arg value="--include-composite-operator-diagram"/>
+        <arg value="--copy-image-files"/>
         <arg value="--author"/>
         <arg value="IBMStreams Open Source Community at GitHub - https://github.com/IBMStreams/${ant.project.name}"/>
         <arg value="--doc-title"/>
