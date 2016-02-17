@@ -22,7 +22,7 @@
 <div class="body refbody">
 <div class="section">
 <p class="p">
-<a class="xref" href="../toolkits/toolkits.html">Toolkits</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.2.0</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iotf.quickstart.html">com.ibm.streamsx.iotf.quickstart</a> &gt; quickstart.spl</p>
+<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iotf Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.3.0.commit_23aa77f</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iotf.quickstart.html">com.ibm.streamsx.iotf.quickstart</a> &gt; quickstart.spl</p>
 
 </div>
 
@@ -40,7 +40,7 @@
 <li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf.quickstart$quickstart.html#spldoc_compilationunit__composite_operator__Quickstart">Quickstart</a></strong>: Quickstart application that subscribes to a single quickstart device's events.
 </li>
 
-<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf.quickstart$quickstart.html#spldoc_compilationunit__composite_operator__QuickstartDeviceEvents">QuickstartDeviceEvents</a></strong>: Subscribe to a device's events for IoTF quickstart.
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf.quickstart$quickstart.html#spldoc_compilationunit__composite_operator__QuickstartDeviceEvents">QuickstartDeviceEvents</a></strong>: Subscribe to a device's events for Quickstart.
 </li>
 
 </ul>
@@ -53,7 +53,7 @@
 
       <dd class="dd">
 <ul class="sl simple">
-<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf.quickstart$quickstart.html#spldoc_compilationunit__type__QSData">QSData</a></strong>: Tuple type that matches the IoTF device simulator event data.
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf.quickstart$quickstart.html#spldoc_compilationunit__type__QSData">QSData</a></strong>: Tuple type that matches the Quickstart device simulator event data.
 </li>
 
 </ul>
@@ -78,8 +78,18 @@
 <p class="p">Quickstart application that subscribes to a single quickstart device's events.
 </p>
 
-<p class="p">This application is very simple in that it just produces a stream of events from the quickstart device. The data may be viewed using IBM Streams views in Streams Studio or Streams console. This is intended as a way to explore IoTF and IBM Streams integration.
+<p class="p">This application is very simple in that it just produces a stream of events from the quickstart device. The data may be viewed using IBM Streams views in Streams Studio or Streams console. This is intended as a way to explore IBM Watson IoT Platform and IBM Streams integration.
 </p>
+
+<div class="p">The application defines two views:
+<ul class="ul">
+<li class="li"> <tt class="ph tt">RawEvents</tt> - JSON device events produced by <a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__DeviceEvents">com.ibm.streamsx.iotf::DeviceEvents</a>.</li>
+
+<li class="li"> <tt class="ph tt">ExtractedEvents</tt> - <a class="xref" href="spl$com.ibm.streamsx.iotf.quickstart$quickstart.html#spldoc_compilationunit__type__QSData">QSData</a> device events produced by <a class="xref" href="spl$com.ibm.streamsx.iotf$extract.html#spldoc_compilationunit__composite_operator__DeviceEventExtractData">com.ibm.streamsx.iotf::DeviceEventExtractData</a>.</li>
+
+</ul>
+
+</div>
 
 <p class="p">Additional functionality may be added in the future.
 </p>
@@ -98,16 +108,24 @@
 <div class="section">
 </div>
 
+<div class="section"><h2 class="title sectiontitle splhead-2">Composite Operator Graph</h2>
+  
+</div>
+
+<div class="section splgraph">
+  <embed class="image" src="../../image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf.quickstart$Quickstart.svg" width="232" height="109"/>
+</div>
+
 <div class="section" id="spldoc_compilationunit__composite_operator__QuickstartDeviceEvents"><h2 class="title sectiontitle splpart">composite QuickstartDeviceEvents(output Events)</h2>
   
 </div>
 
 <div class="section">
 
-<p class="p">Subscribe to a device's events for IoTF quickstart.
+<p class="p">Subscribe to a device's events for Quickstart.
 </p>
 
-<p class="p">This operator subscribes to the IoTF MQTT topic:
+<p class="p">This operator subscribes to the MQTT topic:
 </p>
 
 <p class="p"><tt class="ph tt">iot-2/type/+/id/</tt><em class="ph i">deviceId</em><tt class="ph tt">/evt/+/fmt/json</tt>
@@ -138,6 +156,14 @@
 
 </div>
 
+<div class="section"><h2 class="title sectiontitle splhead-2">Composite Operator Graph</h2>
+  
+</div>
+
+<div class="section splgraph">
+  <embed class="image" src="../../image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf.quickstart$QuickstartDeviceEvents.svg" width="248" height="109"/>
+</div>
+
 <div class="section"><h2 class="title sectiontitle splhead-1">Types</h2>
   
 </div>
@@ -147,7 +173,7 @@
 </div>
 <div class="section">
 
-<p class="p">Tuple type that matches the IoTF device simulator event data. This is used as the <tt class="ph tt">dataType</tt> parameter in an invocation of <a class="xref" href="spl$com.ibm.streamsx.iotf$extract.html#spldoc_compilationunit__composite_operator__DeviceEventExtractData">com.ibm.streamsx.iotf::DeviceEventExtractData</a>. 
+<p class="p">Tuple type that matches the Quickstart device simulator event data. This is used as the <tt class="ph tt">dataType</tt> parameter in an invocation of <a class="xref" href="spl$com.ibm.streamsx.iotf$extract.html#spldoc_compilationunit__composite_operator__DeviceEventExtractData">com.ibm.streamsx.iotf::DeviceEventExtractData</a>. 
 </p>
 
 </div>

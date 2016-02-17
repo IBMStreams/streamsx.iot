@@ -22,7 +22,7 @@
 <div class="body refbody">
 <div class="section">
 <p class="p">
-<a class="xref" href="../toolkits/toolkits.html">Toolkits</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.2.0</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf</a> &gt; device.spl</p>
+<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iotf Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.3.0.commit_23aa77f</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf</a> &gt; device.spl</p>
 
 </div>
 
@@ -37,16 +37,16 @@
 
       <dd class="dd">
 <ul class="sl simple">
-<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__DeviceCommands">DeviceCommands</a></strong>: Subscribe to device commands for an IoTF organization.
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__DeviceCommands">DeviceCommands</a></strong>: Subscribe to device commands for an IBM Watson IoT Platform organization.
 </li>
 
-<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__DeviceEvents">DeviceEvents</a></strong>: Subscribe to device events for an IoTF organization.
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__DeviceEvents">DeviceEvents</a></strong>: Subscribe to device events for an IBM Watson IoT Platform organization.
 </li>
 
-<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__DeviceStatuses">DeviceStatuses</a></strong>: Subscribe to device status events for an IoTF organization.
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__DeviceStatuses">DeviceStatuses</a></strong>: Subscribe to device status events for an IBM Watson IoT Platform organization.
 </li>
 
-<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__SendCommandToDevice">SendCommandToDevice</a></strong>: Send commands to devices registered for an IoTF organization.
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__SendCommandToDevice">SendCommandToDevice</a></strong>: Send commands to devices registered for an IBM Watson IoT Platform organization.
 </li>
 
 </ul>
@@ -68,13 +68,13 @@
 
 <div class="section">
 
-<p class="p">Subscribe to device events for an IoTF organization.
+<p class="p">Subscribe to device events for an IBM Watson IoT Platform organization.
 </p>
 
-<p class="p">This operator subscribes to the IoTF MQTT topic:
+<p class="p">This operator subscribes to the MQTT topic:
 </p>
 
-<p class="p"><tt class="ph tt">iot-2/type/</tt><em class="ph i">devicetType</em><tt class="ph tt">/id/</tt><em class="ph i">deviceId</em><tt class="ph tt">/evt/</tt><em class="ph i">eventId</em><tt class="ph tt">/fmt/json</tt>
+<p class="p"><tt class="ph tt">iot-2/type/</tt><em class="ph i">deviceType</em><tt class="ph tt">/id/</tt><em class="ph i">deviceId</em><tt class="ph tt">/evt/</tt><em class="ph i">eventId</em><tt class="ph tt">/fmt/json</tt>
 </p>
 
 </div>
@@ -82,16 +82,16 @@
 <div class="section"><h2 class="title sectiontitle">Parameters</h2>
 
 <ul class="sl simple">
-<li class="sli"><strong class="ph b">orgId</strong>: IoTF organization identifier.
+<li class="sli"><strong class="ph b">orgId</strong>: Organization identifier.
 </li>
 
-<li class="sli"><strong class="ph b">apiKey</strong>: IoTF application key.
+<li class="sli"><strong class="ph b">apiKey</strong>: Application key.
 </li>
 
-<li class="sli"><strong class="ph b">apiToken</strong>: IoTF application authorization token.
+<li class="sli"><strong class="ph b">apiToken</strong>: Application authorization token.
 </li>
 
-<li class="sli"><strong class="ph b">appId</strong>: IoTF application identifier for the MQTT client identifier, defaults to <em class="ph i">jobId</em><tt class="ph tt">_evt</tt>.
+<li class="sli"><strong class="ph b">appId</strong>: Application identifier for the MQTT client identifier, defaults to <em class="ph i">jobId</em><tt class="ph tt">_evt</tt>.
 </li>
 
 <li class="sli"><strong class="ph b">deviceType</strong>: Subscribe to device events from devices of a specific type. Defaults to <tt class="ph tt">+</tt> for all device types.
@@ -113,11 +113,19 @@
 <div class="section"><h2 class="title sectiontitle">Output Ports</h2>
 
 <ul class="sl simple">
-<li class="sli"><strong class="ph b">Events</strong>: Stream of device events.
+<li class="sli"><strong class="ph b">Events</strong>: Stream of device events of type <a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceEvent">DeviceEvent</a>.
 </li>
 
 </ul>
 
+</div>
+
+<div class="section"><h2 class="title sectiontitle splhead-2">Composite Operator Graph</h2>
+  
+</div>
+
+<div class="section splgraph">
+  <embed class="image" src="../../image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf$DeviceEvents.svg" width="248" height="109"/>
 </div>
 
 <div class="section" id="spldoc_compilationunit__composite_operator__DeviceStatuses"><h2 class="title sectiontitle splpart">composite DeviceStatuses(output Statuses)</h2>
@@ -126,13 +134,13 @@
 
 <div class="section">
 
-<p class="p">Subscribe to device status events for an IoTF organization.
+<p class="p">Subscribe to device status events for an IBM Watson IoT Platform organization.
 </p>
 
-<p class="p">This operator subscribes to the IoTF MQTT topic:
+<p class="p">This operator subscribes to the MQTT topic:
 </p>
 
-<p class="p"><tt class="ph tt">iot-2/type/</tt><em class="ph i">devicetType</em><tt class="ph tt">/id/</tt><em class="ph i">deviceId</em><tt class="ph tt">/mon/</tt>
+<p class="p"><tt class="ph tt">iot-2/type/</tt><em class="ph i">deviceType</em><tt class="ph tt">/id/</tt><em class="ph i">deviceId</em><tt class="ph tt">/mon/</tt>
 </p>
 
 </div>
@@ -140,16 +148,16 @@
 <div class="section"><h2 class="title sectiontitle">Parameters</h2>
 
 <ul class="sl simple">
-<li class="sli"><strong class="ph b">orgId</strong>: IoTF organization identifier.
+<li class="sli"><strong class="ph b">orgId</strong>: Organization identifier.
 </li>
 
-<li class="sli"><strong class="ph b">appId</strong>: IoTF application identifier for the MQTT client identifier, defaults to <em class="ph i">jobId</em><tt class="ph tt">_mon</tt>.
+<li class="sli"><strong class="ph b">appId</strong>: application identifier for the MQTT client identifier, defaults to <em class="ph i">jobId</em><tt class="ph tt">_mon</tt>.
 </li>
 
-<li class="sli"><strong class="ph b">apiKey</strong>: IoTF application key.
+<li class="sli"><strong class="ph b">apiKey</strong>: Application key.
 </li>
 
-<li class="sli"><strong class="ph b">apiToken</strong>: IoTF application authorization token.
+<li class="sli"><strong class="ph b">apiToken</strong>: Application authorization token.
 </li>
 
 <li class="sli"><strong class="ph b">deviceType</strong>: Subscribe to device events from devices of a specific type. Defaults to <tt class="ph tt">+</tt> for all device types.
@@ -168,11 +176,19 @@
 <div class="section"><h2 class="title sectiontitle">Output Ports</h2>
 
 <ul class="sl simple">
-<li class="sli"><strong class="ph b">Statuses</strong>: Stream of device status events.
+<li class="sli"><strong class="ph b">Statuses</strong>: Stream of device status events of type <a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceStatus">DeviceStatus</a>.
 </li>
 
 </ul>
 
+</div>
+
+<div class="section"><h2 class="title sectiontitle splhead-2">Composite Operator Graph</h2>
+  
+</div>
+
+<div class="section splgraph">
+  <embed class="image" src="../../image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf$DeviceStatuses.svg" width="248" height="109"/>
 </div>
 
 <div class="section" id="spldoc_compilationunit__composite_operator__DeviceCommands"><h2 class="title sectiontitle splpart">composite DeviceCommands(output Commands)</h2>
@@ -181,13 +197,13 @@
 
 <div class="section">
 
-<p class="p">Subscribe to device commands for an IoTF organization.
+<p class="p">Subscribe to device commands for an IBM Watson IoT Platform organization.
 </p>
 
-<p class="p">This operator subscribes to the IoTF MQTT topic:
+<p class="p">This operator subscribes to the MQTT topic:
 </p>
 
-<p class="p"><tt class="ph tt">iot-2/type/</tt><em class="ph i">devicetType</em><tt class="ph tt">/id/</tt><em class="ph i">deviceId</em><tt class="ph tt">/cmd/</tt><em class="ph i">cmdId</em><tt class="ph tt">/fmt/json</tt>
+<p class="p"><tt class="ph tt">iot-2/type/</tt><em class="ph i">deviceType</em><tt class="ph tt">/id/</tt><em class="ph i">deviceId</em><tt class="ph tt">/cmd/</tt><em class="ph i">cmdId</em><tt class="ph tt">/fmt/json</tt>
 </p>
 
 </div>
@@ -195,16 +211,16 @@
 <div class="section"><h2 class="title sectiontitle">Parameters</h2>
 
 <ul class="sl simple">
-<li class="sli"><strong class="ph b">orgId</strong>: IoTF organization identifier.
+<li class="sli"><strong class="ph b">orgId</strong>: Organization identifier.
 </li>
 
-<li class="sli"><strong class="ph b">apiKey</strong>: IoTF application key.
+<li class="sli"><strong class="ph b">apiKey</strong>: Application key.
 </li>
 
-<li class="sli"><strong class="ph b">apiToken</strong>: IoTF application authorization token.
+<li class="sli"><strong class="ph b">apiToken</strong>: Application authorization token.
 </li>
 
-<li class="sli"><strong class="ph b">appId</strong>: IoTF application identifier for the MQTT client identifier, defaults to <em class="ph i">jobId</em><tt class="ph tt">_cmd</tt>.
+<li class="sli"><strong class="ph b">appId</strong>: Application identifier for the MQTT client identifier, defaults to <em class="ph i">jobId</em><tt class="ph tt">_cmd</tt>.
 </li>
 
 <li class="sli"><strong class="ph b">deviceType</strong>: Subscribe to device commands for devices of a specific type. Defaults to <tt class="ph tt">+</tt> for all device types.
@@ -226,11 +242,19 @@
 <div class="section"><h2 class="title sectiontitle">Output Ports</h2>
 
 <ul class="sl simple">
-<li class="sli"><strong class="ph b">Commands</strong>: Stream of device commands.
+<li class="sli"><strong class="ph b">Commands</strong>: Stream of device commands of type <a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceCmd">DeviceCmd</a>.
 </li>
 
 </ul>
 
+</div>
+
+<div class="section"><h2 class="title sectiontitle splhead-2">Composite Operator Graph</h2>
+  
+</div>
+
+<div class="section splgraph">
+  <embed class="image" src="../../image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf$DeviceCommands.svg" width="248" height="109"/>
 </div>
 
 <div class="section" id="spldoc_compilationunit__composite_operator__SendCommandToDevice"><h2 class="title sectiontitle splpart">composite SendCommandToDevice(input Commands)</h2>
@@ -239,13 +263,13 @@
 
 <div class="section">
 
-<p class="p">Send commands to devices registered for an IoTF organization. Each tuple is published as a device command to the device specified in the input tuple.
+<p class="p">Send commands to devices registered for an IBM Watson IoT Platform organization. Each tuple is published as a device command to the device specified in the input tuple.
 </p>
 
-<p class="p">This operator publishes each command to IoTF MQTT topic:
+<p class="p">This operator publishes each command to MQTT topic:
 </p>
 
-<p class="p"><tt class="ph tt">iot-2/type/</tt><em class="ph i">devicetType</em><tt class="ph tt">/id/</tt><em class="ph i">deviceId</em><tt class="ph tt">/cmd/</tt><em class="ph i">cmdId</em><tt class="ph tt">/fmt/json</tt>
+<p class="p"><tt class="ph tt">iot-2/type/</tt><em class="ph i">deviceType</em><tt class="ph tt">/id/</tt><em class="ph i">deviceId</em><tt class="ph tt">/cmd/</tt><em class="ph i">cmdId</em><tt class="ph tt">/fmt/json</tt>
 </p>
 
 </div>
@@ -253,16 +277,16 @@
 <div class="section"><h2 class="title sectiontitle">Parameters</h2>
 
 <ul class="sl simple">
-<li class="sli"><strong class="ph b">orgId</strong>: IoTF organization identifier.
+<li class="sli"><strong class="ph b">orgId</strong>: Organization identifier.
 </li>
 
-<li class="sli"><strong class="ph b">appId</strong>: IoTF application identifier for the MQTT client identifier, defaults to <em class="ph i">jobId</em><tt class="ph tt">_snd</tt>. 
+<li class="sli"><strong class="ph b">appId</strong>: application identifier for the MQTT client identifier, defaults to <em class="ph i">jobId</em><tt class="ph tt">_snd</tt>. 
 </li>
 
-<li class="sli"><strong class="ph b">apiKey</strong>: IoTF application key.
+<li class="sli"><strong class="ph b">apiKey</strong>: Application key.
 </li>
 
-<li class="sli"><strong class="ph b">apiToken</strong>: IoTF application authorization token.
+<li class="sli"><strong class="ph b">apiToken</strong>: Application authorization token.
 </li>
 
 </ul>
@@ -272,7 +296,7 @@
 <div class="section"><h2 class="title sectiontitle">Input Ports</h2>
 
 <ul class="sl simple">
-<li class="sli"><strong class="ph b">Commands</strong>: Stream of device commands.
+<li class="sli"><strong class="ph b">Commands</strong>: Stream of device commands of type <a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceCmd">DeviceCmd</a>.
 </li>
 
 </ul>
@@ -280,6 +304,14 @@
 </div>
 
 <div class="section">
+</div>
+
+<div class="section"><h2 class="title sectiontitle splhead-2">Composite Operator Graph</h2>
+  
+</div>
+
+<div class="section splgraph">
+  <embed class="image" src="../../image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf$SendCommandToDevice.svg" width="248" height="109"/>
 </div>
 
 </div>

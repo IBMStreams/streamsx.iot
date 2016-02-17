@@ -22,7 +22,7 @@
 <div class="body refbody">
 <div class="section">
 <p class="p">
-<a class="xref" href="../toolkits/toolkits.html">Toolkits</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.2.0</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf</a> &gt; types.spl</p>
+<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iotf Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.3.0.commit_23aa77f</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf</a> &gt; types.spl</p>
 
 </div>
 
@@ -131,13 +131,13 @@
 
 <li class="li"> <tt class="ph tt">eventId</tt> - Event identifier.</li>
 
-<li class="li"> <tt class="ph tt">jsonString</tt> - Event payload in JSON IoTF event format specification.</li>
+<li class="li"> <tt class="ph tt">jsonString</tt> - Event payload in JSON IBM Watson IoT Platform event format specification.</li>
 
 </ul>
 
 </div>
 
-<div class="p">The event payload is a JSON object using <a class="xref" href="https://docs.internetofthings.ibmcloud.com/messaging/payload.html">IoTF event format specification</a> and thus has two elements:
+<div class="p">The event payload is a JSON object using <a class="xref" href="https://docs.internetofthings.ibmcloud.com/messaging/payload.html">IBM Watson IoT Platform event format specification</a> and thus has two elements:
 <ul class="ul">
 <li class="li"> <tt class="ph tt">d</tt> - Event data, this is the event data as sent by the device application.</li>
 
@@ -172,9 +172,7 @@
 
 <li class="li"> <tt class="ph tt">eventId</tt> - Event identifier.</li>
 
-<li class="li"> <tt class="ph tt">eventTs</tt> - Event timestamp extracted from the <tt class="ph tt">ts</tt> key of the JSON event</li>
-
-<li class="li"> payload. <tt class="ph tt">eventTs</tt> has type <tt class="ph tt">com.ibm.streamsx.datetime.TimeMillis</tt> representing the number of milliseconds since the 1970/01/01 epoch. </li>
+<li class="li"> <tt class="ph tt">eventTs</tt> - Event timestamp extracted from the <tt class="ph tt">ts</tt> key of the JSON event. <tt class="ph tt">eventTs</tt> has type <tt class="ph tt">com.ibm.streamsx.datetime.TimeMillis</tt> representing the number of milliseconds since the 1970/01/01 epoch. </li>
 
 </ul>
 

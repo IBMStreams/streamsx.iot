@@ -22,21 +22,21 @@
 <div class="body refbody">
 <div class="section">
 <p class="p">
-<a class="xref" href="../toolkits/toolkits.html">Toolkits</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.2.0</a> &gt; com.ibm.streamsx.iotf.quickstart</p>
+<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iotf Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.3.0.commit_23aa77f</a> &gt; com.ibm.streamsx.iotf.quickstart</p>
 
 </div>
 
 <div class="section">
 
-<p class="p">Access device events for the IBM Internet of Things Foundation Quickstart service.
+<p class="p">Access device events for the IBM Watson IoT Platform Quickstart service.
 </p>
 
-<p class="p"><a class="xref" href="https://quickstart.internetofthings.ibmcloud.com">Quickstart</a> allows you to experiment with IoTF without having to register. This namespace contains an operator <a class="xref" href="spl$com.ibm.streamsx.iotf.quickstart$quickstart.html#spldoc_compilationunit__composite_operator__QuickstartDeviceEvents">QuickstartDeviceEvents</a> and an application <a class="xref" href="spl$com.ibm.streamsx.iotf.quickstart$quickstart.html#spldoc_compilationunit__composite_operator__Quickstart">Quickstart</a> to interact with a single Quickstart device. Thus you can see the IoTF and Streams integrated concept without having to set up an IoTF service.
+<p class="p"><a class="xref" href="https://quickstart.internetofthings.ibmcloud.com">Quickstart</a> allows you to experiment without having to register. This namespace contains an operator <a class="xref" href="spl$com.ibm.streamsx.iotf.quickstart$quickstart.html#spldoc_compilationunit__composite_operator__QuickstartDeviceEvents">QuickstartDeviceEvents</a> and an application <a class="xref" href="spl$com.ibm.streamsx.iotf.quickstart$quickstart.html#spldoc_compilationunit__composite_operator__Quickstart">Quickstart</a> to interact with a single Quickstart device. Thus you can see IBM Watson IoT Platform and IBM Streams integrated concept without having to set up an IoTF service.
 </p>
 
 </div>
 
-<div class="section"><h2 class="title sectiontitle">Using the IoTF Quickstart Device Simulator
+<div class="section"><h2 class="title sectiontitle">Using the Quickstart Device Simulator
 </h2>
 
 <p class="p">Follow the instructions at <a class="xref" href="https://developer.ibm.com/recipes/tutorials/use-the-simulated-device-to-experience-the-iot-foundation/">https://developer.ibm.com/recipes/tutorials/use-the-simulated-device-to-experience-the-iot-foundation/</a> to use the simulator.
@@ -45,7 +45,7 @@
 <p class="p">Compile the <a class="xref" href="spl$com.ibm.streamsx.iotf.quickstart$quickstart.html#spldoc_compilationunit__composite_operator__Quickstart">Quickstart</a> application  <tt class="ph tt">sc -M com.ibm.streamsx.iotf.quickstart::Quickstart</tt>
 </p>
 
-<p class="p">Submit the Streams application bundle (<tt class="ph tt">.sab</tt> file) to an IBM Streams instance or your <a class="xref" href="https://console.ng.bluemix.net/catalog/services/streaming-analytics/">Bluemix Streaming Analytics Service</a> setting the submission value <tt class="ph tt">deviceId</tt> to the device id of the simulator. The device id is at the top right of the simulator. <br/><img class="image" src="../../image/copy/1$iotf_quickstart_simulator.png" alt="IoTF Simulator"/><br/> 
+<p class="p">Submit the Streams application bundle (<tt class="ph tt">.sab</tt> file) to an IBM Streams instance or your <a class="xref" href="https://console.ng.bluemix.net/catalog/services/streaming-analytics/">Bluemix Streaming Analytics Service</a> setting the submission value <tt class="ph tt">deviceId</tt> to the device id of the simulator. The device id is at the top right of the simulator. <br/><img class="image" src="file:///home/streamsadmin/quarks_iotf/streamsx.iotf/com.ibm.streamsx.iotf/com.ibm.streamsx.iotf.quickstart/../doc/images/iotf_quickstart_simulator.png" alt="Simulator"/><br/> 
 </p>
 
 </div>
@@ -56,7 +56,7 @@
 <li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf.quickstart$quickstart.html#spldoc_compilationunit__composite_operator__Quickstart">Quickstart</a></strong>: Quickstart application that subscribes to a single quickstart device's events.
 </li>
 
-<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf.quickstart$quickstart.html#spldoc_compilationunit__composite_operator__QuickstartDeviceEvents">QuickstartDeviceEvents</a></strong>: Subscribe to a device's events for IoTF quickstart.
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf.quickstart$quickstart.html#spldoc_compilationunit__composite_operator__QuickstartDeviceEvents">QuickstartDeviceEvents</a></strong>: Subscribe to a device's events for Quickstart.
 </li>
 
 </ul>
@@ -66,7 +66,7 @@
 <div class="section"><h2 class="title sectiontitle splhead-1">Types</h2>
   
 <ul class="sl simple">
-<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf.quickstart$quickstart.html#spldoc_compilationunit__type__QSData">QSData</a></strong>: Tuple type that matches the IoTF device simulator event data.
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf.quickstart$quickstart.html#spldoc_compilationunit__type__QSData">QSData</a></strong>: Tuple type that matches the Quickstart device simulator event data.
 </li>
 
 </ul>
