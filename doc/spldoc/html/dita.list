@@ -1,4 +1,4 @@
-#Wed Feb 17 15:51:09 PST 2016
+#Wed Feb 17 15:59:29 PST 2016
 copytosourcelist=
 hreftargetslist=dita/tk$com.ibm.streamsx.iotf/ix$Type.xml,dita/tk$com.ibm.streamsx.iotf/spl$com.ibm.streamsx.iotf.apps$SimpleAllDevices.xml,dita/tk$com.ibm.streamsx.iotf/spl$com.ibm.streamsx.iotf$iotf.xml,dita/tk$com.ibm.streamsx.iotf/spl$com.ibm.streamsx.iotf$device.xml,dita/tk$com.ibm.streamsx.iotf/spl$com.ibm.streamsx.iotf$extract.xml,dita/toolkits/ix$Namespace.xml,dita/toolkits/ix$Operator.xml,dita/tk$com.ibm.streamsx.iotf/spl$com.ibm.streamsx.iotf$types.xml,dita/tk$com.ibm.streamsx.iotf/ns$com.ibm.streamsx.iotf.quarks.xml,dita/tk$com.ibm.streamsx.iotf/spl$com.ibm.streamsx.iotf.quickstart$quickstart.xml,dita/tk$com.ibm.streamsx.iotf/ns$com.ibm.streamsx.iotf.quickstart.xml,dita/toolkits/ix$Type.xml,dita/toolkits/toolkits.xml,dita/tk$com.ibm.streamsx.iotf/ns$com.ibm.streamsx.iotf.apps.xml,dita/tk$com.ibm.streamsx.iotf/ix$Namespace.xml,dita/tk$com.ibm.streamsx.iotf/ix$Operator.xml,dita/tk$com.ibm.streamsx.iotf/tk$com.ibm.streamsx.iotf.xml,dita/tk$com.ibm.streamsx.iotf/ns$com.ibm.streamsx.iotf.xml
 fullditatopicfile=fullditatopic.list
@@ -23,7 +23,7 @@ conreflist=
 resourceonlyfile=resourceonly.list
 imagefile=image.list
 resourceonlylist=
-imagelist=image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf$DeviceEvents.svg,image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf$AllDevices.svg,image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf$SendCommandToDevice.svg,image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf$DeviceCommands.svg,image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf.quickstart$Quickstart.svg,image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf$DeviceStatuses.svg,image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf$DeviceEventExtractData.svg,image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf.quickstart$QuickstartDeviceEvents.svg,image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf.apps$SimpleAllDevices.svg
+imagelist=image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf$DeviceEvents.svg,image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf$AllDevices.svg,image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf$SendCommandToDevice.svg,image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf$DeviceCommands.svg,image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf.quickstart$Quickstart.svg,image/copy/1$SAD_Console.png,image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf$DeviceStatuses.svg,image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf$DeviceEventExtractData.svg,image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf.quickstart$QuickstartDeviceEvents.svg,image/copy/1$iotf_quickstart_simulator.png,image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf.apps$SimpleAllDevices.svg
 htmlfile=html.list
 htmllist=
 canditopicsfile=canditopics.list
