@@ -1,0 +1,61 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2015,2016
+ */
+ namespace com.ibm.streamsx.iotf.apps;
+
+use com.ibm.streamsx.iotf::*;
+use com.ibm.streamsx.topology.topic::Publish;
+
+ /**
+ * Application that subscribes to
+ * all events for all devices for an organization
+ * and publishes them as SPL steams.
+ *
+ * This allows a single application to perform the role
+ * of ingest and egress (for device commands) from
+ * IBM Watson IoT Platform. Multiple independent
+ * analytic applications can then subscribe to the
+ * published streams as required.
+ *
+ * 
+ * This application publishes topic streams of device events,
+ * commands and statuses from an organization.
+ *
+ * * Device events with topic: `iotf/devices/events` with schema of [DeviceEvent]
+ * * Device commands with topic: `iotf/devices/commands` with schema of [DeviceCmd]
+ * * Device status updates with topic: `iotf/devices/statuses` with schema of [DeviceStatus]
+ *
+ * Streams are published using `Publish` and can be subscribed to using
+ * `Subscribe` from the `com.ibm.streamsx.topology.topic` toolkit.
+ * 
+ * These submission time parameters must be defined:
+ * * `orgId` - Organization identifier
+ * * `apiKey` - API key
+ * * `apiToken` - API Token
+ */
+public composite IotfOrganization {
+  param
+    expression<rstring> $orgId : getSubmissionTimeValue("orgId");
+    expression<rstring> $apiKey : getSubmissionTimeValue("apiKey");
+    expression<rstring> $apiToken : getSubmissionTimeValue("apiToken");
+
+graph
+        (stream<DeviceStatus> Statuses; stream<DeviceEvent> Events; stream<DeviceCmd> Commands) as IotfDevices = AllDevices()
+		{
+			param
+				orgId : $orgId;
+				apiKey : $apiKey;
+				apiToken : $apiToken;
+		}
+
+  () as PublishedEvents = Publish(Events) {
+    param topic: "iotf/device/events";
+  }
+  () as PublishedCommands = Publish(Commands) {
+    param topic: "iotf/device/commands";
+  }
+  () as PublishedStatuses = Publish(Statuses) {
+    param topic: "iotf/device/statuses";
+  }
+}
