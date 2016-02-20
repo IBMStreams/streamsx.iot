@@ -49,6 +49,18 @@ public composite EventsSubscribe(output stream<DeviceEvent> Events)
      }
 }
 
+/**
+ * Publish an event to be sent to a device.
+ * with the topic `iotf/device/commands/send`.
+ *
+ * This matches the topic subscribed to by
+ * [com.ibm.streamsx.apps::IotfOrganization].
+ *
+ * Any command on the input stream will be
+ * sent as a device command assuming
+ * [com.ibm.streamsx.apps::IotfOrganization]
+ * is running, or an equivalant application.
+*/
 public composite CommandPublish(input stream<DeviceCmd> Commands) {
    graph
      () as PublishCommand = Publish(Commands) {
