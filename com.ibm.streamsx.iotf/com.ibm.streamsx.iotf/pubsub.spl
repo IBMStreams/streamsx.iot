@@ -12,7 +12,7 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * the topic `iotf/device/events`.
  *
  * This matches the topic published by
- * [com.ibm.streamsx.apps::IotfOrganization].
+ * [com.ibm.streamsx.iotf.apps::IotfOrganization].
  *
  * Filtering on `deviceType` and `eventid` is supported,
  * defaulting to no filtering.
@@ -54,11 +54,11 @@ public composite EventsSubscribe(output stream<DeviceEvent> Events)
  * with the topic `iotf/device/commands/send`.
  *
  * This matches the topic subscribed to by
- * [com.ibm.streamsx.apps::IotfOrganization].
+ * [com.ibm.streamsx.iotf.apps::IotfOrganization].
  *
  * Any command on the input stream will be
  * sent as a device command assuming
- * [com.ibm.streamsx.apps::IotfOrganization]
+ * [com.ibm.streamsx.iotf.apps::IotfOrganization]
  * is running, or an equivalant application.
 */
 public composite CommandPublish(input stream<DeviceCmd> Commands) {

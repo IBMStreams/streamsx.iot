@@ -9,11 +9,11 @@ use com.ibm.streamsx.topology.topic::Publish;
 use com.ibm.streamsx.topology.topic::Subscribe;
 
  /**
- * Application provides complete integration
+ * Application providing integration
  * with an IBM Watson IoT Platform organization
  *
  * This application performs the role
- * of ingest and egress (for device commands) from
+ * of ingest and egress (for device commands) for
  * IBM Watson IoT Platform. Multiple independent
  * analytic applications can then subscribe to the
  * published streams as required. Thus these applications
@@ -22,7 +22,7 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  *
  * Streams of device events, commands and statuses are published:
  *
- * * * Device events with topic: `iotf/devices/events` with schema of [DeviceEvent]
+ * * Device events with topic: `iotf/devices/events` with schema of [DeviceEvent]
  * * Device commands with topic: `iotf/devices/commands/sent` with schema of [DeviceCmd]
  * * Device status updates with topic: `iotf/devices/statuses` with schema of [DeviceStatus]
  *
@@ -30,9 +30,15 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * is subscribed to allow analytic applications to send commands
  * to specific devices.
  *
- * Streams are published using `Publish` and can be subscribed to using
- * `Subscribe` from the `com.ibm.streamsx.topology.topic` toolkit.
- * 
+ * The `Publish` and `Subscribe` model from the
+ * `com.ibm.streamsx.topology.topic` toolkit
+ * is used. Applications may use the operators
+ * from this toolkits but these operators provide
+ * additional functionality specific to this toolkit:
+ *
+ * * [com.ibm.streamsx.iotf::EventsSubscribe] - Subscribe to device events from this application, with filtering on device type and/or event identifier.
+ * * [com.ibm.streamsx.iotf::CommandPublish] - Send a device command that will be sent to the device by this application.
+ *
  * These submission time parameters must be defined:
  * * `orgId` - Organization identifier
  * * `apiKey` - API key
