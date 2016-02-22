@@ -22,18 +22,19 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  *
  * Streams of device events, commands and statuses are published:
  *
- * * Device events with topic: `iotf/devices/events` with schema of [DeviceEvent]
- * * Device commands with topic: `iotf/devices/commands/sent` with schema of [DeviceCmd]
- * * Device status updates with topic: `iotf/devices/statuses` with schema of [DeviceStatus]
+ * * Device events with streams topic: `iotf/devices/events` with schema of [DeviceEvent]
+ * * Device commands with streams topic: `iotf/devices/commands/sent` with schema of [DeviceCmd]
+ * * Device status updates with streams topic: `iotf/devices/statuses` with schema of [DeviceStatus]
  *
- * The topic `iotf/devices/commands/send` (schema [DeviceCmd])
+ * The streams topic `iotf/devices/commands/send` (schema [DeviceCmd])
  * is subscribed to allow analytic applications to send commands
  * to specific devices.
  *
  * The `Publish` and `Subscribe` model from the
  * `com.ibm.streamsx.topology.topic` toolkit
- * is used. Applications may use the operators
- * from this toolkits but these operators provide
+ * is used. Applications may use the generic
+ * `Publish` and `Subscribe` operators from that
+ * toolkit but these operators provide
  * additional functionality specific to this toolkit:
  *
  * * [com.ibm.streamsx.iotf::EventsSubscribe] - Subscribe to device events from this application, with filtering on device type and/or event identifier.

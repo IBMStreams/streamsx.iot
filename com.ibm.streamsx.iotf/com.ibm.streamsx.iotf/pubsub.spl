@@ -2,6 +2,22 @@
 # Licensed Materials - Property of IBM
 # Copyright IBM Corp. 2015,2016
  */
+
+/**
+ * Operators to use in conjunction with
+ * [com.ibm.streamsx.iotf.apps::IotfOrganization].
+ *
+ * `IotfOrganziation` publishes streams for all the
+ * events associated with devices, namely events, commands
+ * and status updates.
+ *
+ * A single copy of `IotfOrganization` can be run and then
+ * multiple analytic applications subscribe to streams as
+ * needed. This allows separation of the IBM Watson IoT
+ * Platform connection information (application key) from
+ * the analytical applications.
+*/
+
  namespace com.ibm.streamsx.iotf;
 
 use com.ibm.streamsx.topology.topic::Publish;
@@ -9,9 +25,9 @@ use com.ibm.streamsx.topology.topic::Subscribe;
 
 /**
  * Subscribe to device events published under
- * the topic `iotf/device/events`.
+ * the streams topic `iotf/device/events`.
  *
- * This matches the topic published by
+ * This matches the streams topic published by
  * [com.ibm.streamsx.iotf.apps::IotfOrganization].
  *
  * Filtering on `deviceType` and `eventid` is supported,
@@ -51,9 +67,9 @@ public composite EventsSubscribe(output stream<DeviceEvent> Events)
 
 /**
  * Publish an event to be sent to a device.
- * with the topic `iotf/device/commands/send`.
+ * via the streams topic `iotf/device/commands/send`.
  *
- * This matches the topic subscribed to by
+ * This matches the streams topic subscribed to by
  * [com.ibm.streamsx.iotf.apps::IotfOrganization].
  *
  * Any command on the input stream will be
