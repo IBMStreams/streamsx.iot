@@ -1,0 +1,84 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2015,2016
+ */
+ namespace com.ibm.streamsx.iotf.apps;
+
+use com.ibm.streamsx.iotf::*;
+use com.ibm.streamsx.topology.topic::Publish;
+use com.ibm.streamsx.topology.topic::Subscribe;
+
+ /**
+ * Application providing integration
+ * with an IBM Watson IoT Platform organization
+ *
+ * This application performs the role
+ * of ingest and egress (for device commands) for
+ * IBM Watson IoT Platform. Multiple independent
+ * analytic applications can then subscribe to the
+ * published streams as required. Thus these applications
+ * are isolated from having to have knowledge of
+ * connection details for the organization.
+ *
+ * Streams of device events, commands and statuses are published:
+ *
+ * * Device events with streams topic: `iotf/devices/events` with schema of [DeviceEvent]
+ * * Device commands with streams topic: `iotf/devices/commands/sent` with schema of [DeviceCmd]
+ * * Device status updates with streams topic: `iotf/devices/statuses` with schema of [DeviceStatus]
+ *
+ * The streams topic `iotf/devices/commands/send` (schema [DeviceCmd])
+ * is subscribed to allow analytic applications to send commands
+ * to specific devices.
+ *
+ * The `Publish` and `Subscribe` model from the
+ * `com.ibm.streamsx.topology.topic` toolkit
+ * is used. Applications may use the generic
+ * `Publish` and `Subscribe` operators from that
+ * toolkit but these operators provide
+ * additional functionality specific to this toolkit:
+ *
+ * * [com.ibm.streamsx.iotf::EventsSubscribe] - Subscribe to device events from this application, with filtering on device type and/or event identifier.
+ * * [com.ibm.streamsx.iotf::CommandPublish] - Send a device command that will be sent to the device by this application.
+ *
+ * These submission time parameters must be defined:
+ * * `orgId` - Organization identifier
+ * * `apiKey` - API key
+ * * `apiToken` - API Token
+ */
+public composite IotfOrganization {
+  param
+    expression<rstring> $orgId : getSubmissionTimeValue("orgId");
+    expression<rstring> $apiKey : getSubmissionTimeValue("apiKey");
+    expression<rstring> $apiToken : getSubmissionTimeValue("apiToken");
+
+graph
+        (stream<DeviceStatus> Statuses; stream<DeviceEvent> Events; stream<DeviceCmd> Commands) as IotfDevices = AllDevices()
+		{
+			param
+				orgId : $orgId;
+				apiKey : $apiKey;
+				apiToken : $apiToken;
+		}
+
+  () as PublishedEvents = Publish(Events) {
+    param topic: "iotf/device/events";
+  }
+  () as PublishedCommands = Publish(Commands) {
+    param topic: "iotf/device/commands/sent";
+  }
+  () as PublishedStatuses = Publish(Statuses) {
+    param topic: "iotf/device/statuses";
+  }
+
+  stream<DeviceCmd> CommandsToSend = Subscribe() {
+    param
+      topic: "iotf/device/commands/send";
+      streamType: DeviceCmd;
+  }
+  () as SendCommandsToDevice = SendCommandToDevice(CommandsToSend) {
+    param
+      orgId : $orgId;
+      apiKey : $apiKey;
+      apiToken : $apiToken;
+  }
+}
