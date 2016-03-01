@@ -25,6 +25,7 @@ public composite IotfSensors {
    @view(name = "SensorEvents", port = SensorEvents, sampleSize = 5, bufferSize = 50)
    stream<DeviceEventTs, SensorInfo> SensorEvents = DeviceEventExtractData(SensorEventsJson) {
        param
+          events : true; // Events are selected by the EventsSubscribe
           dataType: SensorInfo;
    }
    stream<DeviceCmd> SensorWarning = Functor(SensorEvents) {
