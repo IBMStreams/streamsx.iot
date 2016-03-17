@@ -1,3 +1,8 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2015,2016
+ */
+
 namespace com.ibm.streamsx.iotf;
 
 use com.ibm.streamsx.datetime::TimeMillis;
@@ -55,6 +60,14 @@ type DeviceEventTs = DeviceEventId, tuple<TimeMillis eventTs>;
  */
 type DeviceStatus = Device, Json;
 
+/**
+ * A device with command identifier.
+ * * `deviceType` - Type of device the command is for.
+ * * `deviceId` - Identifier of device the command is for.
+ * * `cmdId` - Command identifier.
+*/
+type DeviceCmdId = Device, tuple<rstring cmdId>;
+
 
 /**
  * A device command.
@@ -64,7 +77,7 @@ type DeviceStatus = Device, Json;
  * * `jsonString` - Command data.
  * 
  */
-type DeviceCmd = Device, tuple<rstring cmdId>, Json;
+type DeviceCmd = DeviceCmdId, Json;
 
 
 
