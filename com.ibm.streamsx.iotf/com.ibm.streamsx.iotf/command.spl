@@ -1,0 +1,34 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2016
+ */
+
+namespace com.ibm.streamsx.iotf;
+
+use com.ibm.streamsx.json::TupleToJSON;
+
+/**
+ * Convert tuples to device commands.
+ * Convert input tuples to device commands that can be submitted to
+ * [CommandPublish] or [SendCommandToDevice].
+ * The input port schema must include:
+ *  * Attributes defining the device to receive a command matching [DeviceCmdId].
+ *  * A nested tuple with attribute name specified by the `payload` parameter.
+ *
+ * The contents of the nested tuple are converted to JSON and used as
+ * the payload of the device command.
+ *
+ * @param payload Attribute name of nested tuple that will be the command payload.
+ * 
+ * @input Commands Input stream of commands, must be a super-set of [DeviceCmdId].
+ * @output DeviceCommands Device commands that can be submitted to [CommandPublish] or [SendCommandToDevice].
+*/
+public composite CommandTupleToPayload(input Commands; output stream<DeviceCmd> DeviceCommands) {
+    param attribute $payload;
+    graph
+
+       stream<DeviceCmd> DeviceCommands = TupleToJSON(Commands) {
+          param
+            inputAttribute: $payload;
+       }
+}
