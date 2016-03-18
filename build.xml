@@ -10,8 +10,7 @@
   <property name="toolkit.test" location="tests" />
 
 	
-  <!-- no samples yet -->
-  <target name="all" depends="toolkit, spldoc_work, toolkitIndexOnly"/>
+  <target name="all" depends="toolkit, samples, spldoc_work, toolkitIndexOnly"/>
 
   <target name="setcommitversion">
     <!-- Create the time stamp -->
@@ -65,19 +64,17 @@
     description="Create SPLDOC with git commit hash included in the version"
   />
 
-  <!-- no samples yet -->
   <target name="spldoc_work" depends="setcommitversion"
     description="Create SPLDOC"
   >
     <antcall target="spldoctoolkit">
        <param name="tkdir" value="${toolkit}"/>
        <param name="tktitle" value="IBMStreams ${tkinfo.info:identity.info:name} Toolkit"/>
+       <param name="tksource" value=""/>
     </antcall>
-    <!-- no samples yet
     <subant target="spldoctoolkit" genericantfile="${basedir}/build.xml">
        <dirset dir="samples" includes="*"/>
     </subant>
-    -->
   </target>
 
   <target name="samples" depends="toolkit">
@@ -86,26 +83,20 @@
     </subant>
   </target>
   <target name="cleansamples">
-  <!--
     <subant target="cleantoolkit" genericantfile="${basedir}/build.xml">
        <dirset dir="samples" includes="*"/>
     </subant>
-  -->
   </target>
 
   <target name="build-all-samples" depends="toolkit">
-  <!--
     <subant target="buildsample" genericantfile="${basedir}/build.xml">
        <dirset dir="samples" includes="*"/>
     </subant>
-    -->
   </target>
   <target name="clean-all-samples">
-  <!--
     <subant target="cleansample" genericantfile="${basedir}/build.xml">
        <dirset dir="samples" includes="*"/>
     </subant>
-    -->
   </target>
 
   <!-- Test targets -->
@@ -117,20 +108,24 @@
 
   <!-- Targets called on samples -->
   <target name="buildsample">
+  <!-- nothing to build
      <echo message="Sample to build: ${basedir}"/>
      <exec executable="make" failonerror="true" dir="${basedir}">
         <arg value="-f" />
         <arg value="Makefile" />
         <arg value="all" />
      </exec>
+  -->
   </target>
   <target name="cleansample">
      <echo message="Sample to clean: ${basedir}"/>
+  <!-- nothing to build
      <exec executable="make" failonerror="true" dir="${basedir}">
         <arg value="-f" />
         <arg value="Makefile" />
         <arg value="clean" />
      </exec>
+     -->
   </target>
   <target name="indextoolkit">
      <echo message="Tookit to index: ${basedir}"/>
@@ -151,11 +146,13 @@
   </target>
   <target name="spldoctoolkit">
      <property name="tkdir" value="${basedir}"/>
+     <property name="tksource" value="--include-source"/>
      <echo message="Tookit to SPLDOC: ${tkdir}"/>
      <exec executable="${streams.install}/bin/spl-make-doc">
         <arg value="--include-composite-operator-diagram"/>
         <arg value="--copy-image-files"/>
         <arg value="--author"/>
+	<arg value="${tksource}"/>
         <arg value="IBMStreams Open Source Community at GitHub - https://github.com/IBMStreams/${ant.project.name}"/>
         <arg value="--doc-title"/>
         <arg value="${tktitle}"/>

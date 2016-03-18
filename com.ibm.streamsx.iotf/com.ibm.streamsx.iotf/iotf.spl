@@ -1,8 +1,9 @@
 /*
 # Licensed Materials - Property of IBM
-# Copyright IBM Corp. 2015  
+# Copyright IBM Corp. 2015,2016
  */
- namespace com.ibm.streamsx.iotf;
+
+namespace com.ibm.streamsx.iotf;
 
 /**
  * Composite that produces streams for all devices in an organization.
@@ -24,7 +25,7 @@ public composite AllDevices(output stream<DeviceStatus> Statuses, stream<DeviceE
 
 	graph
 		
-		stream<DeviceEvent> Events = DeviceEvents()
+		stream<DeviceStatus> Statuses = DeviceStatuses()
 		{
 			param
 				orgId : $orgId ;
@@ -32,7 +33,7 @@ public composite AllDevices(output stream<DeviceStatus> Statuses, stream<DeviceE
 				apiToken : $apiToken ;
 		}
 
-		stream<DeviceStatus> Statuses = DeviceStatuses()
+		stream<DeviceEvent> Events = DeviceEvents()
 		{
 			param
 				orgId : $orgId ;
