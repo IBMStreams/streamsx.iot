@@ -18,7 +18,7 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * analytic applications can then subscribe to the
  * published streams as required. Thus these applications
  * are isolated from having to have knowledge of
- * connection details for the organization.
+ * connection details for the IBM Watson IoT Platform organization.
  *
  * Streams of device events, commands and statuses are published:
  *
@@ -37,7 +37,9 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * toolkit but these operators provide
  * additional functionality specific to this toolkit:
  *
- * * [com.ibm.streamsx.iotf::EventsSubscribe] - Subscribe to device events from this application, with filtering on device type and/or event identifier.
+ * * [com.ibm.streamsx.iotf::EventsSubscribe] - Subscribe to device events, with filtering on device type and/or event identifier.
+ * * [com.ibm.streamsx.iotf::CommandsSubscribe] - Subscribe to device commands, with filtering on device type and/or command identifier.
+ * * [com.ibm.streamsx.iotf::StatusesSubscribe] - Subscribe to device status updates, with filtering on device type.
  * * [com.ibm.streamsx.iotf::CommandPublish] - Send a device command that will be sent to the device by this application.
  *
  * These submission time parameters must be defined:
