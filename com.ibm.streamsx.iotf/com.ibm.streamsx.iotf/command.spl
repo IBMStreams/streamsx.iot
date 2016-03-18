@@ -18,10 +18,43 @@ use com.ibm.streamsx.json::TupleToJSON;
  * The contents of the nested tuple are converted to JSON and used as
  * the payload of the device command.
  *
- * @param payload Attribute name of nested tuple that will be the command payload.
+ * An example of how to invoke this operator. First have an SPL
+ * type that forms the content of the command's payload.
+ * The values in the type will be converted to JSON and used
+ * as the command's payload.
+ *
+ *     type StatusMsg = rstring message, rstring severity;
+ *
+ * The input schema to this operator requires [DeviceCmdId] and
+ * the payload type as a nested tuple, for example:
+ *
+ *     stream<DeviceCmdId, tuple<StatusMsg msgs>> StatusMsgCommands = ...
+ *
+ * Stream `StatusMsgCommands` is fed into this operator
+ * and then [CommandPublish] or [SendCommandToDevice].
+ * The invocation of this operator specifies which nested
+ * tuple attribute maps to the command payload using the
+ * `payload` parameter. In this case setting `payload` to `msgs`.
+ *
+ *     // Convert them into the required schema
+ *     stream<DeviceCmd> StatusMsgCommandsJson = CommandTupleToPayload(StatusMsgCommands)
+ *     {
+ *       param
+ *         payload: msgs;
+ *     }
+ *     
+ *     // And then publish them
+ *     () as PublishStatusMsgCmds = CommandPublish(StatusMsgCommandsJson) {}
+ *
+ * This will result in a device command payload of:
+ *
+ *     {"message": "Warning Black Ice Ahead", "severity": "HIGH"}
+ *
+ *
+ * @param payload Attribute of nested tuple that will be the command payload.
  * 
  * @input Commands Input stream of commands, must be a super-set of [DeviceCmdId].
- * @output DeviceCommands Device commands that can be submitted to [CommandPublish] or [SendCommandToDevice].
+ * @output DeviceCommands Device commands that can be submitted to [CommandPublish] or [SendCommandToDevice]. Must be of type [DeviceCmd].
 */
 public composite CommandTupleToPayload(input Commands; output stream<DeviceCmd> DeviceCommands) {
     param attribute $payload;
