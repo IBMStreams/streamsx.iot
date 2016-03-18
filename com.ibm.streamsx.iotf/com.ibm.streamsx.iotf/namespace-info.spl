@@ -11,9 +11,36 @@
  * your IBM Streams applications communicate with and consume data
  * collected by your connected devices, sensors, and gateways.
  * 
+ * # Recommended Deployment
+ * 
+ * Use of publish-subscribe is recommended to allow analytic applications
+ * to be developed and deployed independent of the connectivity to
+ * IBM Watson IoT Platform.
+ *
+ * This is achieved by submitting the [com.ibm.streamsx.iotf.apps::IotfOrganization] application to IBM Streams. This is the only job that connects
+ * to IBM Watson IoT platform, it publishes streams that contain device
+ * events, commands and status updates.
+ *
+ * Analytic applications use
+ * [EventsSubscribe], [CommandsSubscribe] and [StatusesSubscribe] to
+ * subscribe to streams to be analyzed.
+ *
+ * Analytic applications use [CommandPublish] to send device
+ * commands to individual devices.
+ *
+ * The benefits of this approach are:
+ * * Only a single application (`IotfOrganization`) needs to know the authorization tokens.
+ * * Analytic applications can be added and removed at any time without disrupting existing running applications.
+ *
+ * Applications may also connect to IBM Watson IoT Platform directly using
+ * operators [DeviceEvents], [DeviceCommands], [DeviceStatuses] and
+ * [SendCommandToDevice]. In this case the application must supply
+ * the authorization tokens to connect to IBM Watson IoT Platform,
+ * typically through submission time parameters.
+ *
  * # Device Events
  * Devices publish device events that an SPL application can subscribe to
- * using [DeviceEvents]. The default is to subscribe to all event identifiers
+ * using [EventsSubscribe] or [DeviceEvents]. The default is to subscribe to all event identifiers
  * from all device types and ids. The operator is parameterized to allow
  * only subscribing to a specific event id (which is really the type of the event),
  * a specific device type and/or a specific device using its id.
@@ -37,41 +64,23 @@
  *
  * # Device Status
  * Device status events, such as connect or disconnect, are subscribed to using
- * [DeviceStatuses] which produces a stream of type [DeviceStatus].
+ * [StatusesSubscribe] or [DeviceStatuses] which produce a stream of type [DeviceStatus].
  * 
  * # Device Commands
  * Devices can be sent commands, an SPL application can subscribe to
- * commands being sent to devices using [DeviceCommands]. 
+ * commands being sent to devices using [CommandsSubscribe] or [DeviceCommands]. 
  * The default is to subscribe to all commands identifiers
  * for all device types and ids. The operator is parameterized to allow
  * only subscribing to a specific command id (which is really the type of the command),
- * a specific device type and/or a specific device using its id. 
+ * a specific device type and/or a specific device using its id (`DeviceCommands` only). 
  * 
- * An SPL application can send a command to a specific device using [SendCommandToDevice]
+ * An SPL application can send a command to a specific device using [CommandPublish] or [SendCommandToDevice]
  * with the input stream type of [DeviceCmd]. The `jsonString` attribute contains
  * the application specific portion of the command represented as serialized JSON.
+ *
+ * Applications can use [CommandTupleToPayload] to convert an SPL tuple
+ * representation of the command payload to JSON.
  * 
- * # Recommended Deployment
- * 
- * Use of publish-subscribe is recommended to allow analytic applications
- * to be developed and deployed independent of the connectivity to
- * IBM Watson IoT Platform.
- *
- * This is achieved by submitting the [com.ibm.streamsx.iotf.apps::IotfOrganization] application to IBM Streams. This is the only job that then connects
- * to the IoT platform, it publishes streams that contain device
- * events, commands and status updates.
- *
- * Analytic applications then use
- * [EventsSubscribe], [CommandsSubscribe] and [StatusesSubscribe] to
- * subscribe to streams to be analyzed.
- *
- * Analytic applications then use [CommandPublish] to send device
- * commands to individual devices.
- *
- * The benefits of this approach are:
- * * Only a single application (`IotfOrganization`) needs to know the authorization tokens.
- * * Analytic applications can be added and removed at any time without disrupting existing running applications.
- *
  * # Connectivity using MQTT
  * 
  * A Streams application using this toolkit connects to
