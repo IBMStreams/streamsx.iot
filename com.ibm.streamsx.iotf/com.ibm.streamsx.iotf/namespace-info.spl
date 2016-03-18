@@ -51,6 +51,27 @@
  * with the input stream type of [DeviceCmd]. The `jsonString` attribute contains
  * the application specific portion of the command represented as serialized JSON.
  * 
+ * # Recommended Deployment
+ * 
+ * Use of publish-subscribe is recommended to allow analytic applications
+ * to be developed and deployed independent of the connectivity to
+ * IBM Watson IoT Platform.
+ *
+ * This is achieved by submitting the [com.ibm.streamsx.iotf.apps::IotfOrganization] application to IBM Streams. This is the only job that then connects
+ * to the IoT platform, it publishes streams that contain device
+ * events, commands and status updates.
+ *
+ * Analytic applications then use
+ * [EventsSubscribe], [CommandsSubscribe] and [StatusesSubscribe] to
+ * subscribe to streams to be analyzed.
+ *
+ * Analytic applications then use [CommandPublish] to send device
+ * commands to individual devices.
+ *
+ * The benefits of this approach are:
+ * * Only a single application (`IotfOrganization`) needs to know the authorization tokens.
+ * * Analytic applications can be added and removed at any time without disrupting existing running applications.
+ *
  * # Connectivity using MQTT
  * 
  * A Streams application using this toolkit connects to

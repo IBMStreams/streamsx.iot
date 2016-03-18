@@ -27,10 +27,10 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * Subscribe to device events published under
  * the streams topic `iotf/device/events`.
  *
- * This matches the streams topic published by
+ * This matches the stream topic published by
  * [com.ibm.streamsx.iotf.apps::IotfOrganization].
  *
- * Filtering on `deviceType` and `eventid` is supported,
+ * Filtering on `deviceType` and `eventId` is supported,
  * defaulting to no filtering.
  * 
  * @param deviceTypes Device types to include. Defaults
@@ -62,6 +62,85 @@ public composite EventsSubscribe(output stream<DeviceEvent> Events)
            ((size($deviceTypes) == 0) || (deviceType in $deviceTypes))
            &&
            ((size($eventIds) == 0) || (eventId in $eventIds));
+     }
+}
+
+/**
+ * Subscribe to device commands published under
+ * the streams topic `iotf/device/commands/sent`.
+ *
+ * This matches the stream topic published by
+ * [com.ibm.streamsx.iotf.apps::IotfOrganization].
+ *
+ * Filtering on `deviceType` and `cmdId` is supported,
+ * defaulting to no filtering.
+ * 
+ * @param deviceTypes Device types to include. Defaults
+ * to an empty list meaning all device types.
+ * @param cmdIds Command identifiers (types) to include. Defaults
+ * to an empty list meaning all command identifiers.
+ * 
+ * @output Commands Device commands sent to devices
+ */
+public composite CommandsSubscribe(output stream<DeviceCmd> Commands)
+{
+   param
+     expression<list<rstring>> $deviceTypes : [];
+     expression<list<rstring>> $cmdIds : [];
+
+   graph
+     stream<DeviceCmd> CommandsAll = Subscribe()
+     {
+        param
+          topic: "iotf/device/commands/sent";
+          streamType: DeviceCmd;
+     }
+
+     // Currently we are filtering on the subscribe side
+     // filter will be pushed to the publish side in the future
+     stream<DeviceCmd> Commands = Filter(CommandsAll) {
+       param
+        filter:
+           ((size($deviceTypes) == 0) || (deviceType in $deviceTypes))
+           &&
+           ((size($cmdIds) == 0) || (cmdId in $cmdIds));
+     }
+}
+
+/**
+ * Subscribe to device status updates published under
+ * the streams topic `iotf/device/statuses`.
+ *
+ * This matches the stream topic published by
+ * [com.ibm.streamsx.iotf.apps::IotfOrganization].
+ *
+ * Filtering on `deviceType` is supported,
+ * defaulting to no filtering.
+ * 
+ * @param deviceTypes Device types to include. Defaults
+ * to an empty list meaning all device types.
+ * 
+ * @output Statuses Device status updates
+ */
+public composite StatusesSubscribe(output stream<DeviceCmd> Statuses)
+{
+   param
+     expression<list<rstring>> $deviceTypes : [];
+
+   graph
+     stream<DeviceStatus> StatusesAll = Subscribe()
+     {
+        param
+          topic: "iotf/device/statuses";
+          streamType: DeviceStatus;
+     }
+
+     // Currently we are filtering on the subscribe side
+     // filter will be pushed to the publish side in the future
+     stream<DeviceStatus> Statuses = Filter(StatusesAll) {
+       param
+        filter:
+           ((size($deviceTypes) == 0) || (deviceType in $deviceTypes));
      }
 }
 
