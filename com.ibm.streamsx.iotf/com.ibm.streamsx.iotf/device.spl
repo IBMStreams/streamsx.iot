@@ -39,7 +39,7 @@ public rstring getIotfUri(rstring orgId, boolean encrypted) {
  * @param deviceType Subscribe to device events from devices of a specific type. Defaults to `+` for all device types.
  * @param deviceId Subscribe to device events from a specific device. Defaults to `+` for all devices with the specified type.
  * @param eventId Subscribe to device events for a specified identifier. Defaults to `+` for all event identifiers.
- * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencryted , defaults to `true`.
+ * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to `true`.
  * 
  * @output Events Stream of device events of type [DeviceEvent].
  */
@@ -112,7 +112,7 @@ public composite Raw2DeviceEvent(input RawEvents; output Events) {
  * @param appId application identifier for the MQTT client identifier, defaults to *jobId*`_mon`.
  * @param deviceType Subscribe to device events from devices of a specific type. Defaults to `+` for all device types.
  * @param deviceId Subscribe to device events from a specific device. Defaults to `+` for all devices with the specified type.
- * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencryted , defaults to `true`.
+ * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to `true`.
  * 
  * @output Statuses Stream of device status events of type [DeviceStatus].
  */
@@ -171,7 +171,7 @@ public composite DeviceStatuses(output stream<DeviceStatus> Statuses)
  * @param deviceType Subscribe to device commands for devices of a specific type. Defaults to `+` for all device types.
  * @param deviceId Subscribe to device commands for a specific device. Defaults to `+` for all devices with the specified type.
  * @param cmdId Subscribe to device commands for a specified identifier. Defaults to `+` for all command identifiers.
- * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencryted , defaults to `true`.
+ * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to `true`.
  * 
  * @output Commands Stream of device commands of type [DeviceCmd].
  */
@@ -271,7 +271,7 @@ composite DeviceTopic(output Messages)
  * @param apiKey Application key.
  * @param apiToken Application authorization token.
  * @param appId application identifier for the MQTT client identifier, defaults to *jobId*`_snd`.
- * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencryted , defaults to `true`.
+ * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to `true`.
  * 
  * @input Commands Stream of device commands of type [DeviceCmd].
  */

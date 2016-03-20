@@ -11,7 +11,7 @@ namespace com.ibm.streamsx.iotf;
  * @param orgId Organization identifier.
  * @param apiKey Application key.
  * @param apiToken Application authorization token.
- * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencryted , defaults to `true`.
+ * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to `true`.
  * 
  * @output Statuses Device status events
  * @output Events Device events
