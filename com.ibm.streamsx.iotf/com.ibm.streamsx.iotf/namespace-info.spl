@@ -7,7 +7,7 @@
  * Connectivity with IBM Watson IoT Platform.
  * 
  * # IBM Watson IoT Platform
- * The IBM [https://internetofthings.ibmcloud.com/|IBM Watson Iot Platform] service lets
+ * The [https://internetofthings.ibmcloud.com/|IBM Watson Iot Platform] service lets
  * your IBM Streams applications communicate with and consume data
  * collected by your connected devices, sensors, and gateways.
  * 
@@ -37,6 +37,15 @@
  * [SendCommandToDevice]. In this case the application must supply
  * the authorization tokens to connect to IBM Watson IoT Platform,
  * typically through submission time parameters.
+ *
+ * # Connectivity
+ *
+ * Connectivty to
+ * [https://docs.internetofthings.ibmcloud.com/applications/mqtt.html|IBM Watson IoT Plaform is through MQTT].
+ * By default operators and applications in this toolkit use encrypted
+ * connections are used through port `8883` with TLSv1.2. Operator
+ * parameter or submission time parameter `encrypted` can be set to
+ * `false` to use unencrypted connections through port 1883.
  *
  * # Device Events
  * Devices publish device events that an SPL application can subscribe to
