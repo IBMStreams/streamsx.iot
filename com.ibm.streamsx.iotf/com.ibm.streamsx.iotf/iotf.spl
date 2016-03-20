@@ -11,6 +11,7 @@ namespace com.ibm.streamsx.iotf;
  * @param orgId Organization identifier.
  * @param apiKey Application key.
  * @param apiToken Application authorization token.
+ * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencryted , defaults to `true`.
  * 
  * @output Statuses Device status events
  * @output Events Device events
@@ -22,6 +23,7 @@ public composite AllDevices(output stream<DeviceStatus> Statuses, stream<DeviceE
         expression<rstring> $orgId;
         expression<rstring> $apiKey;
         expression<rstring> $apiToken;
+        expression<boolean> $encrypted : true;
 
 	graph
 		
@@ -31,6 +33,7 @@ public composite AllDevices(output stream<DeviceStatus> Statuses, stream<DeviceE
 				orgId : $orgId ;
 				apiKey : $apiKey ;
 				apiToken : $apiToken ;
+                                encrypted: $encrypted;
 		}
 
 		stream<DeviceEvent> Events = DeviceEvents()
@@ -39,6 +42,7 @@ public composite AllDevices(output stream<DeviceStatus> Statuses, stream<DeviceE
 				orgId : $orgId ;
 				apiKey : $apiKey ;
 				apiToken : $apiToken ;
+                                encrypted: $encrypted;
 		}
 
 		stream<DeviceCmd> Commands = DeviceCommands()
@@ -47,6 +51,7 @@ public composite AllDevices(output stream<DeviceStatus> Statuses, stream<DeviceE
 				orgId : $orgId ;
 				apiKey : $apiKey ;
 				apiToken : $apiToken ;
+                                encrypted: $encrypted;
 		}
 }
 
