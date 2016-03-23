@@ -22,7 +22,7 @@
 <div class="body refbody">
 <div class="section">
 <p class="p">
-<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iotf Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.3.0.commit_9b10309</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf</a> &gt; device.spl</p>
+<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iotf Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.4.0.commit_6f034d2</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf</a> &gt; device.spl</p>
 
 </div>
 
@@ -100,7 +100,10 @@
 <li class="sli"><strong class="ph b">deviceId</strong>: Subscribe to device events from a specific device. Defaults to <tt class="ph tt">+</tt> for all devices with the specified type.
 </li>
 
-<li class="sli"><strong class="ph b">eventId</strong>: Subscribe to device events for a specified identifier. Defaults to <tt class="ph tt">+</tt> for all event identifiers. 
+<li class="sli"><strong class="ph b">eventId</strong>: Subscribe to device events for a specified identifier. Defaults to <tt class="ph tt">+</tt> for all event identifiers.
+</li>
+
+<li class="sli"><strong class="ph b">encrypted</strong>: True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to <tt class="ph tt">true</tt>. 
 </li>
 
 </ul>
@@ -163,7 +166,10 @@
 <li class="sli"><strong class="ph b">deviceType</strong>: Subscribe to device events from devices of a specific type. Defaults to <tt class="ph tt">+</tt> for all device types.
 </li>
 
-<li class="sli"><strong class="ph b">deviceId</strong>: Subscribe to device events from a specific device. Defaults to <tt class="ph tt">+</tt> for all devices with the specified type. 
+<li class="sli"><strong class="ph b">deviceId</strong>: Subscribe to device events from a specific device. Defaults to <tt class="ph tt">+</tt> for all devices with the specified type.
+</li>
+
+<li class="sli"><strong class="ph b">encrypted</strong>: True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to <tt class="ph tt">true</tt>. 
 </li>
 
 </ul>
@@ -229,7 +235,10 @@
 <li class="sli"><strong class="ph b">deviceId</strong>: Subscribe to device commands for a specific device. Defaults to <tt class="ph tt">+</tt> for all devices with the specified type.
 </li>
 
-<li class="sli"><strong class="ph b">cmdId</strong>: Subscribe to device commands for a specified identifier. Defaults to <tt class="ph tt">+</tt> for all command identifiers. 
+<li class="sli"><strong class="ph b">cmdId</strong>: Subscribe to device commands for a specified identifier. Defaults to <tt class="ph tt">+</tt> for all command identifiers.
+</li>
+
+<li class="sli"><strong class="ph b">encrypted</strong>: True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to <tt class="ph tt">true</tt>. 
 </li>
 
 </ul>
@@ -280,13 +289,16 @@
 <li class="sli"><strong class="ph b">orgId</strong>: Organization identifier.
 </li>
 
-<li class="sli"><strong class="ph b">appId</strong>: application identifier for the MQTT client identifier, defaults to <em class="ph i">jobId</em><tt class="ph tt">_snd</tt>. 
+<li class="sli"><strong class="ph b">appId</strong>: application identifier for the MQTT client identifier, defaults to <em class="ph i">jobId</em><tt class="ph tt">_snd</tt>.
 </li>
 
 <li class="sli"><strong class="ph b">apiKey</strong>: Application key.
 </li>
 
 <li class="sli"><strong class="ph b">apiToken</strong>: Application authorization token.
+</li>
+
+<li class="sli"><strong class="ph b">encrypted</strong>: True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to <tt class="ph tt">true</tt>. 
 </li>
 
 </ul>

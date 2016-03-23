@@ -22,7 +22,7 @@
 <div class="body refbody">
 <div class="section">
 <p class="p">
-<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iotf Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.3.0.commit_9b10309</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf</a> &gt; pubsub.spl</p>
+<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iotf Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.4.0.commit_6f034d2</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf</a> &gt; pubsub.spl</p>
 
 </div>
 
@@ -53,7 +53,13 @@
 <li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$pubsub.html#spldoc_compilationunit__composite_operator__CommandPublish">CommandPublish</a></strong>: Publish an event to be sent to a device.
 </li>
 
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$pubsub.html#spldoc_compilationunit__composite_operator__CommandsSubscribe">CommandsSubscribe</a></strong>: Subscribe to device commands published under the streams topic <tt class="ph tt">iotf/device/commands/sent</tt>.
+</li>
+
 <li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$pubsub.html#spldoc_compilationunit__composite_operator__EventsSubscribe">EventsSubscribe</a></strong>: Subscribe to device events published under the streams topic <tt class="ph tt">iotf/device/events</tt>.
+</li>
+
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$pubsub.html#spldoc_compilationunit__composite_operator__StatusesSubscribe">StatusesSubscribe</a></strong>: Subscribe to device status updates published under the streams topic <tt class="ph tt">iotf/device/statuses</tt>.
 </li>
 
 </ul>
@@ -78,10 +84,10 @@
 <p class="p">Subscribe to device events published under the streams topic <tt class="ph tt">iotf/device/events</tt>.
 </p>
 
-<p class="p">This matches the streams topic published by <a class="xref" href="spl$com.ibm.streamsx.iotf.apps$IotfOrganization.html#spldoc_compilationunit__composite_operator__IotfOrganization">com.ibm.streamsx.iotf.apps::IotfOrganization</a>.
+<p class="p">This matches the stream topic published by <a class="xref" href="spl$com.ibm.streamsx.iotf.apps$IotfOrganization.html#spldoc_compilationunit__composite_operator__IotfOrganization">com.ibm.streamsx.iotf.apps::IotfOrganization</a>.
 </p>
 
-<p class="p">Filtering on <tt class="ph tt">deviceType</tt> and <tt class="ph tt">eventid</tt> is supported, defaulting to no filtering.
+<p class="p">Filtering on <tt class="ph tt">deviceType</tt> and <tt class="ph tt">eventId</tt> is supported, defaulting to no filtering.
 </p>
 
 </div>
@@ -118,6 +124,105 @@
 
 <div class="section splgraph">
   <embed class="image" src="../../image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf$EventsSubscribe.svg" width="248" height="109"/>
+</div>
+
+<div class="section" id="spldoc_compilationunit__composite_operator__CommandsSubscribe"><h2 class="title sectiontitle splpart">composite CommandsSubscribe(output Commands)</h2>
+  
+</div>
+
+<div class="section">
+
+<p class="p">Subscribe to device commands published under the streams topic <tt class="ph tt">iotf/device/commands/sent</tt>.
+</p>
+
+<p class="p">This matches the stream topic published by <a class="xref" href="spl$com.ibm.streamsx.iotf.apps$IotfOrganization.html#spldoc_compilationunit__composite_operator__IotfOrganization">com.ibm.streamsx.iotf.apps::IotfOrganization</a>.
+</p>
+
+<p class="p">Filtering on <tt class="ph tt">deviceType</tt> and <tt class="ph tt">cmdId</tt> is supported, defaulting to no filtering.
+</p>
+
+</div>
+
+<div class="section"><h2 class="title sectiontitle">Parameters</h2>
+
+<ul class="sl simple">
+<li class="sli"><strong class="ph b">deviceTypes</strong>: Device types to include. Defaults to an empty list meaning all device types.
+</li>
+
+<li class="sli"><strong class="ph b">cmdIds</strong>: Command identifiers (types) to include. Defaults to an empty list meaning all command identifiers. 
+</li>
+
+</ul>
+
+</div>
+
+<div class="section">
+</div>
+
+<div class="section"><h2 class="title sectiontitle">Output Ports</h2>
+
+<ul class="sl simple">
+<li class="sli"><strong class="ph b">Commands</strong>: Device commands sent to devices
+</li>
+
+</ul>
+
+</div>
+
+<div class="section"><h2 class="title sectiontitle splhead-2">Composite Operator Graph</h2>
+  
+</div>
+
+<div class="section splgraph">
+  <embed class="image" src="../../image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf$CommandsSubscribe.svg" width="248" height="109"/>
+</div>
+
+<div class="section" id="spldoc_compilationunit__composite_operator__StatusesSubscribe"><h2 class="title sectiontitle splpart">composite StatusesSubscribe(output Statuses)</h2>
+  
+</div>
+
+<div class="section">
+
+<p class="p">Subscribe to device status updates published under the streams topic <tt class="ph tt">iotf/device/statuses</tt>.
+</p>
+
+<p class="p">This matches the stream topic published by <a class="xref" href="spl$com.ibm.streamsx.iotf.apps$IotfOrganization.html#spldoc_compilationunit__composite_operator__IotfOrganization">com.ibm.streamsx.iotf.apps::IotfOrganization</a>.
+</p>
+
+<p class="p">Filtering on <tt class="ph tt">deviceType</tt> is supported, defaulting to no filtering.
+</p>
+
+</div>
+
+<div class="section"><h2 class="title sectiontitle">Parameters</h2>
+
+<ul class="sl simple">
+<li class="sli"><strong class="ph b">deviceTypes</strong>: Device types to include. Defaults to an empty list meaning all device types. 
+</li>
+
+</ul>
+
+</div>
+
+<div class="section">
+</div>
+
+<div class="section"><h2 class="title sectiontitle">Output Ports</h2>
+
+<ul class="sl simple">
+<li class="sli"><strong class="ph b">Statuses</strong>: Device status updates
+</li>
+
+</ul>
+
+</div>
+
+<div class="section"><h2 class="title sectiontitle splhead-2">Composite Operator Graph</h2>
+  
+</div>
+
+<div class="section splgraph">
+  <embed class="image" src="../../image/tk$com.ibm.streamsx.iotf/op$com.ibm.streamsx.iotf$StatusesSubscribe.svg" width="248" height="109"/>
 </div>
 
 <div class="section" id="spldoc_compilationunit__composite_operator__CommandPublish"><h2 class="title sectiontitle splpart">composite CommandPublish(input Commands)</h2>

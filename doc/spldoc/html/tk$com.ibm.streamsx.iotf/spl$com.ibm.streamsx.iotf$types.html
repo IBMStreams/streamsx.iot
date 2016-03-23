@@ -22,7 +22,7 @@
 <div class="body refbody">
 <div class="section">
 <p class="p">
-<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iotf Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.3.0.commit_9b10309</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf</a> &gt; types.spl</p>
+<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iotf Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.4.0.commit_6f034d2</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf</a> &gt; types.spl</p>
 
 </div>
 
@@ -41,6 +41,9 @@
 </li>
 
 <li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceCmd">DeviceCmd</a></strong>: A device command.
+</li>
+
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceCmdId">DeviceCmdId</a></strong>: A device with command identifier.
 </li>
 
 <li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceEvent">DeviceEvent</a></strong>: A device event.
@@ -213,6 +216,32 @@
 
 </div>
 
+<div class="section" id="spldoc_compilationunit__type__DeviceCmdId"><h2 class="title sectiontitle splpart">DeviceCmdId</h2>
+  
+</div>
+<div class="section">
+
+<div class="p">A device with command identifier.
+<ul class="ul">
+<li class="li"> <tt class="ph tt">deviceType</tt> - Type of device the command is for.</li>
+
+<li class="li"> <tt class="ph tt">deviceId</tt> - Identifier of device the command is for.</li>
+
+<li class="li"> <tt class="ph tt">cmdId</tt> - Command identifier. </li>
+
+</ul>
+
+</div>
+
+</div>
+
+<div class="section">
+   <p class="p">
+<tt class="ph tt">DeviceCmdId = Device, tuple&lt;rstring cmdId&gt;;</tt>
+   </p>
+
+</div>
+
 <div class="section" id="spldoc_compilationunit__type__DeviceCmd"><h2 class="title sectiontitle splpart">DeviceCmd</h2>
   
 </div>
@@ -236,7 +265,7 @@
 
 <div class="section">
    <p class="p">
-<tt class="ph tt">DeviceCmd = Device, tuple&lt;rstring cmdId&gt;, Json;</tt>
+<tt class="ph tt">DeviceCmd = DeviceCmdId, Json;</tt>
    </p>
 
 </div>

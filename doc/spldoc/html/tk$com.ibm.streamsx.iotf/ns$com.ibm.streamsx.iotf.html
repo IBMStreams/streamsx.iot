@@ -22,7 +22,7 @@
 <div class="body refbody">
 <div class="section">
 <p class="p">
-<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iotf Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.3.0.commit_9b10309</a> &gt; com.ibm.streamsx.iotf</p>
+<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iotf Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.4.0.commit_6f034d2</a> &gt; com.ibm.streamsx.iotf</p>
 
 </div>
 
@@ -36,7 +36,51 @@
 <div class="section"><h2 class="title sectiontitle">IBM Watson IoT Platform
 </h2>
 
-<p class="p">The IBM <a class="xref" href="https://internetofthings.ibmcloud.com/">IBM Watson Iot Platform</a> service lets your IBM Streams applications communicate with and consume data collected by your connected devices, sensors, and gateways.
+<p class="p">The <a class="xref" href="https://internetofthings.ibmcloud.com/">IBM Watson Iot Platform</a> service lets your IBM Streams applications communicate with and consume data collected by your connected devices, sensors, and gateways.
+</p>
+
+</div>
+
+<div class="section"><h2 class="title sectiontitle">Recommended Deployment
+</h2>
+
+<p class="p">Use of publish-subscribe is recommended to allow analytic applications to be developed and deployed independent of the connectivity to IBM Watson IoT Platform.
+</p>
+
+<p class="p">This is achieved by submitting the <a class="xref" href="spl$com.ibm.streamsx.iotf.apps$IotfOrganization.html#spldoc_compilationunit__composite_operator__IotfOrganization">com.ibm.streamsx.iotf.apps::IotfOrganization</a> application to IBM Streams. This is the only job that connects to IBM Watson IoT platform, it publishes streams that contain device events, commands and status updates.
+</p>
+
+<p class="p">Analytic applications use <a class="xref" href="spl$com.ibm.streamsx.iotf$pubsub.html#spldoc_compilationunit__composite_operator__EventsSubscribe">EventsSubscribe</a>, <a class="xref" href="spl$com.ibm.streamsx.iotf$pubsub.html#spldoc_compilationunit__composite_operator__CommandsSubscribe">CommandsSubscribe</a> and <a class="xref" href="spl$com.ibm.streamsx.iotf$pubsub.html#spldoc_compilationunit__composite_operator__StatusesSubscribe">StatusesSubscribe</a> to subscribe to streams to be analyzed.
+</p>
+
+<p class="p">Analytic applications use <a class="xref" href="spl$com.ibm.streamsx.iotf$pubsub.html#spldoc_compilationunit__composite_operator__CommandPublish">CommandPublish</a> to send device commands to individual devices.
+</p>
+
+<div class="p">The benefits of this approach are:
+<ul class="ul">
+<li class="li"> Only a single application (<tt class="ph tt">IotfOrganization</tt>) needs to know the authorization tokens.</li>
+
+<li class="li"> Analytic applications can be added and removed at any time without disrupting existing running applications.</li>
+
+</ul>
+
+</div>
+
+<p class="p">Applications may also connect to IBM Watson IoT Platform directly using operators <a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__DeviceEvents">DeviceEvents</a>, <a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__DeviceCommands">DeviceCommands</a>, <a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__DeviceStatuses">DeviceStatuses</a> and <a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__SendCommandToDevice">SendCommandToDevice</a>. In this case the application must supply the authorization tokens to connect to IBM Watson IoT Platform, typically through submission time parameters.
+</p>
+
+</div>
+
+<div class="section"><h2 class="title sectiontitle">Connectivity
+</h2>
+
+<p class="p">Connectivty to IBM Watson IoT Platform is through <a class="xref" href="https://docs.internetofthings.ibmcloud.com/applications/mqtt.html">MQTT</a>. By default operators and applications in this toolkit use encrypted connections through port <tt class="ph tt">8883</tt> with TLSv1.2. Operator parameter or submission time parameter <tt class="ph tt">encrypted</tt> can be set to <tt class="ph tt">false</tt> to use unencrypted connections through port <tt class="ph tt">1883</tt>.
+</p>
+
+<p class="p"><strong class="ph b">At this point SSL is not supported since the MQTT operators do not yet support TLSv1.2. Use of the operators must set <tt class="ph tt">encrypted</tt> to <tt class="ph tt">false</tt> to see device events and send commands.</strong>
+</p>
+
+<p class="p"><strong class="ph b">The applications (<tt class="ph tt">IotfOrganization</tt> and <tt class="ph tt">SimpleAllDevices</tt>) are defaulted to unecrypted connections to allow them to work out of the box. The default will revert to encrypted in future pre-release.</strong>
 </p>
 
 </div>
@@ -44,7 +88,7 @@
 <div class="section"><h2 class="title sectiontitle">Device Events
 </h2>
 
-<p class="p">Devices publish device events that an SPL application can subscribe to using <a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__DeviceEvents">DeviceEvents</a>. The default is to subscribe to all event identifiers from all device types and ids. The operator is parameterized to allow only subscribing to a specific event id (which is really the type of the event), a specific device type and/or a specific device using its id.
+<p class="p">Devices publish device events that an SPL application can subscribe to using <a class="xref" href="spl$com.ibm.streamsx.iotf$pubsub.html#spldoc_compilationunit__composite_operator__EventsSubscribe">EventsSubscribe</a> or <a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__DeviceEvents">DeviceEvents</a>. The default is to subscribe to all event identifiers from all device types and ids. The operator is parameterized to allow only subscribing to a specific event id (which is really the type of the event), a specific device type and/or a specific device using its id.
 </p>
 
 <p class="p">The assumption is made that the format of the event is JSON and the resulting stream is of type <a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceEvent">DeviceEvent</a>. The <tt class="ph tt">jsonString</tt> parameter contains the event payload in serialized JSON. The event payload is a JSON object using <a class="xref" href="https://docs.internetofthings.ibmcloud.com/messaging/payload.html">event format specification</a>, so that the application event data is the value of the <tt class="ph tt">d</tt> key.
@@ -58,7 +102,7 @@
 <div class="section"><h2 class="title sectiontitle">Device Status
 </h2>
 
-<p class="p">Device status events, such as connect or disconnect, are subscribed to using <a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__DeviceStatuses">DeviceStatuses</a> which produces a stream of type <a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceStatus">DeviceStatus</a>.
+<p class="p">Device status events, such as connect or disconnect, are subscribed to using <a class="xref" href="spl$com.ibm.streamsx.iotf$pubsub.html#spldoc_compilationunit__composite_operator__StatusesSubscribe">StatusesSubscribe</a> or <a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__DeviceStatuses">DeviceStatuses</a> which produce a stream of type <a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceStatus">DeviceStatus</a>.
 </p>
 
 </div>
@@ -66,10 +110,13 @@
 <div class="section"><h2 class="title sectiontitle">Device Commands
 </h2>
 
-<p class="p">Devices can be sent commands, an SPL application can subscribe to commands being sent to devices using <a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__DeviceCommands">DeviceCommands</a>.  The default is to subscribe to all commands identifiers for all device types and ids. The operator is parameterized to allow only subscribing to a specific command id (which is really the type of the command), a specific device type and/or a specific device using its id. 
+<p class="p">Devices can be sent commands, an SPL application can subscribe to commands being sent to devices using <a class="xref" href="spl$com.ibm.streamsx.iotf$pubsub.html#spldoc_compilationunit__composite_operator__CommandsSubscribe">CommandsSubscribe</a> or <a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__DeviceCommands">DeviceCommands</a>.  The default is to subscribe to all commands identifiers for all device types and ids. The operator is parameterized to allow only subscribing to a specific command id (which is really the type of the command), a specific device type and/or a specific device using its id (<tt class="ph tt">DeviceCommands</tt> only). 
 </p>
 
-<p class="p">An SPL application can send a command to a specific device using <a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__SendCommandToDevice">SendCommandToDevice</a> with the input stream type of <a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceCmd">DeviceCmd</a>. The <tt class="ph tt">jsonString</tt> attribute contains the application specific portion of the command represented as serialized JSON.
+<p class="p">An SPL application can send a command to a specific device using <a class="xref" href="spl$com.ibm.streamsx.iotf$pubsub.html#spldoc_compilationunit__composite_operator__CommandPublish">CommandPublish</a> or <a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__SendCommandToDevice">SendCommandToDevice</a> with the input stream type of <a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceCmd">DeviceCmd</a>. The <tt class="ph tt">jsonString</tt> attribute contains the application specific portion of the command represented as serialized JSON.
+</p>
+
+<p class="p">Applications can use <a class="xref" href="spl$com.ibm.streamsx.iotf$command.html#spldoc_compilationunit__composite_operator__CommandTupleToPayload">CommandTupleToPayload</a> to convert an SPL tuple representation of the command payload to JSON.
 </p>
 
 </div>
@@ -102,6 +149,12 @@
 <li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$pubsub.html#spldoc_compilationunit__composite_operator__CommandPublish">CommandPublish</a></strong>: Publish an event to be sent to a device.
 </li>
 
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$command.html#spldoc_compilationunit__composite_operator__CommandTupleToPayload">CommandTupleToPayload</a></strong>: Convert tuples to device commands.
+</li>
+
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$pubsub.html#spldoc_compilationunit__composite_operator__CommandsSubscribe">CommandsSubscribe</a></strong>: Subscribe to device commands published under the streams topic <tt class="ph tt">iotf/device/commands/sent</tt>.
+</li>
+
 <li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__DeviceCommands">DeviceCommands</a></strong>: Subscribe to device commands for an IBM Watson IoT Platform organization.
 </li>
 
@@ -120,6 +173,9 @@
 <li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$device.html#spldoc_compilationunit__composite_operator__SendCommandToDevice">SendCommandToDevice</a></strong>: Send commands to devices registered for an IBM Watson IoT Platform organization.
 </li>
 
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$pubsub.html#spldoc_compilationunit__composite_operator__StatusesSubscribe">StatusesSubscribe</a></strong>: Subscribe to device status updates published under the streams topic <tt class="ph tt">iotf/device/statuses</tt>.
+</li>
+
 </ul>
 
 </div>
@@ -131,6 +187,9 @@
 </li>
 
 <li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceCmd">DeviceCmd</a></strong>: A device command.
+</li>
+
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceCmdId">DeviceCmdId</a></strong>: A device with command identifier.
 </li>
 
 <li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf$types.html#spldoc_compilationunit__type__DeviceEvent">DeviceEvent</a></strong>: A device event.
