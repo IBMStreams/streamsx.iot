@@ -47,6 +47,15 @@
  * parameter or submission time parameter `encrypted` can be set to
  * `false` to use unencrypted connections through port `1883`.
  *
+ * **At this point SSL is not supported since the MQTT operators
+ * do not yet support TLSv1.2. Use of the operators must set
+ * `encrypted` to `false` to see device events and send commands.**
+ *
+ * **The applications (`IotfOrganization` and `SimpleAllDevices`)
+ * are defaulted to unecrypted connections
+ * to allow them to work out of the box. The default will revert
+ * to encrypted in future pre-release.**
+ *
  * # Device Events
  * Devices publish device events that an SPL application can subscribe to
  * using [EventsSubscribe] or [DeviceEvents]. The default is to subscribe to all event identifiers

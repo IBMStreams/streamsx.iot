@@ -49,6 +49,6 @@ graph
 				orgId : getSubmissionTimeValue("orgId");
 				apiKey : getSubmissionTimeValue("apiKey");
 				apiToken : getSubmissionTimeValue("apiToken");
-				encrypted : (boolean) getSubmissionTimeValue("encrypted", "true");
+				encrypted : (boolean) getSubmissionTimeValue("encrypted", "false");
 		}
 }
