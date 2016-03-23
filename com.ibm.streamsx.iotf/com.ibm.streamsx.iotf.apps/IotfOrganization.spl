@@ -52,6 +52,7 @@ public composite IotfOrganization {
     expression<rstring> $orgId : getSubmissionTimeValue("orgId");
     expression<rstring> $apiKey : getSubmissionTimeValue("apiKey");
     expression<rstring> $apiToken : getSubmissionTimeValue("apiToken");
+    expression<boolean> $encrypted : (boolean) getSubmissionTimeValue("encrypted", "true");
 
 graph
         (stream<DeviceStatus> Statuses; stream<DeviceEvent> Events; stream<DeviceCmd> Commands) as IotfDevices = AllDevices()
@@ -60,6 +61,7 @@ graph
 				orgId : $orgId;
 				apiKey : $apiKey;
 				apiToken : $apiToken;
+                                encrypted : $encrypted;
 		}
 
   () as PublishedEvents = Publish(Events) {
@@ -82,5 +84,6 @@ graph
       orgId : $orgId;
       apiKey : $apiKey;
       apiToken : $apiToken;
+      encrypted : $encrypted;
   }
 }
