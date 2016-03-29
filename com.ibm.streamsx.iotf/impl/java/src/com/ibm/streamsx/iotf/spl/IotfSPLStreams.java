@@ -1,3 +1,7 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2016 
+ */
 package com.ibm.streamsx.iotf.spl;
 
 import java.util.ArrayList;
