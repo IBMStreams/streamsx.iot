@@ -74,7 +74,7 @@
  * of type [DeviceEvent] and produces a stream of type [DeviceEventTs]
  * augmented with a `dataType` tuple type specified by the application.
  * Since the application event data might be specific to
- * the type of the `eventId` or even the combination of `deviceType`
+ * the type of the `eventId` or even the combination of `typeId`
  * and `eventId` an application may need to use a `Split` operator
  * between the [DeviceEvents] and multiple [DeviceEventExtractData]
  * invocations. An example of its use is in the

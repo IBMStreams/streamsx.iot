@@ -44,7 +44,7 @@ public class IotfStreams {
         
         SPLStream splEvents = IotfSPLStreams.eventsSubscribe(te, eventId);      
         TStream<DeviceEvent> events = splEvents.transform(e -> DeviceEvent.newDeviceEvent(
-                    e.getString("deviceType"),
+                    e.getString("typeId"),
                     e.getString("deviceId"), 
                     e.getString("eventId"),
                     e.getString("jsonString")));

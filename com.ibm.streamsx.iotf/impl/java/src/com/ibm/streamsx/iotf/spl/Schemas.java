@@ -19,7 +19,7 @@ public class Schemas {
      * Matches {@code com.ibm.streamsx.iotf::Device}. 
      */
     public static final StreamSchema DEVICE = 
-            getStreamSchema("tuple<rstring deviceType, rstring deviceId>");
+            getStreamSchema("tuple<rstring typeId, rstring deviceId>");
     
     /**
      * A device event.
