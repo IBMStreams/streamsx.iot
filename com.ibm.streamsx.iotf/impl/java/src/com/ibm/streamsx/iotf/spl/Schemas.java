@@ -5,6 +5,10 @@
 package com.ibm.streamsx.iotf.spl;
 
 import static com.ibm.streams.operator.Type.Factory.getStreamSchema;
+import static com.ibm.streams.operator.Type.MetaType.RSTRING;
+import static com.ibm.streamsx.iotf.DeviceCmd.CMD_ID;
+import static com.ibm.streamsx.iotf.DeviceEvent.EVENT_ID;
+import static com.ibm.streamsx.topology.spl.SPLSchemas.JSON;
 
 import com.ibm.streams.operator.StreamSchema;
 
@@ -26,6 +30,13 @@ public class Schemas {
      * Matches {@code com.ibm.streamsx.iotf::DeviceEvent}. 
      */
     public static final StreamSchema DEVICE_EVENT = 
-            DEVICE.extendBySchemas(getStreamSchema("tuple<rstring eventId, rstring jsonString>"));
+            DEVICE.extend(RSTRING.getLanguageType(), EVENT_ID).extendBySchemas(JSON);
+
+    /**
+     * A device command.
+     * Matches {@code com.ibm.streamsx.iotf::DeviceCmd}. 
+     */
+    public static final StreamSchema DEVICE_CMD = 
+            DEVICE.extend(RSTRING.getLanguageType(), CMD_ID).extendBySchemas(JSON);
 
 }
