@@ -10,7 +10,7 @@ import com.ibm.streamsx.topology.TopologyElement;
 import com.ibm.streamsx.topology.spl.SPLStream;
 
 /**
- * IBM Watson IoT Platform SPL streams.
+ * IBM Watson IoT Platform streams.
  * 
  * These streams using the micro-service model promoted
  * by the {@code com.ibm.streamsx.iotf} toolkit. In order to
@@ -20,6 +20,8 @@ import com.ibm.streamsx.topology.spl.SPLStream;
  *
  */
 public class IotfStreams {
+    
+    private IotfStreams() {}
     
     /**
      * Subscribe to events as {@code DeviceEvent} instances.

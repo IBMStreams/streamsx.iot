@@ -27,6 +27,8 @@ import com.ibm.streamsx.topology.spl.SPLStream;
  */
 public class IotfSPLStreams {
     
+    private IotfSPLStreams() {}
+    
     /**
      * Subscribe to events as SPL tuples.
      * 
