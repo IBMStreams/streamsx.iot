@@ -10,6 +10,9 @@ import java.io.Serializable;
 import com.ibm.json.java.JSON;
 import com.ibm.json.java.JSONObject;
 
+/**
+ * A device event.
+ */
 public class DeviceEvent implements Serializable {
     private static final long serialVersionUID = 1L;
     
