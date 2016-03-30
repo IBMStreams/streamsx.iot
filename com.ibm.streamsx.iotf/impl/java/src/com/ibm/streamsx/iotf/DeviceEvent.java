@@ -29,14 +29,14 @@ public class DeviceEvent implements Serializable {
         this.payload = (JSONObject) data.get("d");
         
     }
-    public static DeviceEvent newDeviceEvent(String deviceType, String deviceId, String eventId, String serializedData) {      
+    public static DeviceEvent newDeviceEvent(String typeId, String deviceId, String eventId, String serializedData) {      
         JSONObject payload;
         try {
             payload = (JSONObject) JSON.parse(serializedData);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }        
-        return new DeviceEvent(new Device(deviceType, deviceId), eventId, payload);       
+        return new DeviceEvent(new Device(typeId, deviceId), eventId, payload);       
     }
     public static DeviceEvent newDeviceEvent(Device device, String eventId, String serializedPayload) throws IOException {      
         JSONObject payload = (JSONObject) JSON.parse(serializedPayload);        

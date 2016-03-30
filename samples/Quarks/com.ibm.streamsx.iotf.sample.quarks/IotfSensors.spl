@@ -46,7 +46,7 @@ public composite IotfSensors {
    stream<SensorEvents> SensorEventsDeDup = DeDuplicate(SensorEvents) {
        param
        timeOut: 8.0;
-       key: deviceType, deviceId, name;
+       key: typeId, deviceId, name;
    }
 
    stream<DeviceCmdId, tuple<WarningInfo warning>> SensorWarnings = Functor(SensorEventsDeDup) {

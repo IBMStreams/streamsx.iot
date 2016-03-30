@@ -30,10 +30,10 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * This matches the stream topic published by
  * [com.ibm.streamsx.iotf.apps::IotfOrganization].
  *
- * Filtering on `deviceType` and `eventId` is supported,
+ * Filtering on `typeId` and `eventId` is supported,
  * defaulting to no filtering.
  * 
- * @param deviceTypes Device types to include. Defaults
+ * @param typeIds Device types to include. Defaults
  * to an empty list meaning all device types.
  * @param eventIds Event identifiers (types) to include. Defaults
  * to an empty list meaning all event identifiers.
@@ -43,7 +43,7 @@ use com.ibm.streamsx.topology.topic::Subscribe;
 public composite EventsSubscribe(output stream<DeviceEvent> Events)
 {
    param
-     expression<list<rstring>> $deviceTypes : [];
+     expression<list<rstring>> $typeIds : [];
      expression<list<rstring>> $eventIds : [];
 
    graph
@@ -59,7 +59,7 @@ public composite EventsSubscribe(output stream<DeviceEvent> Events)
      stream<DeviceEvent> Events = Filter(EventsAll) {
        param
         filter:
-           ((size($deviceTypes) == 0) || (deviceType in $deviceTypes))
+           ((size($typeIds) == 0) || (typeId in $typeIds))
            &&
            ((size($eventIds) == 0) || (eventId in $eventIds));
      }
@@ -72,10 +72,10 @@ public composite EventsSubscribe(output stream<DeviceEvent> Events)
  * This matches the stream topic published by
  * [com.ibm.streamsx.iotf.apps::IotfOrganization].
  *
- * Filtering on `deviceType` and `cmdId` is supported,
+ * Filtering on `typeId` and `cmdId` is supported,
  * defaulting to no filtering.
  * 
- * @param deviceTypes Device types to include. Defaults
+ * @param typeIds Device types to include. Defaults
  * to an empty list meaning all device types.
  * @param cmdIds Command identifiers (types) to include. Defaults
  * to an empty list meaning all command identifiers.
@@ -85,7 +85,7 @@ public composite EventsSubscribe(output stream<DeviceEvent> Events)
 public composite CommandsSubscribe(output stream<DeviceCmd> Commands)
 {
    param
-     expression<list<rstring>> $deviceTypes : [];
+     expression<list<rstring>> $typeIds : [];
      expression<list<rstring>> $cmdIds : [];
 
    graph
@@ -101,7 +101,7 @@ public composite CommandsSubscribe(output stream<DeviceCmd> Commands)
      stream<DeviceCmd> Commands = Filter(CommandsAll) {
        param
         filter:
-           ((size($deviceTypes) == 0) || (deviceType in $deviceTypes))
+           ((size($typeIds) == 0) || (typeId in $typeIds))
            &&
            ((size($cmdIds) == 0) || (cmdId in $cmdIds));
      }
@@ -114,10 +114,10 @@ public composite CommandsSubscribe(output stream<DeviceCmd> Commands)
  * This matches the stream topic published by
  * [com.ibm.streamsx.iotf.apps::IotfOrganization].
  *
- * Filtering on `deviceType` is supported,
+ * Filtering on `typeId` is supported,
  * defaulting to no filtering.
  * 
- * @param deviceTypes Device types to include. Defaults
+ * @param typeIds Device types to include. Defaults
  * to an empty list meaning all device types.
  * 
  * @output Statuses Device status updates
@@ -125,7 +125,7 @@ public composite CommandsSubscribe(output stream<DeviceCmd> Commands)
 public composite StatusesSubscribe(output stream<DeviceCmd> Statuses)
 {
    param
-     expression<list<rstring>> $deviceTypes : [];
+     expression<list<rstring>> $typeIds : [];
 
    graph
      stream<DeviceStatus> StatusesAll = Subscribe()
@@ -140,7 +140,7 @@ public composite StatusesSubscribe(output stream<DeviceCmd> Statuses)
      stream<DeviceStatus> Statuses = Filter(StatusesAll) {
        param
         filter:
-           ((size($deviceTypes) == 0) || (deviceType in $deviceTypes));
+           ((size($typeIds) == 0) || (typeId in $typeIds));
      }
 }
 

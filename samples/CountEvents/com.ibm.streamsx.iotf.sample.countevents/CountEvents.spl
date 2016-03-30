@@ -37,7 +37,7 @@ public composite CountEvents {
       {
           window Events: tumbling, time(minutes(1));
           param
-             groupBy: deviceType, deviceId, eventId;
+             groupBy: typeId, deviceId, eventId;
           output EventCounts:
              count = Count();
       }

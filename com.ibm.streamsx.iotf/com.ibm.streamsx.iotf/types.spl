@@ -10,14 +10,14 @@ use com.ibm.streamsx.json::Json;
 
 /**
  * A device.
- * * `deviceType` - Type of device that issued the event.
+ * * `typeId` - Type of device that issued the event.
  * * `deviceId` - Identifier of device that issued the event.
 */
-type Device = tuple<rstring deviceType, rstring deviceId>;
+type Device = tuple<rstring typeId, rstring deviceId>;
 
 /**
  * A device with event identifier.
- * * `deviceType` - Type of device that issued the event.
+ * * `typeId` - Type of device that issued the event.
  * * `deviceId` - Identifier of device that issued the event.
  * * `eventId` - Event identifier.
 */
@@ -25,7 +25,7 @@ type DeviceEventId = Device, tuple<rstring eventId>;
 
 /**
  * A device event.
- * * `deviceType` - Type of device that issued the event.
+ * * `typeId` - Type of device that issued the event.
  * * `deviceId` - Identifier of device that issued the event.
  * * `eventId` - Event identifier.
  * * `jsonString` - Event payload in JSON IBM Watson IoT Platform event format specification.
@@ -44,7 +44,7 @@ type DeviceEvent = DeviceEventId, Json;
  * used as part of the output schema definition
  * by [DeviceEventExtractData].
  *
- * * `deviceType` - Type of device that issued the event.
+ * * `typeId` - Type of device that issued the event.
  * * `deviceId` - Identifier of device that issued the event.
  * * `eventId` - Event identifier.
  * * `eventTs` - Event timestamp extracted from the `ts` key of the JSON event. `eventTs` has type `com.ibm.streamsx.datetime.TimeMillis` representing the number of milliseconds since the 1970/01/01 epoch.
@@ -53,7 +53,7 @@ type DeviceEventTs = DeviceEventId, tuple<TimeMillis eventTs>;
 
 /**
  * A device status event.
- * * `deviceType` - Type of device that issued the event.
+ * * `typeId` - Type of device that issued the event.
  * * `deviceId` - Identifier of device that issued the event.
  * * `jsonString` - Status ???
  * 
@@ -62,7 +62,7 @@ type DeviceStatus = Device, Json;
 
 /**
  * A device with command identifier.
- * * `deviceType` - Type of device the command is for.
+ * * `typeId` - Type of device the command is for.
  * * `deviceId` - Identifier of device the command is for.
  * * `cmdId` - Command identifier.
 */
@@ -71,7 +71,7 @@ type DeviceCmdId = Device, tuple<rstring cmdId>;
 
 /**
  * A device command.
- * * `deviceType` - Type of device the command is for.
+ * * `typeId` - Type of device the command is for.
  * * `deviceId` - Identifier of device the command is for.
  * * `cmdId` - Command identifier.
  * * `jsonString` - Command data.

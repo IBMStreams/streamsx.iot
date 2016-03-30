@@ -30,13 +30,13 @@ public rstring getIotfUri(rstring orgId, boolean encrypted) {
  * 
  * This operator subscribes to the MQTT topic:
  * 
- * `iot-2/type/`*deviceType*`/id/`*deviceId*`/evt/`*eventId*`/fmt/json`
+ * `iot-2/type/`*typeId*`/id/`*deviceId*`/evt/`*eventId*`/fmt/json`
  * 
  * @param orgId Organization identifier.
  * @param apiKey Application key.
  * @param apiToken Application authorization token.
  * @param appId Application identifier for the MQTT client identifier, defaults to *jobId*`_evt`.
- * @param deviceType Subscribe to device events from devices of a specific type. Defaults to `+` for all device types.
+ * @param typeId Subscribe to device events from devices of a specific type. Defaults to `+` for all device types.
  * @param deviceId Subscribe to device events from a specific device. Defaults to `+` for all devices with the specified type.
  * @param eventId Subscribe to device events for a specified identifier. Defaults to `+` for all event identifiers.
  * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to `true`.
@@ -52,7 +52,7 @@ public composite DeviceEvents(output stream<DeviceEvent> Events)
         expression<rstring> $appId : (rstring) jobID() +"_evt";
         
         
-        expression<rstring> $deviceType : "+";
+        expression<rstring> $typeId : "+";
         expression<rstring> $deviceId : "+";
         expression<rstring> $eventId : "+";
         expression<boolean> $encrypted : true;
@@ -66,7 +66,7 @@ public composite DeviceEvents(output stream<DeviceEvent> Events)
             apiToken: $apiToken;
             encrypted: $encrypted;
             
-            topic: "iot-2/type/" + $deviceType + "/id/" + $deviceId + "/evt/" + $eventId + "/fmt/json";
+            topic: "iot-2/type/" + $typeId + "/id/" + $deviceId + "/evt/" + $eventId + "/fmt/json";
             }
             
        stream<DeviceEvent> Events = Raw2DeviceEvent(RawEvents) {}
@@ -80,19 +80,19 @@ public composite Raw2DeviceEvent(input RawEvents; output Events) {
      graph
             stream<DeviceEvent> Events = Functor(RawEvents) {
        logic state: {
-             mutable rstring _deviceType = "";
+             mutable rstring _typeId = "";
              mutable rstring _deviceId = "";
              mutable rstring _eventId = "";
        }
        onTuple RawEvents:
        {
           list<rstring> tokens = tokenize(topic, "/", false);
-          _deviceType = tokens[2];
+          _typeId = tokens[2];
           _deviceId = tokens[4];
           _eventId = tokens[6];
        }
        output Events: 
-           deviceType = _deviceType,
+           typeId = _typeId,
            deviceId = _deviceId,
            eventId = _eventId;
        }
@@ -104,13 +104,13 @@ public composite Raw2DeviceEvent(input RawEvents; output Events) {
  * 
  * This operator subscribes to the MQTT topic:
  * 
- * `iot-2/type/`*deviceType*`/id/`*deviceId*`/mon/`
+ * `iot-2/type/`*typeId*`/id/`*deviceId*`/mon/`
  * 
  * @param orgId Organization identifier.
  * @param apiKey Application key.
  * @param apiToken Application authorization token.
  * @param appId application identifier for the MQTT client identifier, defaults to *jobId*`_mon`.
- * @param deviceType Subscribe to device events from devices of a specific type. Defaults to `+` for all device types.
+ * @param typeId Subscribe to device events from devices of a specific type. Defaults to `+` for all device types.
  * @param deviceId Subscribe to device events from a specific device. Defaults to `+` for all devices with the specified type.
  * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to `true`.
  * 
@@ -124,7 +124,7 @@ public composite DeviceStatuses(output stream<DeviceStatus> Statuses)
         expression<rstring> $apiKey;
         expression<rstring> $apiToken;
         
-        expression<rstring> $deviceType : "+";
+        expression<rstring> $typeId : "+";
         expression<rstring> $deviceId : "+";
         expression<boolean> $encrypted : true;
 	graph
@@ -137,22 +137,22 @@ public composite DeviceStatuses(output stream<DeviceStatus> Statuses)
             apiToken: $apiToken;
             encrypted: $encrypted;
             
-            topic: "iot-2/type/" + $deviceType + "/id/" + $deviceId + "/mon";
+            topic: "iot-2/type/" + $typeId + "/id/" + $deviceId + "/mon";
             }
             
       stream<DeviceStatus> Statuses = Functor(RawStatuses) {
        logic state: {
-             mutable rstring _deviceType = "";
+             mutable rstring _typeId = "";
              mutable rstring _deviceId = "";
        }
        onTuple RawStatuses:
        {
           list<rstring> tokens = tokenize(topic, "/", false);
-          _deviceType = tokens[2];
+          _typeId = tokens[2];
           _deviceId = tokens[4];
        }
        output Statuses: 
-           deviceType = _deviceType,
+           typeId = _typeId,
            deviceId = _deviceId;
        }
 }
@@ -162,13 +162,13 @@ public composite DeviceStatuses(output stream<DeviceStatus> Statuses)
  * 
  * This operator subscribes to the MQTT topic:
  * 
- * `iot-2/type/`*deviceType*`/id/`*deviceId*`/cmd/`*cmdId*`/fmt/json`
+ * `iot-2/type/`*typeId*`/id/`*deviceId*`/cmd/`*cmdId*`/fmt/json`
  * 
  * @param orgId Organization identifier.
  * @param apiKey Application key.
  * @param apiToken Application authorization token.
  * @param appId Application identifier for the MQTT client identifier, defaults to *jobId*`_cmd`.
- * @param deviceType Subscribe to device commands for devices of a specific type. Defaults to `+` for all device types.
+ * @param typeId Subscribe to device commands for devices of a specific type. Defaults to `+` for all device types.
  * @param deviceId Subscribe to device commands for a specific device. Defaults to `+` for all devices with the specified type.
  * @param cmdId Subscribe to device commands for a specified identifier. Defaults to `+` for all command identifiers.
  * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to `true`.
@@ -184,7 +184,7 @@ public composite DeviceCommands(output stream<DeviceCmd> Commands)
         expression<rstring> $appId : (rstring) jobID() +"_cmd";
         
         
-        expression<rstring> $deviceType : "+";
+        expression<rstring> $typeId : "+";
         expression<rstring> $deviceId : "+";
         expression<rstring> $cmdId : "+";
         expression<boolean> $encrypted : true;
@@ -198,24 +198,24 @@ public composite DeviceCommands(output stream<DeviceCmd> Commands)
             apiToken: $apiToken;
             encrypted : $encrypted;
             
-            topic: "iot-2/type/" + $deviceType + "/id/" + $deviceId + "/cmd/" + $cmdId + "/fmt/json";
+            topic: "iot-2/type/" + $typeId + "/id/" + $deviceId + "/cmd/" + $cmdId + "/fmt/json";
             }
             
        stream<DeviceCmd> Commands = Functor(RawCommands) {
        logic state: {
-             mutable rstring _deviceType = "";
+             mutable rstring _typeId = "";
              mutable rstring _deviceId = "";
              mutable rstring _cmdId = "";
        }
        onTuple RawCommands:
        {
           list<rstring> tokens = tokenize(topic, "/", false);
-          _deviceType = tokens[2];
+          _typeId = tokens[2];
           _deviceId = tokens[4];
           _cmdId = tokens[6];
        }
        output Commands: 
-           deviceType = _deviceType,
+           typeId = _typeId,
            deviceId = _deviceId,
            cmdId = _cmdId;
        }
@@ -265,7 +265,7 @@ composite DeviceTopic(output Messages)
  * 
  * This operator publishes each command to MQTT topic:
  * 
- * `iot-2/type/`*deviceType*`/id/`*deviceId*`/cmd/`*cmdId*`/fmt/json`
+ * `iot-2/type/`*typeId*`/id/`*deviceId*`/cmd/`*cmdId*`/fmt/json`
  * 
  * @param orgId Organization identifier.
  * @param apiKey Application key.
@@ -285,7 +285,7 @@ public composite SendCommandToDevice(input stream<DeviceCmd> Commands) {
    graph
         stream<RawMsg> RawCmds = Functor(Commands) {
             output RawCmds:
-                topic = "iot-2/type/" + deviceType + "/id/" + deviceId + "/cmd/" + cmdId + "/fmt/json";
+                topic = "iot-2/type/" + typeId + "/id/" + deviceId + "/cmd/" + cmdId + "/fmt/json";
         }
         
         () as DeviceCmds = MQTTSink(RawCmds) {
