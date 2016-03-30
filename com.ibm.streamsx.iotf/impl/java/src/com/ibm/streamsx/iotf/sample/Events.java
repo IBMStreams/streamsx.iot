@@ -23,6 +23,8 @@ import com.ibm.streamsx.topology.context.StreamsContextFactory;
  * @see com.ibm.streamsx.iotf.IotfStreams#eventsSubscribe(TopologyElement, String...)
  */
 public class Events {
+
+    private Events() {}
     
     /**
      * Execute this application against a Bluemix Streaming Analytic Service.

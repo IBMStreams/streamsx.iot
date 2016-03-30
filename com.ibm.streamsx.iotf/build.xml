@@ -27,7 +27,7 @@
     <mkdir dir="${lib.dir}" />
   </target>
 
- <target name="all" depends="jar">
+ <target name="all" depends="jar,javadoc">
     <!-- nothing to do yet! -->
  </target>
   <target name="clean" depends="cleanToolkitxml">
@@ -77,6 +77,7 @@
           Windowtitle="Java API for com.ibm.streamsx.iotf"
           Footer="streamsx.iotf @ IBMStreams GitHub"
           failonwarning="yes"
+          linksource="yes"
           additionalparam="-Xdoclint:none">
             <fileset dir="${src.dir}">
                <include name="com/ibm/streamsx/iotf/**"/>
