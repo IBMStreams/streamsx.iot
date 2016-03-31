@@ -22,7 +22,7 @@
 <div class="body refbody">
 <div class="section">
 <p class="p">
-<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iotf Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.4.0.commit_6f034d2</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf</a> &gt; types.spl</p>
+<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iotf Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf 0.6.0.commit_bdde1ec</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iotf.html">com.ibm.streamsx.iotf</a> &gt; types.spl</p>
 
 </div>
 
@@ -78,7 +78,7 @@
 
 <div class="p">A device.
 <ul class="ul">
-<li class="li"> <tt class="ph tt">deviceType</tt> - Type of device that issued the event.</li>
+<li class="li"> <tt class="ph tt">typeId</tt> - Type of device that issued the event.</li>
 
 <li class="li"> <tt class="ph tt">deviceId</tt> - Identifier of device that issued the event. </li>
 
@@ -90,7 +90,7 @@
 
 <div class="section">
    <p class="p">
-<tt class="ph tt">Device = tuple&lt;rstring deviceType, rstring deviceId&gt;;</tt>
+<tt class="ph tt">Device = tuple&lt;rstring typeId, rstring deviceId&gt;;</tt>
    </p>
 
 </div>
@@ -102,7 +102,7 @@
 
 <div class="p">A device with event identifier.
 <ul class="ul">
-<li class="li"> <tt class="ph tt">deviceType</tt> - Type of device that issued the event.</li>
+<li class="li"> <tt class="ph tt">typeId</tt> - Type of device that issued the event.</li>
 
 <li class="li"> <tt class="ph tt">deviceId</tt> - Identifier of device that issued the event.</li>
 
@@ -128,7 +128,7 @@
 
 <div class="p">A device event.
 <ul class="ul">
-<li class="li"> <tt class="ph tt">deviceType</tt> - Type of device that issued the event.</li>
+<li class="li"> <tt class="ph tt">typeId</tt> - Type of device that issued the event.</li>
 
 <li class="li"> <tt class="ph tt">deviceId</tt> - Identifier of device that issued the event.</li>
 
@@ -169,7 +169,7 @@
 
 <div class="p">
 <ul class="ul">
-<li class="li"> <tt class="ph tt">deviceType</tt> - Type of device that issued the event.</li>
+<li class="li"> <tt class="ph tt">typeId</tt> - Type of device that issued the event.</li>
 
 <li class="li"> <tt class="ph tt">deviceId</tt> - Identifier of device that issued the event.</li>
 
@@ -197,7 +197,7 @@
 
 <div class="p">A device status event.
 <ul class="ul">
-<li class="li"> <tt class="ph tt">deviceType</tt> - Type of device that issued the event.</li>
+<li class="li"> <tt class="ph tt">typeId</tt> - Type of device that issued the event.</li>
 
 <li class="li"> <tt class="ph tt">deviceId</tt> - Identifier of device that issued the event.</li>
 
@@ -223,7 +223,7 @@
 
 <div class="p">A device with command identifier.
 <ul class="ul">
-<li class="li"> <tt class="ph tt">deviceType</tt> - Type of device the command is for.</li>
+<li class="li"> <tt class="ph tt">typeId</tt> - Type of device the command is for.</li>
 
 <li class="li"> <tt class="ph tt">deviceId</tt> - Identifier of device the command is for.</li>
 
@@ -249,7 +249,7 @@
 
 <div class="p">A device command.
 <ul class="ul">
-<li class="li"> <tt class="ph tt">deviceType</tt> - Type of device the command is for.</li>
+<li class="li"> <tt class="ph tt">typeId</tt> - Type of device the command is for.</li>
 
 <li class="li"> <tt class="ph tt">deviceId</tt> - Identifier of device the command is for.</li>
 
