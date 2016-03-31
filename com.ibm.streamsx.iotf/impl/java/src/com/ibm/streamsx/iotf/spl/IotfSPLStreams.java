@@ -30,7 +30,7 @@ public class IotfSPLStreams {
     private IotfSPLStreams() {}
     
     /**
-     * Subscribe to events as SPL tuples.
+     * Subscribe to device events as SPL tuples.
      * 
      * Subscribes to all device events with event identifiers
      * listed in {@code eventId}. If {@code eventId} is empty
@@ -39,7 +39,7 @@ public class IotfSPLStreams {
      * 
      * To receive device events the SPL application
      * {@code com.ibm.streamsx.iotf.apps::IotfOrganization}
-     * must be running in the same instance.
+     * must be running in the same Streams instance.
      * 
      * @param te Topology to create this source in.
      * @param eventId Event identifiers to subscribe to. If no event identf
@@ -55,6 +55,34 @@ public class IotfSPLStreams {
         
         return SPL.invokeSource(te, "com.ibm.streamsx.iotf::EventsSubscribe",
                 params, Schemas.DEVICE_EVENT);
+    }
+    
+    /**
+     * Subscribe to device commands as SPL tuples.
+     * 
+     * Subscribes to all device commands with command identifiers
+     * listed in {@code cmdId}. If {@code cmdId} is empty
+     * or passed as a {@code null} array then all device commands
+     * are subscribed to.
+     * 
+     * To receive device events the SPL application
+     * {@code com.ibm.streamsx.iotf.apps::IotfOrganization}
+     * must be running in the same Streams instance.
+     * 
+     * @param te Topology to create this source in.
+     * @param cmdId Event identifiers to subscribe to. If no event identf
+     * @return Stream containing device events.
+     * 
+     * @see com.ibm.streamsx.iotf.IotfStreams#eventsSubscribe(TopologyElement, String...)
+     */
+    public static SPLStream commandsSubscribe(TopologyElement te, String ...cmdId) {
+        
+        Map<String,Object> params = new HashMap<>();
+        if (cmdId != null && cmdId.length != 0)
+            params.put("cmdIds", listRStringParam(cmdId));
+        
+        return SPL.invokeSource(te, "com.ibm.streamsx.iotf::CommandsSubscribe",
+                params, Schemas.DEVICE_CMD);
     }
     
     private static Object listRStringParam(String[] values) {
@@ -88,20 +116,11 @@ public class IotfSPLStreams {
             }
             
         };
-        /*
-        JSONObject param = new JSONObject();
-        param.put("type", "spltype");
-        
-        //JSONObject valueHolder = new JSONObject();
-        //param.put("value", valueHolder);
-        
-       
-        //valueHolder.put("value", literals.toString());
-        param.put("value", literals.toString());
-        System.out.println("XXXXXXXXXXXXXXXXXXX:" + param);
-        
-        Supplier<JSONObject> supplier = () -> param;
-        return supplier;
-        */
+    }
+    
+    public static void commandPublish(SPLStream commandStream) { 
+        if (!commandStream.getSchema().equals(Schemas.DEVICE_CMD))
+            throw new IllegalArgumentException("Schema is invalid:" + commandStream.getSchema().getLanguageType());
+        SPL.invokeSink("com.ibm.streamsx.iotf::CommandPublish", commandStream, null);   
     }
 }
