@@ -2,20 +2,14 @@
 # Licensed Materials - Property of IBM
 # Copyright IBM Corp. 2016 
  */
-package com.ibm.streamsx.iotf.sample;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
+package com.ibm.streamsx.iot.sample;
 
 import java.io.File;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
-import com.ibm.json.java.JSONObject;
-import com.ibm.streamsx.iotf.Device;
-import com.ibm.streamsx.iotf.DeviceCmd;
-import com.ibm.streamsx.iotf.IotfStreams;
+import com.ibm.streamsx.iot.DeviceEvent;
+import com.ibm.streamsx.iot.IotfStreams;
 import com.ibm.streamsx.topology.TStream;
 import com.ibm.streamsx.topology.Topology;
 import com.ibm.streamsx.topology.TopologyElement;
@@ -24,43 +18,40 @@ import com.ibm.streamsx.topology.context.StreamsContext.Type;
 import com.ibm.streamsx.topology.context.StreamsContextFactory;
 
 /**
- * Sample application subscribing to device commands.
+ * Sample application subscribing to device events.
  * 
- * @see com.ibm.streamsx.iotf.IotfStreams#commandsSubscribe(TopologyElement, String...)
+ * @see com.ibm.streamsx.iot.IotfStreams#eventsSubscribe(TopologyElement, String...)
  */
-public class SendCommand {
+public class Events {
 
-    private SendCommand() {}
+    private Events() {}
     
     /**
      * Execute this application against a Bluemix Streaming Analytic Service.
      * 
      * Usage:
      * <BR>
-     * {@code java com.ibm.streamsx.iotf.sample.SendCommand vcapFile serviceName typeId deviceId message}
+     * {@code java com.ibm.streamsx.iotf.sample.Events vcapFile serviceName [eventId ...]}
      * @param args Arguments to the application.
      * @throws Exception Exception executing 
      */
     public static void main(String[] args) throws Exception {
-      
+        
+       
         String vcapFile = args[0];
         String serviceName = args[1];
-        String typeId = args[2];
-        String deviceId = args[3];
-        String message = args[4];
+        String[] eventIds = null;
+        if (args.length > 2) {
+            eventIds = new String[args.length - 2];
+            System.arraycopy(args, 2, eventIds, 0, args.length - 2);
+        }
         
         // The declared application.
         Topology topology = new Topology();
         
-        final Device device = new Device(typeId, deviceId);
-        
-        TStream<DeviceCmd> command = topology.periodicSource(() -> {
-            JSONObject payload = new JSONObject();
-            payload.put("msg", message + " @ " + new Date().toString());
-            return new DeviceCmd(device, "display", payload);
-        }, 10, SECONDS);
-        
-        IotfStreams.commandPublish(command);
+        // Subscribe to device events and just print them to standard out.
+        TStream<DeviceEvent> events = IotfStreams.eventsSubscribe(topology, eventIds);        
+        events.print();
         
         // Submit to BlueMix
         Map<String,Object> config = new HashMap<>();      
@@ -68,6 +59,4 @@ public class SendCommand {
         config.put(AnalyticsServiceProperties.SERVICE_NAME, serviceName);
         StreamsContextFactory.getStreamsContext(Type.ANALYTICS_SERVICE).submit(topology, config);
     }
-    
-
 }

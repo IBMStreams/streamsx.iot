@@ -5,4 +5,4 @@
 /**
  * Sample Java applications connecting to IBM Watson IoT Platform. 
  */
-package com.ibm.streamsx.iotf.sample;
+package com.ibm.streamsx.iot.sample;

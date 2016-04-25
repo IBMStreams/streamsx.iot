@@ -2,10 +2,10 @@
 # Licensed Materials - Property of IBM
 # Copyright IBM Corp. 2016 
  */
-package com.ibm.streamsx.iotf;
+package com.ibm.streamsx.iot;
 
-import com.ibm.streamsx.iotf.spl.IotfSPLStreams;
-import com.ibm.streamsx.iotf.spl.Schemas;
+import com.ibm.streamsx.iot.spl.IotfSPLStreams;
+import com.ibm.streamsx.iot.spl.Schemas;
 import com.ibm.streamsx.topology.TStream;
 import com.ibm.streamsx.topology.TopologyElement;
 import com.ibm.streamsx.topology.spl.SPL;

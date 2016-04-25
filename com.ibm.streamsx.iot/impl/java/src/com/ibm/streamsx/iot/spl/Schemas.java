@@ -2,12 +2,12 @@
 # Licensed Materials - Property of IBM
 # Copyright IBM Corp. 2016 
  */
-package com.ibm.streamsx.iotf.spl;
+package com.ibm.streamsx.iot.spl;
 
 import static com.ibm.streams.operator.Type.Factory.getStreamSchema;
 import static com.ibm.streams.operator.Type.MetaType.RSTRING;
-import static com.ibm.streamsx.iotf.DeviceCmd.CMD_ID;
-import static com.ibm.streamsx.iotf.DeviceEvent.EVENT_ID;
+import static com.ibm.streamsx.iot.DeviceCmd.CMD_ID;
+import static com.ibm.streamsx.iot.DeviceEvent.EVENT_ID;
 import static com.ibm.streamsx.topology.spl.SPLSchemas.JSON;
 
 import com.ibm.streams.operator.StreamSchema;

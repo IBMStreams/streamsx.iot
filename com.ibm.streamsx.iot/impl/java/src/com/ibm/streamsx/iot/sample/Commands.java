@@ -2,14 +2,14 @@
 # Licensed Materials - Property of IBM
 # Copyright IBM Corp. 2016 
  */
-package com.ibm.streamsx.iotf.sample;
+package com.ibm.streamsx.iot.sample;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.ibm.streamsx.iotf.DeviceCmd;
-import com.ibm.streamsx.iotf.IotfStreams;
+import com.ibm.streamsx.iot.DeviceCmd;
+import com.ibm.streamsx.iot.IotfStreams;
 import com.ibm.streamsx.topology.TStream;
 import com.ibm.streamsx.topology.Topology;
 import com.ibm.streamsx.topology.TopologyElement;
@@ -20,7 +20,7 @@ import com.ibm.streamsx.topology.context.StreamsContextFactory;
 /**
  * Sample application subscribing to device commands.
  * 
- * @see com.ibm.streamsx.iotf.IotfStreams#commandsSubscribe(TopologyElement, String...)
+ * @see com.ibm.streamsx.iot.IotfStreams#commandsSubscribe(TopologyElement, String...)
  */
 public class Commands {
 

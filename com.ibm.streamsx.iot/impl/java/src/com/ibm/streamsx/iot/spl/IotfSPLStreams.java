@@ -2,7 +2,7 @@
 # Licensed Materials - Property of IBM
 # Copyright IBM Corp. 2016 
  */
-package com.ibm.streamsx.iotf.spl;
+package com.ibm.streamsx.iot.spl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +45,7 @@ public class IotfSPLStreams {
      * @param eventId Event identifiers to subscribe to. If no event identf
      * @return Stream containing device events.
      * 
-     * @see com.ibm.streamsx.iotf.IotfStreams#eventsSubscribe(TopologyElement, String...)
+     * @see com.ibm.streamsx.iot.IotfStreams#eventsSubscribe(TopologyElement, String...)
      */
     public static SPLStream eventsSubscribe(TopologyElement te, String ...eventId) {
         
@@ -73,7 +73,7 @@ public class IotfSPLStreams {
      * @param cmdId Event identifiers to subscribe to. If no event identf
      * @return Stream containing device events.
      * 
-     * @see com.ibm.streamsx.iotf.IotfStreams#eventsSubscribe(TopologyElement, String...)
+     * @see com.ibm.streamsx.iot.IotfStreams#eventsSubscribe(TopologyElement, String...)
      */
     public static SPLStream commandsSubscribe(TopologyElement te, String ...cmdId) {
         

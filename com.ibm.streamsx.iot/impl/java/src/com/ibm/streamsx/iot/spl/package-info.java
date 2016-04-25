@@ -5,4 +5,4 @@
 /**
  * SPL stream support for connecting to IBM Watson IoT Platform. 
  */
-package com.ibm.streamsx.iotf.spl;
+package com.ibm.streamsx.iot.spl;

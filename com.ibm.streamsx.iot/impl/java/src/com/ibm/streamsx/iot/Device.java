@@ -2,7 +2,7 @@
 # Licensed Materials - Property of IBM
 # Copyright IBM Corp. 2016 
  */
-package com.ibm.streamsx.iotf;
+package com.ibm.streamsx.iot;
 
 import java.io.IOException;
 import java.io.Serializable;
