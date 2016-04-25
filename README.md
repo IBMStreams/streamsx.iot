@@ -1,6 +1,6 @@
-# streamsx.iotf
+# streamsx.iot
 
-[SPLDOC for com.ibm.streamsx.iotf toolkit](http://ibmstreams.github.io/streamsx.iotf/doc/spldoc/html/index.html)
+[SPLDOC for com.ibm.streamsx.iot toolkit](http://ibmstreams.github.io/streamsx.iot/doc/spldoc/html/index.html)
 
 ## Connectivity with IBM Watson IoT Platform
 
