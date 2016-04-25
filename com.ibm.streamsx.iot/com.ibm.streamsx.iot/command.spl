@@ -3,7 +3,7 @@
 # Copyright IBM Corp. 2016
  */
 
-namespace com.ibm.streamsx.iotf;
+namespace com.ibm.streamsx.iot;
 
 use com.ibm.streamsx.json::TupleToJSON;
 

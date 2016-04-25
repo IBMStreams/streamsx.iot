@@ -3,7 +3,7 @@
 # Copyright IBM Corp. 2015,1026
  */
 
-namespace com.ibm.streamsx.iotf;
+namespace com.ibm.streamsx.iot;
 
 use com.ibm.streamsx.datetime.convert::fromIso8601ToMillis;
 use com.ibm.streamsx.json::JSONToTuple;
