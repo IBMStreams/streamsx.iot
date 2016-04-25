@@ -6,7 +6,7 @@
 namespace com.ibm.streamsx.iotf.sample.countevents;
 
 use com.ibm.streamsx.datetime.convert::minutes;
-use com.ibm.streamsx.iotf::*;
+use com.ibm.streamsx.iot::*;
 
 /**
  * Payload for the device command with

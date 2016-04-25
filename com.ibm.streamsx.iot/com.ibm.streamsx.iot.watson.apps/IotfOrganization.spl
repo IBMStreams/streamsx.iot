@@ -2,9 +2,10 @@
 # Licensed Materials - Property of IBM
 # Copyright IBM Corp. 2015,2016
  */
- namespace com.ibm.streamsx.iotf.apps;
+ namespace com.ibm.streamsx.iot.watson.apps;
 
-use com.ibm.streamsx.iotf::*;
+use com.ibm.streamsx.iot::*;
+use com.ibm.streamsx.iot.watson::*;
 use com.ibm.streamsx.topology.topic::Publish;
 use com.ibm.streamsx.topology.topic::Subscribe;
 

@@ -7,4 +7,4 @@
  * Applications for integration with IBM Watson IoT Platform service.
  */
 
-namespace com.ibm.streamsx.iotf.apps ;
+namespace com.ibm.streamsx.iot.watson.apps ;

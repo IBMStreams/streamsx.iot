@@ -5,6 +5,8 @@
 
 namespace com.ibm.streamsx.iot.watson ;
 
+use com.ibm.streamsx.iot::*;
+
 use com.ibm.streamsx.json::Json;
 use com.ibm.streamsx.messaging.mqtt::MQTTSource ;
 use com.ibm.streamsx.messaging.mqtt::MQTTSink ;

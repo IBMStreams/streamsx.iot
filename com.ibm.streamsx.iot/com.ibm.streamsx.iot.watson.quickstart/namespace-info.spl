@@ -30,4 +30,4 @@
  * {../doc/images/iotf_quickstart_simulator.png|Simulator}
  */
 
-namespace com.ibm.streamsx.iotf.quickstart ;
+namespace com.ibm.streamsx.iot.watson.quickstart ;

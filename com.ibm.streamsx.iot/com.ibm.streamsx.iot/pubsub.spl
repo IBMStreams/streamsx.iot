@@ -18,7 +18,7 @@
  * the analytical applications.
 */
 
- namespace com.ibm.streamsx.iotf;
+ namespace com.ibm.streamsx.iot;
 
 use com.ibm.streamsx.topology.topic::Publish;
 use com.ibm.streamsx.topology.topic::Subscribe;

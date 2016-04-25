@@ -3,7 +3,9 @@
 # Copyright IBM Corp. 2015,2016
  */
 
-namespace com.ibm.streamsx.iotf;
+namespace com.ibm.streamsx.iot.watson;
+
+use com.ibm.streamsx.iot::*;
 
 /**
  * Composite that produces streams for all devices in an organization.

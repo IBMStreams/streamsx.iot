@@ -5,7 +5,7 @@
 
 namespace com.ibm.streamsx.iotf.sample.quarks;
 
-use com.ibm.streamsx.iotf::*;
+use com.ibm.streamsx.iot::*;
 
 type AggInfo = float64 MAX, float64 MIN, float64 MEAN, float64 STDDEV;
 type SensorInfo = rstring name, AggInfo reading;

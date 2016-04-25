@@ -2,14 +2,14 @@
 
 set -e
 export BASE=$PWD/..
-export BASE_SPLPATH=$BASE/com.ibm.streamsx.iotf:$HOME/toolkits
+export BASE_SPLPATH=$BASE/com.ibm.streamsx.iot:$HOME/toolkits:$STREAMS_INSTALL/toolkits
 export STREAMS_SPLPATH=$BASE_SPLPATH
 
 rm -fr apptest ; mkdir apptest ; cd apptest
-sc -a -M com.ibm.streamsx.iotf.apps::IotfOrganization
-
+sc -a -M com.ibm.streamsx.iot.watson.apps::IotfOrganization
 cd .. ; rm -fr apptest ; mkdir apptest ; cd apptest
-sc -a -M com.ibm.streamsx.iotf.apps::SimpleAllDevices
+sc -a -M com.ibm.streamsx.iot.watson.apps::SimpleAllDevices
+
 
 export STREAMS_SPLPATH=$BASE_SPLPATH:$BASE/samples/CountEvents
 cd .. ; rm -fr apptest ; mkdir apptest ; cd apptest
