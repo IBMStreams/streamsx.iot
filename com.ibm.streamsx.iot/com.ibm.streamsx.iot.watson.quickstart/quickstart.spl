@@ -5,13 +5,14 @@
  
  namespace com.ibm.streamsx.iot.watson.quickstart ;
 
-use com.ibm.streamsx.iotf::* ;
+use com.ibm.streamsx.iot::* ;
+use com.ibm.streamsx.iot.watson::* ;
 use com.ibm.streamsx.messaging.mqtt::MQTTSource ;
 
 /**
  * Tuple type that matches the Quickstart device simulator event data.
  * This is used as the `dataType` parameter in an invocation of
- * [com.ibm.streamsx.iotf::DeviceEventExtractData].
+ * [com.ibm.streamsx.iot::DeviceEventExtractData].
 */
 type QSData = tuple<float64 temp, float64 humidity, float64 objectTemp>;
 
@@ -27,8 +28,8 @@ type QSData = tuple<float64 temp, float64 humidity, float64 objectTemp>;
  * to explore IBM Watson IoT Platform and IBM Streams integration.
  *
  * The application defines two views:
- * * `RawEvents` - JSON device events produced by [com.ibm.streamsx.iotf::DeviceEvents].
- * * `ExtractedEvents` - [QSData] device events produced by [com.ibm.streamsx.iotf::DeviceEventExtractData].
+ * * `RawEvents` - JSON device events produced by [com.ibm.streamsx.iot.watson::DeviceEvents].
+ * * `ExtractedEvents` - [QSData] device events produced by [com.ibm.streamsx.iot::DeviceEventExtractData].
  * 
  * Additional functionality may be added in the future.
  * 

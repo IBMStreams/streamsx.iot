@@ -21,7 +21,7 @@
  * to use the simulator.
  * 
  * Compile the [Quickstart] application 
- * `sc -M com.ibm.streamsx.iotf.quickstart::Quickstart`
+ * `sc -M com.ibm.streamsx.iot.watson.quickstart::Quickstart`
  * 
  * Submit the Streams application bundle (`.sab` file) to an IBM Streams instance or your
  * [https://console.ng.bluemix.net/catalog/services/streaming-analytics/|Bluemix Streaming Analytics Service]

@@ -38,10 +38,10 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * toolkit but these operators provide
  * additional functionality specific to this toolkit:
  *
- * * [com.ibm.streamsx.iotf::EventsSubscribe] - Subscribe to device events, with filtering on device type and/or event identifier.
- * * [com.ibm.streamsx.iotf::CommandsSubscribe] - Subscribe to device commands, with filtering on device type and/or command identifier.
- * * [com.ibm.streamsx.iotf::StatusesSubscribe] - Subscribe to device status updates, with filtering on device type.
- * * [com.ibm.streamsx.iotf::CommandPublish] - Send a device command that will be sent to the device by this application.
+ * * [com.ibm.streamsx.iot::EventsSubscribe] - Subscribe to device events, with filtering on device type and/or event identifier.
+ * * [com.ibm.streamsx.iot::CommandsSubscribe] - Subscribe to device commands, with filtering on device type and/or command identifier.
+ * * [com.ibm.streamsx.iot::StatusesSubscribe] - Subscribe to device status updates, with filtering on device type.
+ * * [com.ibm.streamsx.iot::CommandPublish] - Send a device command that will be sent to the device by this application.
  *
  * These submission time parameters must be defined:
  * * `orgId` - Organization identifier

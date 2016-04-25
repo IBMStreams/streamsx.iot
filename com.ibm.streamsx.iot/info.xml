@@ -8,7 +8,7 @@ IBM Watson IoT Platform provides a model around devices where devices produce ev
 
 Streams applications can use this toolkit to provide real time analytics against all the events from potentially thousands of devices, including sending commands to specific devices based upon the analytics.
 
-See [namespace:com.ibm.streamsx.iotf] for more details.
+See [namespace:com.ibm.streamsx.iot] for more details.
 
 This toolkit depends on these toolkits:
 * `com.ibm.streamsx.messaging`
