@@ -22,4 +22,4 @@
  * A sample application is provided: [http://quarks-edge.github.io/quarks/docs/javadoc/index.html?quarks/samples/connectors/iotf/IotfSensors.html|quarks.samples.connectors.iotf.IotfSensors]
  */
 
-namespace com.ibm.streamsx.iotf.sample.quarks;
+namespace com.ibm.streamsx.iot.sample.quarks;

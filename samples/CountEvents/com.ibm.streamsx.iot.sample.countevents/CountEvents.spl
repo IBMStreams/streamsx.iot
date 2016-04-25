@@ -3,7 +3,7 @@
 # Copyright IBM Corp. 2016
  */
 
-namespace com.ibm.streamsx.iotf.sample.countevents;
+namespace com.ibm.streamsx.iot.sample.countevents;
 
 use com.ibm.streamsx.datetime.convert::minutes;
 use com.ibm.streamsx.iot::*;

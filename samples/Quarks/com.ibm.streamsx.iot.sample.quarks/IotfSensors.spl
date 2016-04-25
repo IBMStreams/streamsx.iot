@@ -3,7 +3,7 @@
 # Copyright IBM Corp. 2016
  */
 
-namespace com.ibm.streamsx.iotf.sample.quarks;
+namespace com.ibm.streamsx.iot.sample.quarks;
 
 use com.ibm.streamsx.iot::*;
 
