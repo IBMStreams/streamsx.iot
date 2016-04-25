@@ -119,4 +119,4 @@
  * This toolkit supports using JSON as the message format.
  */
 
-namespace com.ibm.streamsx.iotf;
+namespace com.ibm.streamsx.iot.watson;
