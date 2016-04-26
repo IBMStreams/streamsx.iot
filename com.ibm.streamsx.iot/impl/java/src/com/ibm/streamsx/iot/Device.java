@@ -17,32 +17,29 @@ import com.ibm.streamsx.topology.tuple.JSONAble;
  *
  */
 public class Device implements JSONAble, Serializable {
-    
+
     public static final String TYPE_ID = "typeId";
     public static final String DEVICE_ID = "deviceId";
     public static final String JSON = SPLSchemas.JSON.getAttribute(0).getName();
-    
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     private final String typeId;
     private final String id;
-    
+
     public Device(String typeId, String id) {
         super();
         this.typeId = typeId;
         this.id = id;
     }
-    
+
     public static Device newDevice(Tuple tuple) {
-        return new Device(
-                tuple.getString(Device.TYPE_ID),
-                tuple.getString(Device.DEVICE_ID));
+        return new Device(tuple.getString(Device.TYPE_ID), tuple.getString(Device.DEVICE_ID));
     }
 
-    
     /**
      * Get the device type identifier.
+     * 
      * @return device type identifier.
      */
     public String getTypeId() {
@@ -51,20 +48,21 @@ public class Device implements JSONAble, Serializable {
 
     /**
      * Get the device identifier.
+     * 
      * @return device identifier.
      */
     public String getId() {
         return id;
     }
-    
+
     @Override
     public JSONObject toJSON() {
-        JSONObject json = new JSONObject();       
+        JSONObject json = new JSONObject();
         json.put(TYPE_ID, getTypeId());
-        json.put(DEVICE_ID, getId());       
+        json.put(DEVICE_ID, getId());
         return json;
     }
-    
+
     @Override
     public String toString() {
         try {

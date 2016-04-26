@@ -18,37 +18,34 @@ import com.ibm.streamsx.topology.tuple.JSONAble;
  */
 public class DeviceCmd implements JSONAble, Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     public static final String CMD_ID = "cmdId";
-    
+
     private final Device device;
     private final String cmdId;
     private final JSONObject payload;
-    
+
     public DeviceCmd(Device device, String cmdId, JSONObject payload) {
         super();
         this.device = device;
         this.cmdId = cmdId;
-        this.payload = payload;      
+        this.payload = payload;
     }
-    
+
     public static DeviceCmd newDeviceCmd(Tuple tuple) {
-        return newDeviceCmd(
-                Device.newDevice(tuple),
-                tuple.getString(CMD_ID),
-                tuple.getString(Device.JSON));
+        return newDeviceCmd(Device.newDevice(tuple), tuple.getString(CMD_ID), tuple.getString(Device.JSON));
     }
-    public static DeviceCmd newDeviceCmd(Device device, String cmdId, String serializedData) {      
+
+    public static DeviceCmd newDeviceCmd(Device device, String cmdId, String serializedData) {
         JSONObject payload;
         try {
             payload = (JSONObject) JSON.parse(serializedData);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }        
-        return new DeviceCmd(device, cmdId, payload);       
+        }
+        return new DeviceCmd(device, cmdId, payload);
     }
-   
-    
+
     public OutputTuple toTuple(OutputTuple tuple) {
         tuple.setString(Device.TYPE_ID, getDevice().getTypeId());
         tuple.setString(Device.DEVICE_ID, getDevice().getId());
@@ -72,7 +69,7 @@ public class DeviceCmd implements JSONAble, Serializable {
     public JSONObject getPayload() {
         return payload;
     }
-    
+
     @Override
     public JSONObject toJSON() {
         JSONObject json = getDevice().toJSON();
@@ -80,6 +77,7 @@ public class DeviceCmd implements JSONAble, Serializable {
         json.put("payload", getPayload());
         return json;
     }
+
     @Override
     public String toString() {
         try {
