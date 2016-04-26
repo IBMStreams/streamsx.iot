@@ -4,14 +4,14 @@
 # Copyright IBM Corp. 2016
 -->
 
-<project name="com.ibm.streamsx.iotf" basedir="." default="all">
+<project name="com.ibm.streamsx.iot" basedir="." default="all">
   <property environment="env" />
   <property name="streams.install" value="${env.STREAMS_INSTALL}" />
 
   <property name="src.dir" value="impl/java/src" />
   <property name="build.dir" value="impl/java/classes" />
   <property name="lib.dir" value="lib" />
-  <property name="jarfile" value="com.ibm.streamsx.iotf.jar" />
+  <property name="jarfile" value="com.ibm.streamsx.iot.jar" />
 
   <path id="cp.streams">
     <pathelement location="${streams.install}/lib/com.ibm.streams.operator.samples.jar" />
@@ -66,7 +66,7 @@
    </target>
 
    <target name="jar" depends="compile">
-	<jar destfile="${lib.dir}/${jarfile}" basedir="${build.dir}" includes="com/ibm/streamsx/iotf/**" filesonly="true">
+	<jar destfile="${lib.dir}/${jarfile}" basedir="${build.dir}" includes="com/ibm/streamsx/iot/**" filesonly="true">
 	</jar>
 	<delete dir="${build.dir}" />
     </target>
@@ -74,16 +74,16 @@
     <target name="javadoc">
        <javadoc destdir="${basedir}/doc/javadoc" classpathref="cp.streams"
           Overview="${src.dir}/overview.html"
-          Windowtitle="Java API for com.ibm.streamsx.iotf"
-          Footer="streamsx.iotf @ IBMStreams GitHub"
+          Windowtitle="Java API for com.ibm.streamsx.iot"
+          Footer="streamsx.iot @ IBMStreams GitHub"
           failonwarning="yes"
           linksource="yes"
           additionalparam="-Xdoclint:none">
             <fileset dir="${src.dir}">
-               <include name="com/ibm/streamsx/iotf/**"/>
+               <include name="com/ibm/streamsx/iot/**"/>
             </fileset>
-           <group title="API" packages="com.ibm.streamsx.iotf:com.ibm.streamsx.iotf.spl"/>
-           <group title="Samples" packages="com.ibm.streamsx.iotf.sample"/>
+           <group title="API" packages="com.ibm.streamsx.iot:com.ibm.streamsx.iot.spl"/>
+           <group title="Samples" packages="com.ibm.streamsx.iot.sample"/>
 
        </javadoc>
     </target>
