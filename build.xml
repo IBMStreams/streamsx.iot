@@ -166,7 +166,7 @@
   <target name="create_release_bundle"  depends="all">
         <property name="release.dir" location="${release.base}${commithash}" />
 	<mkdir dir="${release.dir}" />
-        <property name="releasefilename" value="${release.dir}/streamsx.iotf.toolkits-${tkinfo.info:identity.info:version}-${DSTAMP}-${TSTAMP}.tgz"/>
+        <property name="releasefilename" value="${release.dir}/streamsx.iot.toolkits-${tkinfo.info:identity.info:version}-${DSTAMP}-${TSTAMP}.tgz"/>
     	<tar compression="gzip" longfile="gnu"
              destfile="${releasefilename}"
     	     basedir="${basedir}"
