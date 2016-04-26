@@ -44,24 +44,24 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * * [com.ibm.streamsx.iot::CommandPublish] - Send a device command that will be sent to the device by this application.
  *
  * These submission time parameters must be defined:
- * * `orgId` - Organization identifier
- * * `apiKey` - API key
- * * `apiToken` - API Token
+ * * `org` - Organization identifier
+ * * `authKey` - API key
+ * * `authToken` - API Token
  */
 public composite IotPlatform {
   param
-    expression<rstring> $orgId : getSubmissionTimeValue("orgId");
-    expression<rstring> $apiKey : getSubmissionTimeValue("apiKey");
-    expression<rstring> $apiToken : getSubmissionTimeValue("apiToken");
+    expression<rstring> $org : getSubmissionTimeValue("org");
+    expression<rstring> $authKey : getSubmissionTimeValue("authKey");
+    expression<rstring> $authToken : getSubmissionTimeValue("authToken");
     expression<boolean> $encrypted : (boolean) getSubmissionTimeValue("encrypted", "false");
 
 graph
         (stream<DeviceStatus> Statuses; stream<DeviceEvent> Events; stream<DeviceCmd> Commands) as IotfDevices = AllDevices()
 		{
 			param
-				orgId : $orgId;
-				apiKey : $apiKey;
-				apiToken : $apiToken;
+				org : $org;
+				authKey : $authKey;
+				authToken : $authToken;
                                 encrypted : $encrypted;
 		}
 
@@ -82,9 +82,9 @@ graph
   }
   () as SendCommandsToDevice = SendCommandToDevice(CommandsToSend) {
     param
-      orgId : $orgId;
-      apiKey : $apiKey;
-      apiToken : $apiToken;
+      org : $org;
+      authKey : $authKey;
+      authToken : $authToken;
       encrypted : $encrypted;
   }
 }

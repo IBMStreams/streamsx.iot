@@ -20,11 +20,11 @@ type RawMsg = Json, tuple<rstring topic>;
  * https://docs.internetofthings.ibmcloud.com/applications/mqtt.html
  * @exclude
  */
-public rstring getIotfUri(rstring orgId, boolean encrypted) {
+public rstring getIotfUri(rstring org, boolean encrypted) {
     if (encrypted)
-        return "ssl://" + orgId + ".messaging.internetofthings.ibmcloud.com:8883";
+        return "ssl://" + org + ".messaging.internetofthings.ibmcloud.com:8883";
     else
-        return "tcp://" + orgId + ".messaging.internetofthings.ibmcloud.com:1883";
+        return "tcp://" + org + ".messaging.internetofthings.ibmcloud.com:1883";
 }
  
  /**
@@ -34,9 +34,9 @@ public rstring getIotfUri(rstring orgId, boolean encrypted) {
  * 
  * `iot-2/type/`*typeId*`/id/`*deviceId*`/evt/`*eventId*`/fmt/json`
  * 
- * @param orgId Organization identifier.
- * @param apiKey Application key.
- * @param apiToken Application authorization token.
+ * @param org Organization identifier.
+ * @param authKey Application key.
+ * @param authToken Application authorization token.
  * @param appId Application identifier for the MQTT client identifier, defaults to *jobId*`_evt`.
  * @param typeId Subscribe to device events from devices of a specific type. Defaults to `+` for all device types.
  * @param deviceId Subscribe to device events from a specific device. Defaults to `+` for all devices with the specified type.
@@ -48,9 +48,9 @@ public rstring getIotfUri(rstring orgId, boolean encrypted) {
 public composite DeviceEvents(output stream<DeviceEvent> Events)
 {
     param
-        expression<rstring> $orgId;
-        expression<rstring> $apiKey;
-        expression<rstring> $apiToken;
+        expression<rstring> $org;
+        expression<rstring> $authKey;
+        expression<rstring> $authToken;
         expression<rstring> $appId : (rstring) jobID() +"_evt";
         
         
@@ -62,10 +62,10 @@ public composite DeviceEvents(output stream<DeviceEvent> Events)
 		stream<RawMsg> RawEvents = DeviceTopic()
 		{		         
 			param	
-            orgId: $orgId;
+            org: $org;
             appId: $appId;
-            apiKey: $apiKey;
-            apiToken: $apiToken;
+            authKey: $authKey;
+            authToken: $authToken;
             encrypted: $encrypted;
             
             topic: "iot-2/type/" + $typeId + "/id/" + $deviceId + "/evt/" + $eventId + "/fmt/json";
@@ -108,9 +108,9 @@ public composite Raw2DeviceEvent(input RawEvents; output Events) {
  * 
  * `iot-2/type/`*typeId*`/id/`*deviceId*`/mon/`
  * 
- * @param orgId Organization identifier.
- * @param apiKey Application key.
- * @param apiToken Application authorization token.
+ * @param org Organization identifier.
+ * @param authKey Application key.
+ * @param authToken Application authorization token.
  * @param appId application identifier for the MQTT client identifier, defaults to *jobId*`_mon`.
  * @param typeId Subscribe to device events from devices of a specific type. Defaults to `+` for all device types.
  * @param deviceId Subscribe to device events from a specific device. Defaults to `+` for all devices with the specified type.
@@ -121,10 +121,10 @@ public composite Raw2DeviceEvent(input RawEvents; output Events) {
 public composite DeviceStatuses(output stream<DeviceStatus> Statuses)
 {
     param
-        expression<rstring> $orgId;
+        expression<rstring> $org;
         expression<rstring> $appId : (rstring) jobID() + "_mon";
-        expression<rstring> $apiKey;
-        expression<rstring> $apiToken;
+        expression<rstring> $authKey;
+        expression<rstring> $authToken;
         
         expression<rstring> $typeId : "+";
         expression<rstring> $deviceId : "+";
@@ -133,10 +133,10 @@ public composite DeviceStatuses(output stream<DeviceStatus> Statuses)
 		stream<RawMsg> RawStatuses = DeviceTopic()
 		{		         
 			param
-            orgId: $orgId;
+            org: $org;
             appId: $appId;
-            apiKey: $apiKey;
-            apiToken: $apiToken;
+            authKey: $authKey;
+            authToken: $authToken;
             encrypted: $encrypted;
             
             topic: "iot-2/type/" + $typeId + "/id/" + $deviceId + "/mon";
@@ -166,9 +166,9 @@ public composite DeviceStatuses(output stream<DeviceStatus> Statuses)
  * 
  * `iot-2/type/`*typeId*`/id/`*deviceId*`/cmd/`*cmdId*`/fmt/json`
  * 
- * @param orgId Organization identifier.
- * @param apiKey Application key.
- * @param apiToken Application authorization token.
+ * @param org Organization identifier.
+ * @param authKey Application key.
+ * @param authToken Application authorization token.
  * @param appId Application identifier for the MQTT client identifier, defaults to *jobId*`_cmd`.
  * @param typeId Subscribe to device commands for devices of a specific type. Defaults to `+` for all device types.
  * @param deviceId Subscribe to device commands for a specific device. Defaults to `+` for all devices with the specified type.
@@ -180,9 +180,9 @@ public composite DeviceStatuses(output stream<DeviceStatus> Statuses)
 public composite DeviceCommands(output stream<DeviceCmd> Commands)
 {
     param
-        expression<rstring> $orgId;
-        expression<rstring> $apiKey;
-        expression<rstring> $apiToken;
+        expression<rstring> $org;
+        expression<rstring> $authKey;
+        expression<rstring> $authToken;
         expression<rstring> $appId : (rstring) jobID() +"_cmd";
         
         
@@ -194,10 +194,10 @@ public composite DeviceCommands(output stream<DeviceCmd> Commands)
 		stream<RawMsg> RawCommands = DeviceTopic()
 		{	         
 			param	
-            orgId: $orgId;
-            appId: $apiKey + "_" + $appId;
-            apiKey: $apiKey;
-            apiToken: $apiToken;
+            org: $org;
+            appId: $authKey + "_" + $appId;
+            authKey: $authKey;
+            authToken: $authToken;
             encrypted : $encrypted;
             
             topic: "iot-2/type/" + $typeId + "/id/" + $deviceId + "/cmd/" + $cmdId + "/fmt/json";
@@ -229,10 +229,10 @@ public composite DeviceCommands(output stream<DeviceCmd> Commands)
 composite DeviceTopic(output Messages)
 {
     param
-        expression<rstring> $orgId;
+        expression<rstring> $org;
         expression<rstring> $appId;
-        expression<rstring> $apiKey;
-        expression<rstring> $apiToken;
+        expression<rstring> $authKey;
+        expression<rstring> $authToken;
         expression<rstring> $topic;
         expression<boolean> $encrypted;
 	graph
@@ -240,10 +240,10 @@ composite DeviceTopic(output Messages)
 		{
 		    logic state: {
 		      rstring _topic = $topic;
-		      rstring _clientId = "a:" + $orgId + ":" + $appId;
-		      rstring _userId = $apiKey;
-		      rstring _password = $apiToken;
-		      rstring _serverURI = getIotfUri($orgId, $encrypted);
+		      rstring _clientId = "a:" + $org + ":" + $appId;
+		      rstring _userId = $authKey;
+		      rstring _password = $authToken;
+		      rstring _serverURI = getIotfUri($org, $encrypted);
 		    }
 		         
 			param
@@ -269,9 +269,9 @@ composite DeviceTopic(output Messages)
  * 
  * `iot-2/type/`*typeId*`/id/`*deviceId*`/cmd/`*cmdId*`/fmt/json`
  * 
- * @param orgId Organization identifier.
- * @param apiKey Application key.
- * @param apiToken Application authorization token.
+ * @param org Organization identifier.
+ * @param authKey Application key.
+ * @param authToken Application authorization token.
  * @param appId application identifier for the MQTT client identifier, defaults to *jobId*`_snd`.
  * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to `true`.
  * 
@@ -279,10 +279,10 @@ composite DeviceTopic(output Messages)
  */
 public composite SendCommandToDevice(input stream<DeviceCmd> Commands) {
    param
-        expression<rstring> $orgId;
+        expression<rstring> $org;
         expression<rstring> $appId : (rstring) jobID() + "_snd";
-        expression<rstring> $apiKey;
-        expression<rstring> $apiToken;
+        expression<rstring> $authKey;
+        expression<rstring> $authToken;
         expression<boolean> $encrypted : true;
    graph
         stream<RawMsg> RawCmds = Functor(Commands) {
@@ -293,10 +293,10 @@ public composite SendCommandToDevice(input stream<DeviceCmd> Commands) {
         () as DeviceCmds = MQTTSink(RawCmds) {
         
  		    logic state: {
-		      rstring _clientId = "a:" + $orgId + ":" + $appId;
-		      rstring _userId = $apiKey;
-		      rstring _password = $apiToken;
-		      rstring _serverURI = getIotfUri($orgId, $encrypted);
+		      rstring _clientId = "a:" + $org + ":" + $appId;
+		      rstring _userId = $authKey;
+		      rstring _password = $authToken;
+		      rstring _serverURI = getIotfUri($org, $encrypted);
 		    }
 		         
 			param

@@ -35,9 +35,9 @@ use com.ibm.streamsx.iot.watson::*;
  * Additional functionality may be added in the future.
  * 
  * These submission time parameters must be defined:
- * * `orgId` - Organization identifier
- * * `apiKey` - API key
- * * `apiToken` - API Token
+ * * `org` - Organization identifier
+ * * `authKey` - API key
+ * * `authToken` - API Token
  */
 public composite SimpleAllDevices {
 graph
@@ -47,9 +47,9 @@ graph
         (stream<DeviceStatus> Statuses; stream<DeviceEvent> Events; stream<DeviceCmd> Commands) as IotDevices = AllDevices()
 		{
 			param
-				orgId : getSubmissionTimeValue("orgId");
-				apiKey : getSubmissionTimeValue("apiKey");
-				apiToken : getSubmissionTimeValue("apiToken");
+				org : getSubmissionTimeValue("org");
+				authKey : getSubmissionTimeValue("authKey");
+				authToken : getSubmissionTimeValue("authToken");
 				encrypted : (boolean) getSubmissionTimeValue("encrypted", "false");
 		}
 }

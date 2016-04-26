@@ -10,9 +10,9 @@ use com.ibm.streamsx.iot::*;
 /**
  * Composite that produces streams for all devices in an organization.
  * 
- * @param orgId Organization identifier.
- * @param apiKey Application key.
- * @param apiToken Application authorization token.
+ * @param org Organization identifier.
+ * @param authKey Application key.
+ * @param authToken Application authorization token.
  * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to `true`.
  * 
  * @output Statuses Device status events
@@ -22,9 +22,9 @@ use com.ibm.streamsx.iot::*;
 public composite AllDevices(output stream<DeviceStatus> Statuses, stream<DeviceEvent> Events, stream<DeviceCmd> Commands)
 {
    param
-        expression<rstring> $orgId;
-        expression<rstring> $apiKey;
-        expression<rstring> $apiToken;
+        expression<rstring> $org;
+        expression<rstring> $authKey;
+        expression<rstring> $authToken;
         expression<boolean> $encrypted : true;
 
 	graph
@@ -32,27 +32,27 @@ public composite AllDevices(output stream<DeviceStatus> Statuses, stream<DeviceE
 		stream<DeviceStatus> Statuses = DeviceStatuses()
 		{
 			param
-				orgId : $orgId ;
-				apiKey : $apiKey ;
-				apiToken : $apiToken ;
+				org : $org ;
+				authKey : $authKey ;
+				authToken : $authToken ;
                                 encrypted: $encrypted;
 		}
 
 		stream<DeviceEvent> Events = DeviceEvents()
 		{
 			param
-				orgId : $orgId ;
-				apiKey : $apiKey ;
-				apiToken : $apiToken ;
+				org : $org ;
+				authKey : $authKey ;
+				authToken : $authToken ;
                                 encrypted: $encrypted;
 		}
 
 		stream<DeviceCmd> Commands = DeviceCommands()
 		{
 			param
-				orgId : $orgId ;
-				apiKey : $apiKey ;
-				apiToken : $apiToken ;
+				org : $org ;
+				authKey : $authKey ;
+				authToken : $authToken ;
                                 encrypted: $encrypted;
 		}
 }

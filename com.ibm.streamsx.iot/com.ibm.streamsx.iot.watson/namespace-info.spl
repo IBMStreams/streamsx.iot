@@ -106,13 +106,13 @@
  * [https://docs.internetofthings.ibmcloud.com/messaging/applications.html|MQTT application]
  * 
  * Each invocation of an operator in this toolkit (e.g. [DeviceEvents], [DeviceStatuses])
- * makes its own MQTT connection using a client identifier of `a:`*orgId*`:`*appKey*`_`*appId*.
+ * makes its own MQTT connection using a client identifier of `a:`*org*`:`*appKey*`_`*appId*.
  * A Streams application must ensure that each operator invocation uses a client identifier
- * that is unique for its `orgId`. Reuse of client identifiers, even across multiple
+ * that is unique for its `org`. Reuse of client identifiers, even across multiple
  * applications, is not allowed and will result in unexpected disconnection of clients.
  * The default `appId` ensures that the client identifiers will be unique
  * for an instance if there is only a single invocation of each operator kind in an application. In this case
- * the MQTT client identifier is `a:`*orgId*`:`*appKey*`_`*jobId*`_xxx` where `xxx` is specific to each operator kind.
+ * the MQTT client identifier is `a:`*org*`:`*appKey*`_`*jobId*`_xxx` where `xxx` is specific to each operator kind.
  * 
  * # JSON Message Format
  * 
