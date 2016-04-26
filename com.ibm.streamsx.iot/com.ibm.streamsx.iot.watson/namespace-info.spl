@@ -17,7 +17,7 @@
  * to be developed and deployed independent of the connectivity to
  * IBM Watson IoT Platform.
  *
- * This is achieved by submitting the [com.ibm.streamsx.iot.watson.apps::IotfOrganization] application to IBM Streams. This is the only job that connects
+ * This is achieved by submitting the [com.ibm.streamsx.iot.watson.apps::IotPlatform] application to IBM Streams. This is the only job that connects
  * to IBM Watson IoT platform, it publishes streams that contain device
  * events, commands and status updates.
  *
@@ -29,7 +29,7 @@
  * commands to individual devices.
  *
  * The benefits of this approach are:
- * * Only a single application (`IotfOrganization`) needs to know the authorization tokens.
+ * * Only a single application (`IotPlatform`) needs to know the authorization tokens.
  * * Analytic applications can be added and removed at any time without disrupting existing running applications.
  *
  * Applications may also connect to IBM Watson IoT Platform directly using
@@ -51,7 +51,7 @@
  * do not yet support TLSv1.2. Use of the operators must set
  * `encrypted` to `false` to see device events and send commands.**
  *
- * **The applications (`IotfOrganization` and `SimpleAllDevices`)
+ * **The applications (`IotPlatform` and `SimpleAllDevices`)
  * are defaulted to unecrypted connections
  * to allow them to work out of the box. The default will revert
  * to encrypted in future pre-release.**

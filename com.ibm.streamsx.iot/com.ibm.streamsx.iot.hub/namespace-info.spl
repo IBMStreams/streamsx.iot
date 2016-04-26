@@ -43,7 +43,7 @@
  *
  * This toolkit provides these message hub applications:
  *
- * * [com.ibm.streamsx.iot.watson.apps::IotfOrganization|IBM Watson Iot Platform]
+ * * [com.ibm.streamsx.iot.watson.apps::IotPlatform|IBM Watson Iot Platform]
  *
  * Others may be added in the future or a custom one can be created that
  * publishes and subscribes to the correct topics.

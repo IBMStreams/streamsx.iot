@@ -5,13 +5,13 @@
 
 /**
  * Operators to use in conjunction with
- * [com.ibm.streamsx.iot.watson.apps::IotfOrganization].
+ * [com.ibm.streamsx.iot.watson.apps::IotPlatform].
  *
- * `IotfOrganziation` publishes streams for all the
+ * `IotPlatform` publishes streams for all the
  * events associated with devices, namely events, commands
  * and status updates.
  *
- * A single copy of `IotfOrganization` can be run and then
+ * A single copy of `IotPlatform` can be run and then
  * multiple analytic applications subscribe to streams as
  * needed. This allows separation of the IBM Watson IoT
  * Platform connection information (application key) from
@@ -28,7 +28,7 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * the streams topic `streamsx/iot/device/events`.
  *
  * This matches the stream topic published by
- * [com.ibm.streamsx.iot.watson.apps::IotfOrganization].
+ * [com.ibm.streamsx.iot.watson.apps::IotPlatform].
  *
  * Filtering on `typeId` and `eventId` is supported,
  * defaulting to no filtering.
@@ -70,7 +70,7 @@ public composite EventsSubscribe(output stream<DeviceEvent> Events)
  * the streams topic `streamsx/iotdevice/commands/sent`.
  *
  * This matches the stream topic published by
- * [com.ibm.streamsx.iot.watson.apps::IotfOrganization].
+ * [com.ibm.streamsx.iot.watson.apps::IotPlatform].
  *
  * Filtering on `typeId` and `cmdId` is supported,
  * defaulting to no filtering.
@@ -112,7 +112,7 @@ public composite CommandsSubscribe(output stream<DeviceCmd> Commands)
  * the streams topic `streamsx/iot/device/statuses`.
  *
  * This matches the stream topic published by
- * [com.ibm.streamsx.iot.watson.apps::IotfOrganization].
+ * [com.ibm.streamsx.iot.watson.apps::IotPlatform].
  *
  * Filtering on `typeId` is supported,
  * defaulting to no filtering.
@@ -149,11 +149,11 @@ public composite StatusesSubscribe(output stream<DeviceCmd> Statuses)
  * via the streams topic `streamsx/iot/device/commands/send`.
  *
  * This matches the streams topic subscribed to by
- * [com.ibm.streamsx.iot.watson.apps::IotfOrganization].
+ * [com.ibm.streamsx.iot.watson.apps::IotPlatform].
  *
  * Any command on the input stream will be
  * sent as a device command assuming
- * [com.ibm.streamsx.iot.watson.apps::IotfOrganization]
+ * [com.ibm.streamsx.iot.watson.apps::IotPlatform]
  * is running, or an equivalant application.
 */
 public composite CommandPublish(input stream<DeviceCmd> Commands) {

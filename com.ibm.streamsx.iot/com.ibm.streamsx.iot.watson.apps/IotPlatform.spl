@@ -48,7 +48,7 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * * `apiKey` - API key
  * * `apiToken` - API Token
  */
-public composite IotfOrganization {
+public composite IotPlatform {
   param
     expression<rstring> $orgId : getSubmissionTimeValue("orgId");
     expression<rstring> $apiKey : getSubmissionTimeValue("apiKey");
@@ -66,18 +66,18 @@ graph
 		}
 
   () as PublishedEvents = Publish(Events) {
-    param topic: "iotf/device/events";
+    param topic: "streamsx/iot/device/events";
   }
   () as PublishedCommands = Publish(Commands) {
-    param topic: "iotf/device/commands/sent";
+    param topic: "streamsx/iot/device/commands/sent";
   }
   () as PublishedStatuses = Publish(Statuses) {
-    param topic: "iotf/device/statuses";
+    param topic: "streamsx/iot/device/statuses";
   }
 
   stream<DeviceCmd> CommandsToSend = Subscribe() {
     param
-      topic: "iotf/device/commands/send";
+      topic: "streamsx/iot/device/commands/send";
       streamType: DeviceCmd;
   }
   () as SendCommandsToDevice = SendCommandToDevice(CommandsToSend) {

@@ -6,7 +6,7 @@ export BASE_SPLPATH=$BASE/com.ibm.streamsx.iot:$HOME/toolkits:$STREAMS_INSTALL/t
 export STREAMS_SPLPATH=$BASE_SPLPATH
 
 rm -fr apptest ; mkdir apptest ; cd apptest
-sc -a -M com.ibm.streamsx.iot.watson.apps::IotfOrganization
+sc -a -M com.ibm.streamsx.iot.watson.apps::IotPlatform
 cd .. ; rm -fr apptest ; mkdir apptest ; cd apptest
 sc -a -M com.ibm.streamsx.iot.watson.apps::SimpleAllDevices
 
