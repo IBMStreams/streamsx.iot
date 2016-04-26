@@ -1,0 +1,6 @@
+namespace com.ibm.streamsx.iot.hub;
+
+/**
+@exclude
+*/
+type _unused = int32 x;

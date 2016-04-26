@@ -1,0 +1,52 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2016
+ */
+ 
+ /**
+ * IoT message hub connectivity.
+ *
+ * # Message hub application
+ *
+ * The recommended approach for this toolkit is to implement
+ * connectivity to the IoT message hub in a single application
+ * that publishes topics for *device events*, *device commands*
+ * and optionally *device statuses*. This separates message hub
+ * specific connectivity from analytics against devices.
+ *
+ * Analytic applications then subscribe to these topics using
+ * [com.ibm.streamsx.iot::EventsSubscribe|EventsSubscribe],
+ * [com.ibm.streamsx.iot::CommandsSubscribe|CommandsSubscribe],
+ * and [com.ibm.streamsx.iot::StatusesSubscribe|StatusesSubscribe].
+ *
+ * Analytics applications can publish *device commands* to be
+ * sent to devices using [com.ibm.streamsx.iot::CommandPublish|CommandPublish].
+ * The message hub application subscribes to the topic and is then
+ * responsible for ensuring the *device command* is delivered.
+ *
+ * # IoT topics
+ *
+ * --- Message hub topics
+ * ------------------------------
+ * | Topic | Type | Description |
+ * |=======|======|=============|
+ * | `streamsx/iot/device/events` | [com.ibm.streamsx.iot::DeviceEvent|DeviceEvent] | *device events* sent by devices - published by hub application, subscribed to by analytic applications using [com.ibm.streamsx.iot::EventsSubscribe|EventsSubscribe]. |
+ * |---------------|---------------|----------------|
+ * | `streamsx/iot/device/commands/sent` | [com.ibm.streamsx.iot::DeviceCmd|DeviceCmd] | *device commands* sent to devices - published by hub application, subscribed to by analytic applications using [com.ibm.streamsx.iot::CommandsSubscribe|CommandsSubscribe]. |
+ * |---------------|---------------|----------------|
+ * | `streamsx/iot/device/commands/send` | [com.ibm.streamsx.iot::DeviceCmd|DeviceCmd] | Send a *device command* to a device - published by analytic applications using [com.ibm.streamsx.iot::CommandPublish|CommandPublish] and subscribed to by message hub application. The message hub application is responsible for sending the device onto the message hub for delivery to the device. |
+ * |---------------|---------------|----------------|
+ * | `streamsx/iot/device/statuses` | [com.ibm.streamsx.iot::DeviceStatus|DeviceStatus] | *device statuses* - published by hub application, subscribed to by analytic applications using [com.ibm.streamsx.iot::StatusesSubscribe|StatusesSubscribe]. Optional if the message hub does not provide device status events. |
+ * ------------------------------------------------
+ *
+ * # Supplied message hub applications
+ *
+ * This toolkit provides these message hub applications:
+ *
+ * * [com.ibm.streamsx.iot.watson.apps::IotfOrganization|IBM Watson Iot Platform]
+ *
+ * Others may be added in the future or a custom one can be created that
+ * publishes and subscribes to the correct topics.
+ */
+
+namespace com.ibm.streamsx.iot.hub;

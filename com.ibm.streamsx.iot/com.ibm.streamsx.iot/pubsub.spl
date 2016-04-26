@@ -25,7 +25,7 @@ use com.ibm.streamsx.topology.topic::Subscribe;
 
 /**
  * Subscribe to device events published under
- * the streams topic `iotf/device/events`.
+ * the streams topic `streamsx/iot/device/events`.
  *
  * This matches the stream topic published by
  * [com.ibm.streamsx.iot.watson.apps::IotfOrganization].
@@ -50,7 +50,7 @@ public composite EventsSubscribe(output stream<DeviceEvent> Events)
      stream<DeviceEvent> EventsAll = Subscribe()
      {
         param
-          topic: "iotf/device/events";
+          topic: "streamsx/iot/device/events";
           streamType: DeviceEvent;
      }
 
@@ -67,7 +67,7 @@ public composite EventsSubscribe(output stream<DeviceEvent> Events)
 
 /**
  * Subscribe to device commands published under
- * the streams topic `iotf/device/commands/sent`.
+ * the streams topic `streamsx/iotdevice/commands/sent`.
  *
  * This matches the stream topic published by
  * [com.ibm.streamsx.iot.watson.apps::IotfOrganization].
@@ -92,7 +92,7 @@ public composite CommandsSubscribe(output stream<DeviceCmd> Commands)
      stream<DeviceCmd> CommandsAll = Subscribe()
      {
         param
-          topic: "iotf/device/commands/sent";
+          topic: "streamsx/iot/device/commands/sent";
           streamType: DeviceCmd;
      }
 
@@ -109,7 +109,7 @@ public composite CommandsSubscribe(output stream<DeviceCmd> Commands)
 
 /**
  * Subscribe to device status updates published under
- * the streams topic `iotf/device/statuses`.
+ * the streams topic `streamsx/iot/device/statuses`.
  *
  * This matches the stream topic published by
  * [com.ibm.streamsx.iot.watson.apps::IotfOrganization].
@@ -131,7 +131,7 @@ public composite StatusesSubscribe(output stream<DeviceCmd> Statuses)
      stream<DeviceStatus> StatusesAll = Subscribe()
      {
         param
-          topic: "iotf/device/statuses";
+          topic: "streamsx/iot/device/statuses";
           streamType: DeviceStatus;
      }
 
@@ -146,7 +146,7 @@ public composite StatusesSubscribe(output stream<DeviceCmd> Statuses)
 
 /**
  * Publish an event to be sent to a device.
- * via the streams topic `iotf/device/commands/send`.
+ * via the streams topic `streamsx/iot/device/commands/send`.
  *
  * This matches the streams topic subscribed to by
  * [com.ibm.streamsx.iot.watson.apps::IotfOrganization].
@@ -159,7 +159,7 @@ public composite StatusesSubscribe(output stream<DeviceCmd> Statuses)
 public composite CommandPublish(input stream<DeviceCmd> Commands) {
    graph
      () as PublishCommand = Publish(Commands) {
-       param topic: "iotf/device/commands/send";
+       param topic: "streamsx/iot/device/commands/send";
      }
 }
 

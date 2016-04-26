@@ -23,11 +23,11 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  *
  * Streams of device events, commands and statuses are published:
  *
- * * Device events with streams topic: `iotf/devices/events` with schema of [DeviceEvent]
- * * Device commands with streams topic: `iotf/devices/commands/sent` with schema of [DeviceCmd]
- * * Device status updates with streams topic: `iotf/devices/statuses` with schema of [DeviceStatus]
+ * * Device events with streams topic: `streamsx/iot/devices/events` with schema of [DeviceEvent]
+ * * Device commands with streams topic: `streamsx/iot/devices/commands/sent` with schema of [DeviceCmd]
+ * * Device status updates with streams topic: `streamsx/iot/devices/statuses` with schema of [DeviceStatus]
  *
- * The streams topic `iotf/devices/commands/send` (schema [DeviceCmd])
+ * The streams topic `streamsx/iot/devices/commands/send` (schema [DeviceCmd])
  * is subscribed to allow analytic applications to send commands
  * to specific devices.
  *
