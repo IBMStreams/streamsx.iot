@@ -17,7 +17,7 @@ This toolkit depends on these toolkits:
 * `com.ibm.streamsx.topology`
 
 </info:description>
-    <info:version>0.7.0.commit_175a1fa</info:version>
+    <info:version>0.7.0.commit___dev__</info:version>
     <info:requiredProductVersion>4.1.0.0</info:requiredProductVersion>
   </info:identity>
   <info:dependencies>
