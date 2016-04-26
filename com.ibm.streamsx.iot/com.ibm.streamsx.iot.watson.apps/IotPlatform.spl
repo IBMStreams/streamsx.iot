@@ -1,0 +1,90 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2015,2016
+ */
+ namespace com.ibm.streamsx.iot.watson.apps;
+
+use com.ibm.streamsx.iot::*;
+use com.ibm.streamsx.iot.watson::*;
+use com.ibm.streamsx.topology.topic::Publish;
+use com.ibm.streamsx.topology.topic::Subscribe;
+
+ /**
+ * Application providing integration
+ * with an IBM Watson IoT Platform organization
+ *
+ * This application performs the role
+ * of ingest and egress (for device commands) for
+ * IBM Watson IoT Platform. Multiple independent
+ * analytic applications can then subscribe to the
+ * published streams as required. Thus these applications
+ * are isolated from having to have knowledge of
+ * connection details for the IBM Watson IoT Platform organization.
+ *
+ * Streams of device events, commands and statuses are published:
+ *
+ * * Device events with streams topic: `streamsx/iot/devices/events` with schema of [DeviceEvent]
+ * * Device commands with streams topic: `streamsx/iot/devices/commands/sent` with schema of [DeviceCmd]
+ * * Device status updates with streams topic: `streamsx/iot/devices/statuses` with schema of [DeviceStatus]
+ *
+ * The streams topic `streamsx/iot/devices/commands/send` (schema [DeviceCmd])
+ * is subscribed to allow analytic applications to send commands
+ * to specific devices.
+ *
+ * The `Publish` and `Subscribe` model from the
+ * `com.ibm.streamsx.topology.topic` toolkit
+ * is used. Applications may use the generic
+ * `Publish` and `Subscribe` operators from that
+ * toolkit but these operators provide
+ * additional functionality specific to this toolkit:
+ *
+ * * [com.ibm.streamsx.iot::EventsSubscribe] - Subscribe to device events, with filtering on device type and/or event identifier.
+ * * [com.ibm.streamsx.iot::CommandsSubscribe] - Subscribe to device commands, with filtering on device type and/or command identifier.
+ * * [com.ibm.streamsx.iot::StatusesSubscribe] - Subscribe to device status updates, with filtering on device type.
+ * * [com.ibm.streamsx.iot::CommandPublish] - Send a device command that will be sent to the device by this application.
+ *
+ * These submission time parameters must be defined:
+ * * `org` - Organization identifier
+ * * `authKey` - API key
+ * * `authToken` - API Token
+ */
+public composite IotPlatform {
+  param
+    expression<rstring> $org : getSubmissionTimeValue("org");
+    expression<rstring> $authKey : getSubmissionTimeValue("authKey");
+    expression<rstring> $authToken : getSubmissionTimeValue("authToken");
+    expression<boolean> $encrypted : (boolean) getSubmissionTimeValue("encrypted", "false");
+
+graph
+        (stream<DeviceStatus> Statuses; stream<DeviceEvent> Events; stream<DeviceCmd> Commands) as IotfDevices = AllDevices()
+		{
+			param
+				org : $org;
+				authKey : $authKey;
+				authToken : $authToken;
+                                encrypted : $encrypted;
+		}
+
+  () as PublishedEvents = Publish(Events) {
+    param topic: "streamsx/iot/device/events";
+  }
+  () as PublishedCommands = Publish(Commands) {
+    param topic: "streamsx/iot/device/commands/sent";
+  }
+  () as PublishedStatuses = Publish(Statuses) {
+    param topic: "streamsx/iot/device/statuses";
+  }
+
+  stream<DeviceCmd> CommandsToSend = Subscribe() {
+    param
+      topic: "streamsx/iot/device/commands/send";
+      streamType: DeviceCmd;
+  }
+  () as SendCommandsToDevice = SendCommandToDevice(CommandsToSend) {
+    param
+      org : $org;
+      authKey : $authKey;
+      authToken : $authToken;
+      encrypted : $encrypted;
+  }
+}

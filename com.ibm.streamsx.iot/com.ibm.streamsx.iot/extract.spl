@@ -1,0 +1,67 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2015,1026
+ */
+
+namespace com.ibm.streamsx.iot;
+
+use com.ibm.streamsx.datetime.convert::fromIso8601ToMillis;
+use com.ibm.streamsx.json::JSONToTuple;
+
+/**
+ * Extract application event data into an SPL tuple from the JSON.
+ * Extracts the data portion of an device event into
+ * the output tuple's attributes.
+ *
+ * The application event data is the value of the `d` key
+ * in the event's JSON. It is extracted to tuple type
+ * `dataType` in the output tuple with the assumption is
+ * is an JSON object.
+ * 
+ * The structure of `dataType` is expected to match JSON schema of the
+ * application event data. A subset of the attributes can be specified as well.
+ * Only those attributes that are present in `dataType` and the application
+ * event data will be converted. All other attributes will be ignored.
+ * If an invalid JSON string is found in the input, the operator will fail.
+ * Null values in JSON arrays are ignored. Null values for all other
+ * attributes will result in default initializled output attributes.
+ * Limitations: BLOB, MAP and COMPLEX attribute types are not supported
+ * in `dataType` and will be ignored.
+ *
+ * The event's timestamp (`ts` in the JSON) is extracted to
+ * the attribute `eventTs` in the output tuple.
+ * `eventTs` has type `com.ibm.streamsx.datetime.TimeMillis`
+ * representing the number of milliseconds since the 1970/01/01 epoch.
+ *
+ * @param events Filter expression for events to be extracted
+ * @param dataType Schema type used to convert the event's data JSON to.
+ *
+ * @input Events Input stream of [DeviceEvent] tuples.
+ * @output EventsWithData Output stream of device events with the timestamp and data extracted into an SPL tuple. Type of the stream is: [DeviceEventTs] `dataType`.
+*/
+public composite DeviceEventExtractData(input stream<DeviceEvent> Events; output EventsWithData) {
+    param
+        expression<boolean> $events;
+        type $dataType;
+
+    graph
+       stream<DeviceEvent> MatchingEvents = Filter(Events) {
+           param
+             filter: $events;
+       }
+
+       stream<DeviceEventId, tuple<rstring ts, $dataType d> > FullEvents = JSONToTuple(MatchingEvents) {
+       }
+       
+       stream<DeviceEventTs, $dataType> EventsWithData = Custom(FullEvents) {
+         logic onTuple FullEvents:
+         {
+              mutable EventsWithData event = {};
+              assignFrom(event, FullEvents);
+              event.eventTs = fromIso8601ToMillis(ts);
+              assignFrom(event, d);
+              
+              submit(event, EventsWithData);
+         }       
+       }
+}

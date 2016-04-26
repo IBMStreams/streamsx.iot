@@ -1,0 +1,85 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2015, 2016
+ */
+ 
+ /**
+ * Intenet of Things (IoT) integration.
+ * 
+ * The expected model for using IBM Streams to analyze events
+ * or data from thousands to millions of devices (*Internet of Things*)
+ * is that devices will be connected to a IoT scale message hub and
+ * Streams applications will subscribe to messages from the message hub
+ * to access the device events and to send commands.
+ * 
+ * # IoT device model
+ * TO BE FILLED IN
+ *
+ * # Microservices architecture
+ * 
+ * Use of the streaming topic based publish-subscribe model is recommended
+ * to allow analytic applications to be developed and deployed
+ * independent of the connectivity to message hub.
+ *
+ * This is achieved by submitting the a single application that
+ * connects to the device hub wich then publishes stream topics containing
+ * the device events, commands and optionally status updates. In
+ * addition it subscribes to a stream topic containing commands to
+ * be sent to devices.
+ *
+ * Analytic applications then use
+ * [EventsSubscribe], [CommandsSubscribe] and [StatusesSubscribe] to
+ * subscribe to streams to be analyzed.
+ *
+ * Analytic applications use [CommandPublish] to send device
+ * commands to individual devices.
+ *
+ * The benefits of this approach are:
+ * * Only a single application needs to know any authorization tokens required to connect to the message hub.
+ * * Analytic applications can be added and removed at any time without disrupting existing running applications.
+ *
+ * 
+ * # Device Events
+ * Devices publish device events that an SPL application can subscribe to
+ * using [EventsSubscribe].  The default is to subscribe to all event identifiers
+ * from all device types and ids. The operator is parameterized to allow
+ * only subscribing to a specific event id (which is really the type of the event) and/or a specific device type.
+ * 
+ * The assumption is made that the format of the event is JSON and the
+ * resulting stream is of type [DeviceEvent]. The `jsonString` parameter
+ * contains the event payload in serialized JSON. The event payload is a JSON object using
+ * [https://docs.internetofthings.ibmcloud.com/messaging/payload.html|event format specification],
+ * so that the application event data is the value of the `d` key.
+ * 
+ * The application event data can be extracted into an SPL tuple
+ * using [DeviceEventExtractData]. This operator takes an input stream
+ * of type [DeviceEvent] and produces a stream of type [DeviceEventTs]
+ * augmented with a `dataType` tuple type specified by the application.
+ * Since the application event data might be specific to
+ * the type of the `eventId` or even the combination of `typeId`
+ * and `eventId` an application may need to use a `Split` operator
+ * between the [DeviceEvents] and multiple [DeviceEventExtractData]
+ * invocations. An example of its use is in the
+ * [com.ibm.streamsx.iot.watson.quickstart::Quickstart] application.
+ *
+ * # Device Status
+ * Device status events, such as connect or disconnect, are subscribed to using
+ * [StatusesSubscribe] which produce a stream of type [DeviceStatus].
+ * 
+ * # Device Commands
+ * Devices can be sent commands, an SPL application can subscribe to
+ * commands being sent to devices using [CommandsSubscribe]. 
+ * The default is to subscribe to all commands identifiers
+ * for all device types and ids. The operator is parameterized to allow
+ * only subscribing to a specific command id (which is really the type of the command) and/or a specific device type. 
+ * 
+ * An SPL application can send a command to a specific device using [CommandPublish]
+ * with the input stream type of [DeviceCmd]. The `jsonString` attribute contains
+ * the application specific portion of the command represented as serialized JSON.
+ *
+ * Applications can use [CommandTupleToPayload] to convert an SPL tuple
+ * representation of the command payload to JSON.
+ * 
+ */
+
+namespace com.ibm.streamsx.iot;

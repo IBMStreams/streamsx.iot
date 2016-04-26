@@ -1,0 +1,59 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2015,2016
+ */
+
+namespace com.ibm.streamsx.iot.watson;
+
+use com.ibm.streamsx.iot::*;
+
+/**
+ * Composite that produces streams for all devices in an organization.
+ * 
+ * @param org Organization identifier.
+ * @param authKey Application key.
+ * @param authToken Application authorization token.
+ * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to `true`.
+ * 
+ * @output Statuses Device status events
+ * @output Events Device events
+ * @output Commands Device commands events
+ */
+public composite AllDevices(output stream<DeviceStatus> Statuses, stream<DeviceEvent> Events, stream<DeviceCmd> Commands)
+{
+   param
+        expression<rstring> $org;
+        expression<rstring> $authKey;
+        expression<rstring> $authToken;
+        expression<boolean> $encrypted : true;
+
+	graph
+		
+		stream<DeviceStatus> Statuses = DeviceStatuses()
+		{
+			param
+				org : $org ;
+				authKey : $authKey ;
+				authToken : $authToken ;
+                                encrypted: $encrypted;
+		}
+
+		stream<DeviceEvent> Events = DeviceEvents()
+		{
+			param
+				org : $org ;
+				authKey : $authKey ;
+				authToken : $authToken ;
+                                encrypted: $encrypted;
+		}
+
+		stream<DeviceCmd> Commands = DeviceCommands()
+		{
+			param
+				org : $org ;
+				authKey : $authKey ;
+				authToken : $authToken ;
+                                encrypted: $encrypted;
+		}
+}
+

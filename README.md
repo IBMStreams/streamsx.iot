@@ -1,8 +1,35 @@
-# streamsx.iotf
+# com.ibm.streamsx.iot
 
-[SPLDOC for com.ibm.streamsx.iotf toolkit](http://ibmstreams.github.io/streamsx.iotf/doc/spldoc/html/index.html)
+## Overview
 
-## Connectivity with IBM Watson IoT Platform
+A toolkit that provides Internet of Things (IoT) functionality for IBM Streams,
+including:
+
+ * IoT device model
+ * Separation of device connectivty and analytics.
+ * Application integration with IBM Watson IoT Platform
+ * Application integration with Apache Quarks
+
+## IoT device model.
+
+A generic IoT device model where:
+ * Devices have a type (e.g. Raspberry_Pi_B) and a identifier, with the pair being unique.
+ * Devices send events comprising of a event identifier and an event specific payload.
+ * Devices receive commands comprising of a command identifier and a command specific payload.
+
+Devices typically communicate through an internet of things scale message hub to send *device events* and receive *device commands*.
+
+IBM Streams applications subscribe to device events and device commands to perform analytics against the state of device and other revelant data (such as weather, systems of record etc.). The result of these analytics may result in *device commands* being sent to the device to alter its behaviour etc.
+
+The device model matches the ones used by Apache Quarks and IBM Watson IoT Platform for devices connected to Streams through a message hub.
+
+## Microservice architecture
+
+This toolkits uses the streaming publish-subscribe model within IBM Streams applications to separate connectivity to the message hub from analytical applications. An independent applications connects to the message hub and publishes streamsfor device events, device commands and device statues (if supported by the message hub). Analytics applications then subscribe to device events and or commands of interest.
+
+In addition the message hub connectivity application subscribes to streams published by applications wanting to send device commands.
+
+## Integration with IBM Watson IoT Platform
 
 Provide the ability to have an IBM Streams application easily interact with IBM Watson IoT Platform, either in Bluemix (Streaming Analytics Service) or on-premises (IBM Streams).
 

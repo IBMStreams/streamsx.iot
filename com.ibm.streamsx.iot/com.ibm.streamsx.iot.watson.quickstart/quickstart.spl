@@ -1,0 +1,105 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2015  
+ */
+ 
+ namespace com.ibm.streamsx.iot.watson.quickstart ;
+
+use com.ibm.streamsx.iot::* ;
+use com.ibm.streamsx.iot.watson::* ;
+use com.ibm.streamsx.messaging.mqtt::MQTTSource ;
+
+/**
+ * Tuple type that matches the Quickstart device simulator event data.
+ * This is used as the `dataType` parameter in an invocation of
+ * [com.ibm.streamsx.iot::DeviceEventExtractData].
+*/
+type QSData = tuple<float64 temp, float64 humidity, float64 objectTemp>;
+
+ /**
+ * Quickstart application that subscribes to
+ * a single quickstart device's events.
+ * 
+ * This application is very simple in that it
+ * just produces a stream of events from the
+ * quickstart device. The data may be viewed
+ * using IBM Streams views in Streams Studio
+ * or Streams console. This is intended as a way
+ * to explore IBM Watson IoT Platform and IBM Streams integration.
+ *
+ * The application defines two views:
+ * * `RawEvents` - JSON device events produced by [com.ibm.streamsx.iot.watson::DeviceEvents].
+ * * `ExtractedEvents` - [QSData] device events produced by [com.ibm.streamsx.iot::DeviceEventExtractData].
+ * 
+ * Additional functionality may be added in the future.
+ * 
+ * The submission time parameter `deviceId` defines the
+ * device being monitored.
+ */
+public composite Quickstart()
+{
+	graph
+        @view(name = "RawEvents", port = DeviceEvents, sampleSize = 5, bufferSize = 50)
+		stream<DeviceEvent> DeviceEvents = QuickstartDeviceEvents()
+		{		         
+			param	
+               deviceId: getSubmissionTimeValue("deviceId");
+        }
+      
+        @view(name = "ExtractedEvents", port = DeviceData, sampleSize = 5, bufferSize = 50)
+        stream<DeviceEventTs, QSData> DeviceData = DeviceEventExtractData(DeviceEvents) {
+           param
+              dataType: QSData;
+        }
+}
+
+ /**
+ * Subscribe to a device's events for Quickstart.
+ * 
+ * This operator subscribes to the MQTT topic:
+ * 
+ * `iot-2/type/+/id/`*deviceId*`/evt/+/fmt/json`
+ * 
+ * @param deviceId Subscribe to a device's events.
+ * 
+ * @output Events Stream of device events.
+ */
+public composite QuickstartDeviceEvents(output stream<DeviceEvent> Events)
+{
+    param
+        expression<rstring> $deviceId;
+	graph
+		stream<RawMsg> RawEvents = QSDeviceTopic()
+		{		         
+			param	
+            topic: "iot-2/type/+/id/" + $deviceId + "/evt/+/fmt/json";
+            }
+            
+       stream<DeviceEvent> Events = Raw2DeviceEvent(RawEvents) {}
+}
+/*
+ * @exclude
+ */
+composite QSDeviceTopic(output Messages)
+{
+    param
+        expression<rstring> $topic;
+	graph
+		stream<RawMsg> Messages = MQTTSource()
+		{
+		    logic state: {
+		      rstring _topic = $topic;
+		      rstring _serverURI = getIotfUri("quickstart");
+		      rstring _clientId = "a:quickstart:" + (rstring) jobID() +"_qst";
+		    }
+		         
+			param
+				topics : _topic ;
+				serverURI: _serverURI;
+				clientID  : _clientId;
+				
+				topicOutAttrName: "topic";
+				dataAttributeName: "jsonString";
+		}
+}
+
