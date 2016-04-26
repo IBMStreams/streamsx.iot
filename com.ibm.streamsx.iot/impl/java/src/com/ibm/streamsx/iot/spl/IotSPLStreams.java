@@ -21,13 +21,13 @@ import com.ibm.streamsx.topology.spl.SPLStream;
  * These streams using the micro-service model promoted
  * by the {@code com.ibm.streamsx.iotf} toolkit. In order to
  * interact with IoT Platform the SPL application
- * {@code com.ibm.streamsx.iotf.apps::IotfOrganization}
+ * {@code com.ibm.streamsx.iot.watson.apps::IotfOrganization}
  * must be running.
  *
  */
-public class IotfSPLStreams {
+public class IotSPLStreams {
     
-    private IotfSPLStreams() {}
+    private IotSPLStreams() {}
     
     /**
      * Subscribe to device events as SPL tuples.
@@ -38,14 +38,14 @@ public class IotfSPLStreams {
      * are subscribed to.
      * 
      * To receive device events the SPL application
-     * {@code com.ibm.streamsx.iotf.apps::IotfOrganization}
+     * {@code com.ibm.streamsx.iot.watson.apps::IotfOrganization}
      * must be running in the same Streams instance.
      * 
      * @param te Topology to create this source in.
      * @param eventId Event identifiers to subscribe to. If no event identf
      * @return Stream containing device events.
      * 
-     * @see com.ibm.streamsx.iot.IotfStreams#eventsSubscribe(TopologyElement, String...)
+     * @see com.ibm.streamsx.iot.IotStreams#eventsSubscribe(TopologyElement, String...)
      */
     public static SPLStream eventsSubscribe(TopologyElement te, String ...eventId) {
         
@@ -73,7 +73,7 @@ public class IotfSPLStreams {
      * @param cmdId Event identifiers to subscribe to. If no event identf
      * @return Stream containing device events.
      * 
-     * @see com.ibm.streamsx.iot.IotfStreams#eventsSubscribe(TopologyElement, String...)
+     * @see com.ibm.streamsx.iot.IotStreams#eventsSubscribe(TopologyElement, String...)
      */
     public static SPLStream commandsSubscribe(TopologyElement te, String ...cmdId) {
         

@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 import com.ibm.json.java.JSONObject;
 import com.ibm.streamsx.iot.Device;
 import com.ibm.streamsx.iot.DeviceCmd;
-import com.ibm.streamsx.iot.IotfStreams;
+import com.ibm.streamsx.iot.IotStreams;
 import com.ibm.streamsx.topology.TStream;
 import com.ibm.streamsx.topology.Topology;
 import com.ibm.streamsx.topology.TopologyElement;
@@ -26,7 +26,7 @@ import com.ibm.streamsx.topology.context.StreamsContextFactory;
 /**
  * Sample application subscribing to device commands.
  * 
- * @see com.ibm.streamsx.iot.IotfStreams#commandsSubscribe(TopologyElement, String...)
+ * @see com.ibm.streamsx.iot.IotStreams#commandsSubscribe(TopologyElement, String...)
  */
 public class SendCommand {
 
@@ -60,7 +60,7 @@ public class SendCommand {
             return new DeviceCmd(device, "display", payload);
         }, 10, SECONDS);
         
-        IotfStreams.commandPublish(command);
+        IotStreams.commandPublish(command);
         
         // Submit to BlueMix
         Map<String,Object> config = new HashMap<>();      

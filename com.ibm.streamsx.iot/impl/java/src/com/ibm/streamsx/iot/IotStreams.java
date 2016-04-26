@@ -4,7 +4,7 @@
  */
 package com.ibm.streamsx.iot;
 
-import com.ibm.streamsx.iot.spl.IotfSPLStreams;
+import com.ibm.streamsx.iot.spl.IotSPLStreams;
 import com.ibm.streamsx.iot.spl.Schemas;
 import com.ibm.streamsx.topology.TStream;
 import com.ibm.streamsx.topology.TopologyElement;
@@ -18,13 +18,13 @@ import com.ibm.streamsx.topology.spl.SPLStreams;
  * These streams using the micro-service model promoted
  * by the {@code com.ibm.streamsx.iotf} toolkit. In order to
  * interact with IoT Platform the SPL application
- * {@code com.ibm.streamsx.iotf.apps::IotfOrganization}
+ * {@code com.ibm.streamsx.iot.watson.apps::IotfOrganization}
  * must be running.
  *
  */
-public class IotfStreams {
+public class IotStreams {
     
-    private IotfStreams() {}
+    private IotStreams() {}
     
     /**
      * Subscribe to events as {@code DeviceEvent} instances.
@@ -45,7 +45,7 @@ public class IotfStreams {
      */
     public static TStream<DeviceEvent> eventsSubscribe(TopologyElement te, String ...eventId) {
         
-        SPLStream splEvents = IotfSPLStreams.eventsSubscribe(te, eventId);      
+        SPLStream splEvents = IotSPLStreams.eventsSubscribe(te, eventId);      
         TStream<DeviceEvent> events = splEvents.transform(DeviceEvent::newDeviceEvent);        
         return events;
     }
@@ -59,7 +59,7 @@ public class IotfStreams {
      * are subscribed to.
      * 
      * To receive device events the SPL application
-     * {@code com.ibm.streamsx.iotf.apps::IotfOrganization}
+     * {@code com.ibm.streamsx.iot.watson.apps::IotfOrganization}
      * must be running in the same Streams instance.
      * 
      * @param te Topology to create this source in.
@@ -69,7 +69,7 @@ public class IotfStreams {
      */
     public static TStream<DeviceCmd> commandsSubscribe(TopologyElement te, String ...cmdId) {
         
-        SPLStream splCommands = IotfSPLStreams.commandsSubscribe(te, cmdId);      
+        SPLStream splCommands = IotSPLStreams.commandsSubscribe(te, cmdId);      
         TStream<DeviceCmd> commands = splCommands.transform(DeviceCmd::newDeviceCmd);        
         return commands;
     }
@@ -79,7 +79,7 @@ public class IotfStreams {
                 (cmd,tuple) -> cmd.toTuple(tuple),
                 Schemas.DEVICE_CMD);
         
-        IotfSPLStreams.commandPublish(splCommands);
+        IotSPLStreams.commandPublish(splCommands);
     }
 
 }

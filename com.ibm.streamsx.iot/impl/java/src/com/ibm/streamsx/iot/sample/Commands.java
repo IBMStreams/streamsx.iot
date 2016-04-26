@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.ibm.streamsx.iot.DeviceCmd;
-import com.ibm.streamsx.iot.IotfStreams;
+import com.ibm.streamsx.iot.IotStreams;
 import com.ibm.streamsx.topology.TStream;
 import com.ibm.streamsx.topology.Topology;
 import com.ibm.streamsx.topology.TopologyElement;
@@ -20,7 +20,7 @@ import com.ibm.streamsx.topology.context.StreamsContextFactory;
 /**
  * Sample application subscribing to device commands.
  * 
- * @see com.ibm.streamsx.iot.IotfStreams#commandsSubscribe(TopologyElement, String...)
+ * @see com.ibm.streamsx.iot.IotStreams#commandsSubscribe(TopologyElement, String...)
  */
 public class Commands {
 
@@ -50,7 +50,7 @@ public class Commands {
         Topology topology = new Topology();
         
         // Subscribe to device events and just print them to standard out.
-        TStream<DeviceCmd> commands = IotfStreams.commandsSubscribe(topology, cmdIds);        
+        TStream<DeviceCmd> commands = IotStreams.commandsSubscribe(topology, cmdIds);        
         commands.print();
         
         // Submit to BlueMix
