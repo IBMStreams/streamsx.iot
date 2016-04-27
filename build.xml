@@ -48,6 +48,7 @@
           <fileset dir="${basedir}" includes="release-*/"/>
         </delete>
   	<ant dir="${toolkit}" target="clean"/>
+        <ant dir="${toolkit.test}" target="clean"/>
   </target>
 
   <target name="toolkit"
@@ -101,8 +102,7 @@
 
   <!-- Test targets -->
   <target name="tests" depends="toolkit">
-     <ant dir="${toolkit}" target="test"/>
-     <ant dir="${toolkit.test}" target="all"/>
+     <ant dir="${toolkit.test}" target="test"/>
   </target>
 
 
