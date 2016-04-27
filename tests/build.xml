@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="streamsx.iot.test" default="test">
+
+	<property environment="env"/>
+	<property name="streams.install" value="${env.STREAMS_INSTALL}"/>
+	<taskdef resource="com/ibm/streamsx/ant/streams.xml"/>
+
+	<property name="iot.tk"
+	   location="${basedir}/../com.ibm.streamsx.iot"/>
+	<property name="streams.tk"
+	   location="${streams.install}/toolkits"/>
+	<property name="extra.tk"
+	   location="${env.HOME}/toolkits"/>
+	<property name="sabs"
+	   location="${basedir}/sabs"/>
+
+	<!-- Index the Vwap , runs spl-make-toolkit -->
+	<!--
+	<target name ="index">
+		<indextoolkit location="${vwap.toolkit}"/>
+	</target>
+	-->
+
+       <target name="test" depends="init,build.spl.apps,build.sample.apps"/>
+
+       <target name="init" depends="clean">
+          <mkdir dir="${sabs}"/>
+       </target>
+
+	<!-- Compile the applications within the toolkit -->
+	<target name="build.spl.apps" depends="init">
+	  <build.iot.app
+  	    namespace="com.ibm.streamsx.iot.watson.apps"
+  	    composite="IotPlatform" />
+	  <build.iot.app
+  	    namespace="com.ibm.streamsx.iot.watson.apps"
+  	    composite="SimpleAllDevices" />
+	</target>
+	<!-- Compile the smple applications -->
+	<target name="build.sample.apps" depends="init">
+	  <build.sample.app
+  	    toolkit="${basedir}/../samples/CountEvents"
+  	    namespace="com.ibm.streamsx.iot.sample.countevents"
+  	    composite="CountEvents" />
+	  <build.sample.app
+  	    toolkit="${basedir}/../samples/Quarks"
+  	    namespace="com.ibm.streamsx.iot.sample.quarks"
+  	    composite="IotfSensors" />
+	</target>
+
+    <target name="clean">
+        <delete dir="${basedir}/output"/>
+        <delete dir="${sabs}"/>
+    </target>
+
+    <macrodef name="build.iot.app">
+     <attribute name="namespace"/>
+     <attribute name="composite"/>
+     <sequential>
+         <splcompile
+  	    mainComposite="@{namespace}::@{composite}"
+  	      optimize="true" noToolkitIndexing="true">
+	   <toolkit location="${iot.tk}" />
+	   <toolkit location="${extra.tk}" />
+           <toolkit location="${streams.tk}" />
+        </splcompile>
+        <move file="${basedir}/output/@{namespace}.@{composite}.sab"
+             toDir="${sabs}"/>
+        <delete dir="${basedir}/output"/>
+     </sequential>
+   </macrodef>
+
+    <macrodef name="build.sample.app">
+     <attribute name="toolkit"/>
+     <attribute name="namespace"/>
+     <attribute name="composite"/>
+     <sequential>
+         <splcompile
+  	    mainComposite="@{namespace}::@{composite}"
+  	      optimize="true" noToolkitIndexing="true">
+           <toolkit location="@{toolkit}" />
+	   <toolkit location="${iot.tk}" />
+	   <toolkit location="${extra.tk}" />
+           <toolkit location="${streams.tk}" />
+        </splcompile>
+        <move file="${basedir}/output/@{namespace}.@{composite}.sab"
+             toDir="${sabs}"/>
+        <delete dir="${basedir}/output"/>
+     </sequential>
+   </macrodef>
+
+</project>
+
