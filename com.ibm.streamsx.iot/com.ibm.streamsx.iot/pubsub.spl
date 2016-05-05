@@ -20,8 +20,7 @@
 
  namespace com.ibm.streamsx.iot;
 
-use com.ibm.streamsx.topology.topic::Publish;
-use com.ibm.streamsx.topology.topic::Subscribe;
+use com.ibm.streamsx.topology.topic::*;
 
 /**
  * Subscribe to device events published under
@@ -46,14 +45,27 @@ public composite EventsSubscribe(output stream<DeviceEvent> Events)
      expression<list<rstring>> $typeIds : [];
      expression<list<rstring>> $eventIds : [];
 
+   type
+       static _EventParam = tuple<list<rstring> typeIds, list<rstring> eventIds>;
+
    graph
+/*
      stream<DeviceEvent> EventsAll = Subscribe()
+*/
+     stream<DeviceEvent> Events = FilteredSubscribe()
      {
         param
           topic: "streamsx/iot/device/events";
           streamType: DeviceEvent;
+          remoteFilter: 
+              andFilter(
+                  inFilter("typeId", $typeIds),
+                  inFilter("eventId", $eventIds));
+          localFilterFunction: com.ibm.streamsx.iot::filterEvents;
+          localFilterParameter: { typeIds = $typeIds, eventIds = $eventIds};
      }
 
+/*
      // Currently we are filtering on the subscribe side
      // filter will be pushed to the publish side in the future
      stream<DeviceEvent> Events = Filter(EventsAll) {
@@ -63,6 +75,14 @@ public composite EventsSubscribe(output stream<DeviceEvent> Events)
            &&
            ((size($eventIds) == 0) || (eventId in $eventIds));
      }
+*/
+}
+
+public boolean filterEvents(DeviceEvent e, EventsSubscribe._EventParam p) {
+    return
+       ((size(p.typeIds) == 0) || (e.typeId in p.typeIds))
+           &&
+       ((size(p.eventIds) == 0) || (e.eventId in p.eventIds));
 }
 
 /**
