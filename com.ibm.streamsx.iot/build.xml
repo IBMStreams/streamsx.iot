@@ -8,26 +8,7 @@
   <property environment="env" />
   <property name="streams.install" value="${env.STREAMS_INSTALL}" />
 
-  <property name="src.dir" value="impl/java/src" />
-  <property name="build.dir" value="impl/java/classes" />
-  <property name="lib.dir" value="lib" />
-  <property name="jarfile" value="com.ibm.streamsx.iot.jar" />
-
-  <path id="cp.streams">
-    <pathelement location="${streams.install}/lib/com.ibm.streams.operator.samples.jar" />
-    <pathelement location="${streams.install}/toolkits/com.ibm.streamsx.topology/lib/com.ibm.streamsx.topology.jar" />
-  </path>
-
-  <path id="cp.compile">
-    <path refid="cp.streams" />
-  </path>
-
-  <target name="init">
-    <mkdir dir="${build.dir}" />
-    <mkdir dir="${lib.dir}" />
-  </target>
-
- <target name="all" depends="jar,javadoc">
+ <target name="all">
     <!-- nothing to do yet! -->
  </target>
   <target name="clean" depends="cleanToolkitxml">
@@ -36,8 +17,6 @@
 	<delete>
 	  <fileset dir="${src.dir}" includes="**/*$StreamsModel.java"/>
 	</delete>
-	<delete dir="${build.dir}" />
-	<delete dir="${lib.dir}" />
 	<delete dir="output"/>
   </target>
   <target name="indextoolkit" >
@@ -56,35 +35,4 @@
 			</fileset>
 		</delete>
 	</target>
-  <target name="compile" depends="init">
-    <javac srcdir="${src.dir}" destdir="${build.dir}" debug="true"
-	includeantruntime="no">
-	<classpath>
-          <path refid="cp.compile" />
-	</classpath>
-    </javac>
-   </target>
-
-   <target name="jar" depends="compile">
-	<jar destfile="${lib.dir}/${jarfile}" basedir="${build.dir}" includes="com/ibm/streamsx/iot/**" filesonly="true">
-	</jar>
-	<delete dir="${build.dir}" />
-    </target>
-
-    <target name="javadoc">
-       <javadoc destdir="${basedir}/doc/javadoc" classpathref="cp.streams"
-          Overview="${src.dir}/overview.html"
-          Windowtitle="Java API for com.ibm.streamsx.iot"
-          Footer="streamsx.iot @ IBMStreams GitHub"
-          failonwarning="yes"
-          linksource="yes"
-          additionalparam="-Xdoclint:none">
-            <fileset dir="${src.dir}">
-               <include name="com/ibm/streamsx/iot/**"/>
-            </fileset>
-           <group title="API" packages="com.ibm.streamsx.iot:com.ibm.streamsx.iot.spl"/>
-           <group title="Samples" packages="com.ibm.streamsx.iot.sample"/>
-
-       </javadoc>
-    </target>
 </project>
