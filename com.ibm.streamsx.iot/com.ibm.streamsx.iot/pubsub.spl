@@ -49,9 +49,6 @@ public composite EventsSubscribe(output stream<DeviceEvent> Events)
        static _EventParam = tuple<list<rstring> typeIds, list<rstring> eventIds>;
 
    graph
-/*
-     stream<DeviceEvent> EventsAll = Subscribe()
-*/
      stream<DeviceEvent> Events = FilteredSubscribe()
      {
         param
@@ -64,20 +61,11 @@ public composite EventsSubscribe(output stream<DeviceEvent> Events)
           localFilterFunction: com.ibm.streamsx.iot::filterEvents;
           localFilterParameter: { typeIds = $typeIds, eventIds = $eventIds};
      }
-
-/*
-     // Currently we are filtering on the subscribe side
-     // filter will be pushed to the publish side in the future
-     stream<DeviceEvent> Events = Filter(EventsAll) {
-       param
-        filter:
-           ((size($typeIds) == 0) || (typeId in $typeIds))
-           &&
-           ((size($eventIds) == 0) || (eventId in $eventIds));
-     }
-*/
 }
 
+/**
+ @exclude
+*/
 public boolean filterEvents(DeviceEvent e, EventsSubscribe._EventParam p) {
     return
        ((size(p.typeIds) == 0) || (e.typeId in p.typeIds))
@@ -108,23 +96,32 @@ public composite CommandsSubscribe(output stream<DeviceCmd> Commands)
      expression<list<rstring>> $typeIds : [];
      expression<list<rstring>> $cmdIds : [];
 
+   type
+       static _CmdParam = tuple<list<rstring> typeIds, list<rstring> cmdIds>;
+
    graph
-     stream<DeviceCmd> CommandsAll = Subscribe()
+     stream<DeviceCmd> Commands = FilteredSubscribe()
      {
         param
           topic: "streamsx/iot/device/commands/sent";
           streamType: DeviceCmd;
+          remoteFilter: 
+              andFilter(
+                  inFilter("typeId", $typeIds),
+                  inFilter("cmdId", $cmdIds));
+          localFilterFunction: com.ibm.streamsx.iot::filterCommands;
+          localFilterParameter: { typeIds = $typeIds, cmdIds = $cmdIds};
      }
+}
 
-     // Currently we are filtering on the subscribe side
-     // filter will be pushed to the publish side in the future
-     stream<DeviceCmd> Commands = Filter(CommandsAll) {
-       param
-        filter:
-           ((size($typeIds) == 0) || (typeId in $typeIds))
+/**
+ @exclude
+*/
+public boolean filterCommands(DeviceCmd c, CommandsSubscribe._CmdParam p) {
+    return
+       ((size(p.typeIds) == 0) || (c.typeId in p.typeIds))
            &&
-           ((size($cmdIds) == 0) || (cmdId in $cmdIds));
-     }
+       ((size(p.cmdIds) == 0) || (c.cmdId in p.cmdIds));
 }
 
 /**

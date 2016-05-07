@@ -14,10 +14,7 @@
   <target name="clean" depends="cleanToolkitxml">
      <delete dir="${basedir}/doc/spldoc" quiet="true"/>
      <delete dir="${basedir}/doc/javadoc" quiet="true"/>
-	<delete>
-	  <fileset dir="${src.dir}" includes="**/*$StreamsModel.java"/>
-	</delete>
-	<delete dir="output"/>
+     <delete dir="output"/>
   </target>
   <target name="indextoolkit" >
      <echo message="Tookit to index: ${basedir}"/>
