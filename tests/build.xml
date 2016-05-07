@@ -14,18 +14,54 @@
 	<property name="sabs"
 	   location="${basedir}/sabs"/>
 
-	<!-- Index the Vwap , runs spl-make-toolkit -->
-	<!--
-	<target name ="index">
-		<indextoolkit location="${vwap.toolkit}"/>
-	</target>
-	-->
+  <property name="testsrc.dir" value="src/test/java" />
+  <property name="testbuild.dir" value="classes" />
+  <property name="testreports.dir" value="reports" />
 
-       <target name="test" depends="init,build.spl.apps,build.sample.apps"/>
+  <path id="cp.streams">
+    <pathelement location="${streams.install}/lib/com.ibm.streams.operator.samples.jar" />
+    <pathelement location="${user.home}/toolkits/com.ibm.streamsx.topology/lib/com.ibm.streamsx.topology.jar" />
+    <pathelement location="${streams.install}/toolkits/com.ibm.streamsx.topology/lib/com.ibm.streamsx.topology.jar" />
+  </path>
+
+  <path id="cp.compile">
+    <path refid="cp.streams" />
+    <pathelement location="../com.ibm.streamsx.iot/lib/com.ibm.streamsx.iot.jar" />
+  </path>
+
+       <target name="test" depends="init,unittests,build.spl.apps,build.sample.apps"/>
 
        <target name="init" depends="clean">
           <mkdir dir="${sabs}"/>
+          <mkdir dir="${testbuild.dir}"/>
+          <mkdir dir="${testreports.dir}"/>
        </target>
+
+  <target name="compile" depends="init">
+    <javac srcdir="${testsrc.dir}" destdir="${testbuild.dir}" debug="true"
+	includeantruntime="yes">
+	<classpath>
+          <path refid="cp.compile" />
+	</classpath>
+    </javac>
+   </target>
+
+   <target name="unittests" depends="compile">
+   <junit printsummary="yes" haltonfailure="yes">
+     <classpath>
+         <pathelement location="${testbuild.dir}"/>
+         <path refid="cp.compile"/>
+     </classpath>
+
+  <formatter type="xml"/>
+
+    <batchtest fork="yes" todir="${testreports.dir}">
+      <fileset dir="${testsrc.dir}">
+         <include name="**/*Test*.java"/>
+      </fileset>
+    </batchtest>
+    </junit>
+    </target>
 
 	<!-- Compile the applications within the toolkit -->
 	<target name="build.spl.apps" depends="init">
@@ -51,6 +87,8 @@
     <target name="clean">
         <delete dir="${basedir}/output"/>
         <delete dir="${sabs}"/>
+        <delete dir="${testbuild.dir}"/>
+        <delete dir="${testreports.dir}"/>
     </target>
 
     <macrodef name="build.iot.app">

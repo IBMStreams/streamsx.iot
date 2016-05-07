@@ -54,6 +54,7 @@ public composite IotPlatform {
     expression<rstring> $authKey : getSubmissionTimeValue("authKey");
     expression<rstring> $authToken : getSubmissionTimeValue("authToken");
     expression<boolean> $encrypted : (boolean) getSubmissionTimeValue("encrypted", "false");
+    expression<boolean> $allowFilters : true;
 
 graph
         (stream<DeviceStatus> Statuses; stream<DeviceEvent> Events; stream<DeviceCmd> Commands) as IotfDevices = AllDevices()
@@ -67,12 +68,15 @@ graph
 
   () as PublishedEvents = Publish(Events) {
     param topic: "streamsx/iot/device/events";
+          allowFilter: $allowFilters;
   }
   () as PublishedCommands = Publish(Commands) {
     param topic: "streamsx/iot/device/commands/sent";
+          allowFilter: $allowFilters;
   }
   () as PublishedStatuses = Publish(Statuses) {
     param topic: "streamsx/iot/device/statuses";
+          allowFilter: $allowFilters;
   }
 
   stream<DeviceCmd> CommandsToSend = Subscribe() {

@@ -48,18 +48,30 @@ public class IotSPLStreams {
      * 
      * @see com.ibm.streamsx.iot.IotStreams#eventsSubscribe(TopologyElement,
      *      String...)
-     */
-    public static SPLStream eventsSubscribe(TopologyElement te, String... eventId) {
+     */   
+    public static SPLStream eventsSubscribe(TopologyElement te, String[] typeIds, String... eventId) {
 
         Map<String, Object> params = new HashMap<>();
+        if (typeIds != null && typeIds.length != 0)
+            params.put("typeIds", listRStringParam(typeIds));
+
         if (eventId != null && eventId.length != 0)
-            params.put("eventIds", listRStringParam(eventId));
+            params.put("eventIds", listRStringParam(eventId));    
 
         return SPL.invokeSource(te, "com.ibm.streamsx.iot::EventsSubscribe", params, Schemas.DEVICE_EVENT);
     }
+    
+    public static SPLStream statusesSubscribe(TopologyElement te, String ... typeId) {
+
+        Map<String, Object> params = new HashMap<>();
+        if (typeId != null && typeId.length != 0)
+            params.put("typeIds", listRStringParam(typeId));
+ 
+        return SPL.invokeSource(te, "com.ibm.streamsx.iot::StatusesSubscribe", params, Schemas.DEVICE_STATUS);
+    }
 
     /**
-     * Subscribe to device commands as SPL tuples.
+     * Subscribe to sent device commands as SPL tuples.
      * 
      * Subscribes to all device commands with command identifiers listed in
      * {@code cmdId}. If {@code cmdId} is empty or passed as a {@code null}
@@ -79,9 +91,12 @@ public class IotSPLStreams {
      * @see com.ibm.streamsx.iot.IotStreams#eventsSubscribe(TopologyElement,
      *      String...)
      */
-    public static SPLStream commandsSubscribe(TopologyElement te, String... cmdId) {
+    public static SPLStream commandsSubscribe(TopologyElement te, String[] typeIds, String... cmdId) {
 
         Map<String, Object> params = new HashMap<>();
+        if (typeIds != null && typeIds.length != 0)
+            params.put("typeIds", listRStringParam(typeIds));
+
         if (cmdId != null && cmdId.length != 0)
             params.put("cmdIds", listRStringParam(cmdId));
 
