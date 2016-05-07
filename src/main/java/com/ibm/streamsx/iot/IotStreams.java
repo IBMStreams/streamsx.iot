@@ -16,8 +16,8 @@ import com.ibm.streamsx.topology.spl.SPLStreams;
  * 
  * These streams using the micro-service model promoted by the
  * {@code com.ibm.streamsx.iot} toolkit. In order to interact with IoT Platform
- * the SPL application
- * {@code com.ibm.streamsx.iot.watson.apps::IotfOrganization} must be running.
+ * the Streams application
+ * {@code com.ibm.streamsx.iot.watson.apps::IotPlatform} must be running.
  *
  */
 public class IotStreams {
@@ -32,23 +32,59 @@ public class IotStreams {
      * {@code eventId}. If {@code eventId} is empty or passed as a {@code null}
      * array then all device events are subscribed to.
      * 
-     * To receive device events the SPL application
-     * {@code com.ibm.streamsx.iot.watson.apps::IotfOrganization} must be
+     * To receive device events the Streams application
+     * {@code com.ibm.streamsx.iot.watson.apps::IotPlatform} must be
      * running in the same Streams instance.
      * 
      * @param te
      *            Topology to create this source in.
      * @param eventId
-     *            Event identifiers to subscribe to.
+     *            Event identifiers to subscribe to. If none are provided then
+     *            all event identifiers are subscribed to.
      * @return Stream containing device events.
      * 
      */
     public static TStream<DeviceEvent> eventsSubscribe(TopologyElement te, String... eventId) {
 
-        SPLStream splEvents = IotSPLStreams.eventsSubscribe(te, eventId);
+        return eventsSubscribe(te, null, eventId);
+    }
+    
+    /**
+     * Subscribe to events as {@code DeviceEvent} instances.
+     * 
+     * Subscribes to all device events with:
+     * <UL>
+     * <LI>All device type identifiers listed in {@code typeIds}. If
+     * {@code typeIds} is empty or passed as a {@code null} array reference
+     * then no filtering against type identifier is applied.</LI>
+     * <LI>AND</LI>
+     * <LI>All device event identifiers listed in {@code eventId}. If
+     * {@code eventId} is empty or passed as a {@code null} array reference
+     * then no filtering against event identifier is applied.</LI>
+     * </UL>
+     * 
+     * 
+     * To receive device events the Streams application
+     * {@code com.ibm.streamsx.iot.watson.apps::IotPlatform} must be
+     * running in the same Streams instance.
+     * 
+     * @param te
+     *            Topology to create this source in.
+     * @param typeIds Type identifers to subscribe to. If this is empty or null then
+     * all type identifiers are subscribed to.
+     * @param eventId
+     *            Event identifiers to subscribe to. If none are provided then
+     *            all event identifiers are subscribed to.
+     * @return Stream containing device events.
+     * 
+     */
+    public static TStream<DeviceEvent> eventsSubscribe(TopologyElement te, String[] typeIds, String... eventId) {
+
+        SPLStream splEvents = IotSPLStreams.eventsSubscribe(te, typeIds, eventId);
         TStream<DeviceEvent> events = splEvents.transform(DeviceEvent::newDeviceEvent);
         return events;
-    }
+    }    
+    
 
     /**
      * Subscribe to commands as {@code DeviceCmd} instances.
@@ -57,8 +93,8 @@ public class IotStreams {
      * {@code cmdId}. If {@code cmdId} is empty or passed as a {@code null}
      * array then all device commands are subscribed to.
      * 
-     * To receive device events the SPL application
-     * {@code com.ibm.streamsx.iot.watson.apps::IotfOrganization} must be
+     * To receive device events the Streams application
+     * {@code com.ibm.streamsx.iot.watson.apps::IotPlatform} must be
      * running in the same Streams instance.
      * 
      * @param te

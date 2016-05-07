@@ -51,9 +51,17 @@ public class IotSPLStreams {
      */
     public static SPLStream eventsSubscribe(TopologyElement te, String... eventId) {
 
+        return eventsSubscribe(te, null, eventId);
+    }
+    
+    public static SPLStream eventsSubscribe(TopologyElement te, String[] typeIds, String... eventId) {
+
         Map<String, Object> params = new HashMap<>();
+        if (typeIds != null && typeIds.length != 0)
+            params.put("typeIds", listRStringParam(typeIds));
+
         if (eventId != null && eventId.length != 0)
-            params.put("eventIds", listRStringParam(eventId));
+            params.put("eventIds", listRStringParam(eventId));    
 
         return SPL.invokeSource(te, "com.ibm.streamsx.iot::EventsSubscribe", params, Schemas.DEVICE_EVENT);
     }
