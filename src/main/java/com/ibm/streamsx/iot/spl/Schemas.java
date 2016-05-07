@@ -34,5 +34,10 @@ public class Schemas {
      */
     public static final StreamSchema DEVICE_CMD = DEVICE.extend(RSTRING.getLanguageType(), CMD_ID)
             .extendBySchemas(JSON);
+    
+    /**
+     * A device status. Matches {@code com.ibm.streamsx.iot::DeviceStatus}.
+     */
+    public static final StreamSchema DEVICE_STATUS = DEVICE.extendBySchemas(JSON);
 
 }

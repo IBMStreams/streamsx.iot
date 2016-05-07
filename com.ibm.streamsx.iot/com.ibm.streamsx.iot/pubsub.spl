@@ -139,12 +139,25 @@ public boolean filterCommands(DeviceCmd c, CommandsSubscribe._CmdParam p) {
  * 
  * @output Statuses Device status updates
  */
-public composite StatusesSubscribe(output stream<DeviceCmd> Statuses)
+public composite StatusesSubscribe(output stream<DeviceStatus> Statuses)
 {
    param
      expression<list<rstring>> $typeIds : [];
 
+   type
+       static _StatusParam = tuple<list<rstring> typeIds>;
+
    graph
+     stream<DeviceStatus> Statuses = FilteredSubscribe()
+     {
+        param
+          topic: "streamsx/iot/device/statuses";
+          streamType: DeviceStatus;
+          remoteFilter: inFilter("typeId", $typeIds);
+          localFilterFunction: com.ibm.streamsx.iot::filterStatuses;
+          localFilterParameter: { typeIds = $typeIds};
+     }
+/*
      stream<DeviceStatus> StatusesAll = Subscribe()
      {
         param
@@ -159,6 +172,15 @@ public composite StatusesSubscribe(output stream<DeviceCmd> Statuses)
         filter:
            ((size($typeIds) == 0) || (typeId in $typeIds));
      }
+*/
+}
+
+/**
+ @exclude
+*/
+public boolean filterStatuses(DeviceStatus s, StatusesSubscribe._StatusParam p) {
+    return
+       (size(p.typeIds) == 0) || (s.typeId in p.typeIds);
 }
 
 /**

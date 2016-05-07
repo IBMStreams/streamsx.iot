@@ -48,12 +48,7 @@ public class IotSPLStreams {
      * 
      * @see com.ibm.streamsx.iot.IotStreams#eventsSubscribe(TopologyElement,
      *      String...)
-     */
-    public static SPLStream eventsSubscribe(TopologyElement te, String... eventId) {
-
-        return eventsSubscribe(te, null, eventId);
-    }
-    
+     */   
     public static SPLStream eventsSubscribe(TopologyElement te, String[] typeIds, String... eventId) {
 
         Map<String, Object> params = new HashMap<>();
@@ -64,6 +59,15 @@ public class IotSPLStreams {
             params.put("eventIds", listRStringParam(eventId));    
 
         return SPL.invokeSource(te, "com.ibm.streamsx.iot::EventsSubscribe", params, Schemas.DEVICE_EVENT);
+    }
+    
+    public static SPLStream statusesSubscribe(TopologyElement te, String ... typeId) {
+
+        Map<String, Object> params = new HashMap<>();
+        if (typeId != null && typeId.length != 0)
+            params.put("typeIds", listRStringParam(typeId));
+ 
+        return SPL.invokeSource(te, "com.ibm.streamsx.iot::StatusesSubscribe", params, Schemas.DEVICE_STATUS);
     }
 
     /**
@@ -87,10 +91,6 @@ public class IotSPLStreams {
      * @see com.ibm.streamsx.iot.IotStreams#eventsSubscribe(TopologyElement,
      *      String...)
      */
-    public static SPLStream commandsSubscribe(TopologyElement te, String... cmdId) {
-        return commandsSubscribe(te, null, cmdId);
-    }
-
     public static SPLStream commandsSubscribe(TopologyElement te, String[] typeIds, String... cmdId) {
 
         Map<String, Object> params = new HashMap<>();

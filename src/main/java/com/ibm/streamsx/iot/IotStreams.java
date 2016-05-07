@@ -122,4 +122,10 @@ public class IotStreams {
         IotSPLStreams.commandPublish(splCommands);
     }
 
+    public static TStream<DeviceStatus> statusesSubscribe(TopologyElement te, String ... typeId) {
+
+        SPLStream splStatuses = IotSPLStreams.statusesSubscribe(te, typeId);
+        TStream<DeviceStatus> statuses = splStatuses.transform(DeviceStatus::newDeviceStatus);
+        return statuses;
+    }
 }
