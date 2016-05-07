@@ -29,7 +29,7 @@
     <pathelement location="../com.ibm.streamsx.iot/lib/com.ibm.streamsx.iot.jar" />
   </path>
 
-       <target name="test" depends="init,build.spl.apps,build.sample.apps"/>
+       <target name="test" depends="init,unittests,build.spl.apps,build.sample.apps"/>
 
        <target name="init" depends="clean">
           <mkdir dir="${sabs}"/>

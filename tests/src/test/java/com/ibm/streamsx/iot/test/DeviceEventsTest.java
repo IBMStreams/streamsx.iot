@@ -27,7 +27,7 @@ import com.ibm.streamsx.topology.streams.StringStreams;
 import com.ibm.streamsx.topology.tester.Condition;
 import com.ibm.streamsx.topology.tester.Tester;
 
-public class DeviceEvents {
+public class DeviceEventsTest {
     
     @Test
     public void testDeviceEventsAllNoPubFilter() throws Exception {
