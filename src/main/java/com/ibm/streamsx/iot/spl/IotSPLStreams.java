@@ -67,7 +67,7 @@ public class IotSPLStreams {
     }
 
     /**
-     * Subscribe to device commands as SPL tuples.
+     * Subscribe to sent device commands as SPL tuples.
      * 
      * Subscribes to all device commands with command identifiers listed in
      * {@code cmdId}. If {@code cmdId} is empty or passed as a {@code null}
@@ -88,8 +88,15 @@ public class IotSPLStreams {
      *      String...)
      */
     public static SPLStream commandsSubscribe(TopologyElement te, String... cmdId) {
+        return commandsSubscribe(te, null, cmdId);
+    }
+
+    public static SPLStream commandsSubscribe(TopologyElement te, String[] typeIds, String... cmdId) {
 
         Map<String, Object> params = new HashMap<>();
+        if (typeIds != null && typeIds.length != 0)
+            params.put("typeIds", listRStringParam(typeIds));
+
         if (cmdId != null && cmdId.length != 0)
             params.put("cmdIds", listRStringParam(cmdId));
 

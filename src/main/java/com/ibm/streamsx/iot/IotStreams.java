@@ -105,8 +105,12 @@ public class IotStreams {
      * 
      */
     public static TStream<DeviceCmd> commandsSubscribe(TopologyElement te, String... cmdId) {
+        return commandsSubscribe(te, null, cmdId);
+    }
+    
+    public static TStream<DeviceCmd> commandsSubscribe(TopologyElement te, String[] typeIds, String... cmdId) {
 
-        SPLStream splCommands = IotSPLStreams.commandsSubscribe(te, cmdId);
+        SPLStream splCommands = IotSPLStreams.commandsSubscribe(te, typeIds, cmdId);
         TStream<DeviceCmd> commands = splCommands.transform(DeviceCmd::newDeviceCmd);
         return commands;
     }

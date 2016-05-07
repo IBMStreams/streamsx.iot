@@ -42,6 +42,31 @@ public class Simulate {
         events.modify(new Delay<>(delay)).publish("streamsx/iot/device/events", allowFilter);        
     }
     
+    // Create a SPL stream that looks like device events
+    public static void simulateSentCommands(Topology topology, int delay, boolean allowFilter, JSONObject ...payloads) {
+        
+        TStream<JSONObject> pys = topology.constants(Arrays.asList(payloads));
+        
+        SPLStream commands = SPLStreams.convertStream(pys,
+                (payload,tuple) -> { 
+                    tuple.setString("typeId", payload.get("py_type").toString());                    
+                    tuple.setString("deviceId", payload.get("py_device").toString());
+                    tuple.setString("cmdId", payload.get("py_command").toString());
+                    
+                    try {
+                        tuple.setString("jsonString",
+                                ((JSONObject) payload.get("py_payload")).serialize());
+                    } catch (Exception e) {
+                        new RuntimeException(e);
+                    }
+                    return tuple;
+                },
+                Schemas.DEVICE_CMD);
+        
+        
+        commands.modify(new Delay<>(delay)).publish("streamsx/iot/device/commands/sent", allowFilter);        
+    }
+    
     /**
      * Delay to ensure that tuples are not dropped while dynamic
      * connections are being made.
