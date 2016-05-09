@@ -10,6 +10,7 @@ import java.io.Serializable;
 import com.ibm.json.java.JSON;
 import com.ibm.json.java.JSONObject;
 import com.ibm.streams.operator.Tuple;
+import com.ibm.streamsx.iot.spl.Schemas;
 import com.ibm.streamsx.topology.tuple.JSONAble;
 
 /**
@@ -30,7 +31,7 @@ public class DeviceStatus implements JSONAble, Serializable {
     }
 
     public static DeviceStatus newDeviceStatus(Tuple tuple) {
-        return newDeviceStatus(Device.newDevice(tuple), tuple.getString(Device.JSON));
+        return newDeviceStatus(IotUtils.newDevice(tuple), tuple.getString(Schemas.JSON_STRING));
     }
 
     public static DeviceStatus newDeviceStatus(Device device,String serializedPayload) {

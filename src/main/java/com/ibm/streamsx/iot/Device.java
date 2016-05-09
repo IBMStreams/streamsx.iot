@@ -8,8 +8,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import com.ibm.json.java.JSONObject;
-import com.ibm.streams.operator.Tuple;
-import com.ibm.streamsx.topology.spl.SPLSchemas;
+import com.ibm.streamsx.iot.spl.Schemas;
 import com.ibm.streamsx.topology.tuple.JSONAble;
 
 /**
@@ -17,10 +16,6 @@ import com.ibm.streamsx.topology.tuple.JSONAble;
  *
  */
 public class Device implements JSONAble, Serializable {
-
-    public static final String TYPE_ID = "typeId";
-    public static final String DEVICE_ID = "deviceId";
-    public static final String JSON = SPLSchemas.JSON.getAttribute(0).getName();
 
     private static final long serialVersionUID = 1L;
 
@@ -31,10 +26,6 @@ public class Device implements JSONAble, Serializable {
         super();
         this.typeId = typeId;
         this.id = id;
-    }
-
-    public static Device newDevice(Tuple tuple) {
-        return new Device(tuple.getString(Device.TYPE_ID), tuple.getString(Device.DEVICE_ID));
     }
 
     /**
@@ -58,8 +49,8 @@ public class Device implements JSONAble, Serializable {
     @Override
     public JSONObject toJSON() {
         JSONObject json = new JSONObject();
-        json.put(TYPE_ID, getTypeId());
-        json.put(DEVICE_ID, getId());
+        json.put(Schemas.TYPE_ID, getTypeId());
+        json.put(Schemas.DEVICE_ID, getId());
         return json;
     }
 

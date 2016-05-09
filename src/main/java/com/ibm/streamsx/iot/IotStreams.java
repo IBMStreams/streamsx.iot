@@ -81,7 +81,7 @@ public class IotStreams {
     public static TStream<DeviceEvent> eventsSubscribe(TopologyElement te, String[] typeIds, String... eventId) {
 
         SPLStream splEvents = IotSPLStreams.eventsSubscribe(te, typeIds, eventId);
-        TStream<DeviceEvent> events = splEvents.transform(DeviceEvent::newDeviceEvent);
+        TStream<DeviceEvent> events = splEvents.transform(IotUtils::newDeviceEvent);
         return events;
     }    
     
@@ -111,12 +111,12 @@ public class IotStreams {
     public static TStream<DeviceCmd> commandsSubscribe(TopologyElement te, String[] typeIds, String... cmdId) {
 
         SPLStream splCommands = IotSPLStreams.commandsSubscribe(te, typeIds, cmdId);
-        TStream<DeviceCmd> commands = splCommands.transform(DeviceCmd::newDeviceCmd);
+        TStream<DeviceCmd> commands = splCommands.transform(IotUtils::newDeviceCmd);
         return commands;
     }
 
     public static void commandPublish(TStream<DeviceCmd> commandStream) {
-        SPLStream splCommands = SPLStreams.convertStream(commandStream, (cmd, tuple) -> cmd.toTuple(tuple),
+        SPLStream splCommands = SPLStreams.convertStream(commandStream, IotUtils::toTuple,
                 Schemas.DEVICE_CMD);
 
         IotSPLStreams.commandPublish(splCommands);

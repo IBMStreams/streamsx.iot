@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -152,7 +153,15 @@ public class DeviceCommandsTest {
             assertEquals(cmd.get("py_device"), result.get("deviceId"));
             assertEquals(cmd.get("py_command"), result.get("cmdId"));
             
-            assertEquals(cmd.get("py_payload"), result.get("payload"));
+            assertEquals(cmd.get("py_data"), result.get("d"));
+            
+            if (cmd.containsKey("py_ts")) {
+                assertTrue(result.containsKey("ts"));
+                Instant expectedTs = Instant.ofEpochMilli((Long) cmd.get("py_ts"));
+                assertEquals(expectedTs, Instant.parse((String) result.get("ts")));
+            } else {
+                assertFalse(result.containsKey("ts"));
+            }
         }
     }
     
@@ -169,10 +178,15 @@ public class DeviceCommandsTest {
             cmd.put("py_device", "D" + r.nextInt(10));
             cmd.put("py_command", "C" + r.nextInt(5));
             
-            JSONObject payload = new JSONObject();
-            cmd.put("py_payload", payload);
-            payload.put("c1", (long) r.nextInt(1000));
-            payload.put("c2", "C2_" + r.nextInt(5000));
+            if (r.nextFloat() > 0.1) {
+                int offset = r.nextInt(20000) - 10000;
+                cmd.put("py_ts", System.currentTimeMillis() + offset);
+            }
+            
+            JSONObject data = new JSONObject();
+            cmd.put("py_data", data);
+            data.put("c1", (long) r.nextInt(1000));
+            data.put("c2", "C2_" + r.nextInt(5000));
         }
         
         return commands;

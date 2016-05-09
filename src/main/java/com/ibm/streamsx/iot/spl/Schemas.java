@@ -6,17 +6,24 @@ package com.ibm.streamsx.iot.spl;
 
 import static com.ibm.streams.operator.Type.Factory.getStreamSchema;
 import static com.ibm.streams.operator.Type.MetaType.RSTRING;
-import static com.ibm.streamsx.iot.DeviceCmd.CMD_ID;
-import static com.ibm.streamsx.iot.DeviceEvent.EVENT_ID;
 import static com.ibm.streamsx.topology.spl.SPLSchemas.JSON;
 
 import com.ibm.streams.operator.StreamSchema;
+import com.ibm.streamsx.topology.spl.SPLSchemas;
 
 /**
  * SPL schemas for {@code com.ibm.streamsx.iot} toolkit.
  *
  */
 public class Schemas {
+    public static final String JSON_STRING = SPLSchemas.JSON.getAttribute(0).getName();
+
+    public static final String TYPE_ID = "typeId";
+    public static final String DEVICE_ID = "deviceId";
+    
+    public static final String EVENT_ID = "eventId";
+    public static final String CMD_ID = "cmdId";
+
 
     /**
      * A device. Matches {@code com.ibm.streamsx.iot::Device}.

@@ -6,46 +6,30 @@ package com.ibm.streamsx.iot;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.Instant;
 
-import com.ibm.json.java.JSON;
 import com.ibm.json.java.JSONObject;
-import com.ibm.streams.operator.Tuple;
+import com.ibm.streamsx.iot.spl.Schemas;
 import com.ibm.streamsx.topology.tuple.JSONAble;
 
 /**
  * A device event.
  */
 public class DeviceEvent implements JSONAble, Serializable {
-    public static final String EVENT_ID = "eventId";
 
     private static final long serialVersionUID = 1L;
 
     private final Device device;
     private final String eventId;
-    private final String ts;
-    private final JSONObject payload;
-
-    public DeviceEvent(Device device, String eventId, JSONObject data) {
+    private final Instant ts;
+    private final JSONObject data;
+    
+    public DeviceEvent(Device device, String eventId, Instant ts, JSONObject data) {
         super();
         this.device = device;
         this.eventId = eventId;
-        this.ts = (String) data.get("ts");
-        this.payload = (JSONObject) data.get("d");
-
-    }
-
-    public static DeviceEvent newDeviceEvent(Tuple tuple) {
-        return newDeviceEvent(Device.newDevice(tuple), tuple.getString(EVENT_ID), tuple.getString(Device.JSON));
-    }
-
-    public static DeviceEvent newDeviceEvent(Device device, String eventId, String serializedData) {
-        JSONObject payload;
-        try {
-            payload = (JSONObject) JSON.parse(serializedData);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return new DeviceEvent(device, eventId, payload);
+        this.ts = ts;
+        this.data = data;
     }
 
     public Device getDevice() {
@@ -56,20 +40,21 @@ public class DeviceEvent implements JSONAble, Serializable {
         return eventId;
     }
 
-    public JSONObject getPayload() {
-        return payload;
+    public JSONObject getData() {
+        return data;
     }
 
-    public String getTs() {
+    public Instant getTs() {
         return ts;
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject json = getDevice().toJSON();
-        json.put(EVENT_ID, getEventId());
-        json.put("ts", getTs());
-        json.put("payload", getPayload());
+        json.put(Schemas.EVENT_ID, getEventId());
+        if (getTs() != null)
+            json.put("ts", getTs().toString());
+        json.put("d", getData());
         return json;
     }
 
