@@ -1,0 +1,43 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2016
+ */
+
+namespace com.ibm.streamsx.iot.watson;
+
+use com.ibm.streamsx.iot::*;
+use com.ibm.streamsx.topology.topic::Subscribe;
+
+/**
+ * Subsribes to device commands to be sent to devices for an organization.
+ *
+ * Subscribes to the topic `streamsx/iot/device/commands/send`
+ * with a tuple type of [DeviceCmd].
+ * 
+ * @param org Organization identifier.
+ * @param authKey Application key.
+ * @param authToken Application authorization token.
+ * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to `true`.
+ * 
+ */
+public composite SubscribeDeviceCommands() {
+   param
+        expression<rstring> $org;
+        expression<rstring> $authKey;
+        expression<rstring> $authToken;
+        expression<boolean> $encrypted : true;
+
+   graph
+      stream<DeviceCmd> CommandsToSend = Subscribe() {
+        param
+          topic: "streamsx/iot/device/commands/send";
+          streamType: DeviceCmd;
+      }
+      () as SendCommandsToDevice = SendCommandToDevice(CommandsToSend) {
+        param
+          org : $org;
+          authKey : $authKey;
+          authToken : $authToken;
+          encrypted : $encrypted;
+      }
+}

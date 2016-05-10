@@ -83,12 +83,7 @@ graph
        allowFilter : $allowFilters;
   }
 
-  stream<DeviceCmd> CommandsToSend = Subscribe() {
-    param
-      topic: "streamsx/iot/device/commands/send";
-      streamType: DeviceCmd;
-  }
-  () as SendCommandsToDevice = SendCommandToDevice(CommandsToSend) {
+  () as SendCommandsToDevice = SubscribeDeviceCommands() {
     param
       org : $org;
       authKey : $authKey;
