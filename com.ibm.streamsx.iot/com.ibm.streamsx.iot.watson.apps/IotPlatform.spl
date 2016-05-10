@@ -54,29 +54,33 @@ public composite IotPlatform {
     expression<rstring> $authKey : getSubmissionTimeValue("authKey");
     expression<rstring> $authToken : getSubmissionTimeValue("authToken");
     expression<boolean> $encrypted : (boolean) getSubmissionTimeValue("encrypted", "false");
-    expression<boolean> $allowFilters : true;
+    expression<boolean> $allowFilters : (boolean) getSubmissionTimeValue("allowFilters", "true");
 
 graph
-        (stream<DeviceStatus> Statuses; stream<DeviceEvent> Events; stream<DeviceCmd> Commands) as IotfDevices = AllDevices()
-		{
-			param
-				org : $org;
-				authKey : $authKey;
-				authToken : $authToken;
-                                encrypted : $encrypted;
-		}
 
-  () as PublishedEvents = Publish(Events) {
-    param topic: "streamsx/iot/device/events";
-          allowFilter: $allowFilters;
+  () as Events = PublishDeviceEvents() {
+     param
+       org : $org;
+       authKey : $authKey;
+       authToken : $authToken;
+       encrypted : $encrypted;
+       allowFilter : $allowFilters;
   }
-  () as PublishedCommands = Publish(Commands) {
-    param topic: "streamsx/iot/device/commands/sent";
-          allowFilter: $allowFilters;
+  () as Commands = PublishDeviceCommands() {
+     param
+       org : $org;
+       authKey : $authKey;
+       authToken : $authToken;
+       encrypted : $encrypted;
+       allowFilter : $allowFilters;
   }
-  () as PublishedStatuses = Publish(Statuses) {
-    param topic: "streamsx/iot/device/statuses";
-          allowFilter: $allowFilters;
+  () as Status = PublishDeviceStatuses() {
+     param
+       org : $org;
+       authKey : $authKey;
+       authToken : $authToken;
+       encrypted : $encrypted;
+       allowFilter : $allowFilters;
   }
 
   stream<DeviceCmd> CommandsToSend = Subscribe() {

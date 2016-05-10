@@ -1,0 +1,120 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2016
+ */
+
+namespace com.ibm.streamsx.iot.watson;
+
+use com.ibm.streamsx.iot::*;
+use com.ibm.streamsx.topology.topic::Publish;
+
+/**
+ * Publishes all device statuses for an organization.
+ *
+ * Publishes to the topic `streamsx/iot/device/statuses`
+ * with a tuple type of [DeviceStatus].
+ * 
+ * @param org Organization identifier.
+ * @param authKey Application key.
+ * @param authToken Application authorization token.
+ * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to `true`.
+ * @param allowFilter True to use allow subscribers to push tuple filtering to this composite, defaults to `true`.
+ * 
+ */
+public composite PublishDeviceStatuses() {
+   param
+        expression<rstring> $org;
+        expression<rstring> $authKey;
+        expression<rstring> $authToken;
+        expression<boolean> $encrypted : true;
+        expression<boolean> $allowFilter : true;
+
+	graph
+		
+         stream<DeviceStatus> Statuses = DeviceStatuses() {
+           param
+             org : $org ;
+             authKey : $authKey ;
+             authToken : $authToken ;
+             encrypted: $encrypted;
+         }
+
+         () as PublishedStatuses = Publish(Statuses) {
+            param topic: "streamsx/iot/device/statuses";
+              allowFilter: $allowFilter;
+         }
+}
+
+/**
+ * Publishes all device events for an organization.
+ *
+ * Publishes to the topic `streamsx/iot/device/events`
+ * with a tuple type of [DeviceEvent].
+ * 
+ * @param org Organization identifier.
+ * @param authKey Application key.
+ * @param authToken Application authorization token.
+ * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to `true`.
+ * @param allowFilter True to use allow subscribers to push tuple filtering to this composite, defaults to `true`.
+ * 
+ */
+public composite PublishDeviceEvents() {
+   param
+        expression<rstring> $org;
+        expression<rstring> $authKey;
+        expression<rstring> $authToken;
+        expression<boolean> $encrypted : true;
+        expression<boolean> $allowFilter : true;
+
+	graph
+
+        stream<DeviceEvent> Events = DeviceEvents()
+        {
+          param
+            org : $org ;
+            authKey : $authKey ;
+            authToken : $authToken ;
+            encrypted: $encrypted;
+        }
+        () as PublishedEvents = Publish(Events) {
+           param topic: "streamsx/iot/device/events";
+             allowFilter: $allowFilter;
+        }
+}
+
+/**
+ * Publishes all device commands for an organization.
+ *
+ * Publishes to the topic `streamsx/iot/device/commands/sent`
+ * with a tuple type of [DeviceCmd].
+ * 
+ * @param org Organization identifier.
+ * @param authKey Application key.
+ * @param authToken Application authorization token.
+ * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to `true`.
+ * @param allowFilter True to use allow subscribers to push tuple filtering to this composite, defaults to `true`.
+ * 
+ */
+public composite PublishDeviceCommands() {
+   param
+        expression<rstring> $org;
+        expression<rstring> $authKey;
+        expression<rstring> $authToken;
+        expression<boolean> $encrypted : true;
+        expression<boolean> $allowFilter : true;
+
+	graph
+          stream<DeviceCmd> Commands = DeviceCommands()
+          {
+          param
+             org : $org ;
+             authKey : $authKey ;
+             authToken : $authToken ;
+             encrypted: $encrypted;
+          }
+
+          () as PublishedCommands = Publish(Commands) {
+             param topic: "streamsx/iot/device/commands/sent";
+               allowFilter: $allowFilter;
+          }
+}
