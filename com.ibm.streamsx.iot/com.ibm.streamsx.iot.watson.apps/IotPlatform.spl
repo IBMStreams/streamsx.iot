@@ -93,6 +93,7 @@ graph
        authToken : $authToken;
        encrypted : $encrypted;
        allowFilter : $allowFilters;
+     config placement: partitionColocation(getThisCompositeInstanceName()+"_evt");
   }
 
   @parallel(width=$scaleCommands)
@@ -103,6 +104,7 @@ graph
        authToken : $authToken;
        encrypted : $encrypted;
        allowFilter : $allowFilters;
+     config placement: partitionColocation(getThisCompositeInstanceName()+"_cmd");
   }
 
   @parallel(width=$scaleStatuses)
@@ -113,6 +115,7 @@ graph
        authToken : $authToken;
        encrypted : $encrypted;
        allowFilter : $allowFilters;
+     config placement: partitionColocation(getThisCompositeInstanceName()+"_mon");
   }
 
   () as SendCommandsToDevice = SubscribeDeviceCommands() {
@@ -121,5 +124,6 @@ graph
       authKey : $authKey;
       authToken : $authToken;
       encrypted : $encrypted;
+     config placement: partitionColocation(getThisCompositeInstanceName());
   }
 }
