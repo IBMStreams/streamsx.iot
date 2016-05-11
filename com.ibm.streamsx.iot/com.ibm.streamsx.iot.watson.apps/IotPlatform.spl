@@ -43,10 +43,34 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * * [com.ibm.streamsx.iot::StatusesSubscribe] - Subscribe to device status updates, with filtering on device type.
  * * [com.ibm.streamsx.iot::CommandPublish] - Send a device command that will be sent to the device by this application.
  *
- * These submission time parameters must be defined:
- * * `org` - Organization identifier
- * * `authKey` - API key
- * * `authToken` - API Token
+ * `IotPlatform` supports Watson IoT Platform's scalable application
+ * mode that distributes messages (device events, commands and statuses)
+ * across multiple MQTT subscribers. This is configured by setting the
+ * optional parameters `scaleEvents`, `scaleCommands` and
+ * `scaleStatuses`. IBM Streams parallel regions are used to instantiate
+ * multiple MQTT source operators and publish those events, commands or
+ * statuses using multiple streams. Applications that subscribe using
+ * `EventsSubscribe`, `CommandsSubscribe`, `StatusesSubscribe` or
+ * `Subscribe` will correctly see the required tuples, regardless
+ * of the scale factor or if the subscriber is itself using parallel regions.
+ *
+ * Scalable application mode also supports failures of the MQTT source
+ * operators or their connections by automatically delivering messages
+ * across the remaining active connections.
+ * Once a connection from this application
+ * is resetablished it will again be included in message delivery.
+ *
+ * All of this composite's parameters can be set using submission
+ * time values at job submission time.
+ *
+ * @param org Organization identifier (required)
+ * @param authKey API key (required)
+ * @param authToken  API Token (required)
+ * @param scaleEvents Scaling factor for device events (optional, defaults to `1`)
+ * @param scaleCommands Scaling factor for sent device commands. Optional, defaults to `1`)
+ * @param scaleStatuses Scaling factor for device statuses (optional, defaults to `1`)
+ * @param allowFilters `true` to use allow applications subscribing to device events, sent device commands and device statuses to push filtering to this application. `false` to disallow execution of subscriber filters (optional defaults to `true`)
+ * @param encrypted `true` to use encrypted (TLSv1.2) connections to IoT Plaform, `false` to use unencrypted (optional, defaults to `false`)
  */
 public composite IotPlatform {
   param

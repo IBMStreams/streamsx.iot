@@ -42,6 +42,7 @@
  *
  * Connectivty to IBM Watson IoT Platform is through
  * [https://docs.internetofthings.ibmcloud.com/applications/mqtt.html|MQTT].
+ *
  * By default operators and applications in this toolkit use encrypted
  * connections through port `8883` with TLSv1.2. Operator
  * parameter or submission time parameter `encrypted` can be set to
@@ -56,6 +57,24 @@
  * to allow them to work out of the box. The default will revert
  * to encrypted in future pre-release.**
  *
+ * The Watson Iot Platform scalable application model is used
+ * when operators interacting with Watson IoT Platform are in a
+ * parallel region of width greater that one.
+ * This means MQTT messages representing device events,
+ * commands and statuses are load balanced across
+ * the multiple channels created by the parallel regions.
+ *
+ * In addition if a connection breaks or the processing element
+ * fails messages are routed by Watson IoT Platform to the 
+ * remaining active connections. When Streams reconnects or
+ * restarts the PE the new connection will be automaticallyy
+ * included in the load balancing and start receiving messages.
+ *
+ * [com.ibm.streamsx.iot.watson.apps::IotPlatform]
+ * optionally supports the scalable application mode through
+ * submission time values that allow independent setting a scale factor
+ * for device events, commands and statuses.
+ * 
  * # Device Events
  * Devices publish device events that an SPL application can subscribe to
  * using [EventsSubscribe] or [DeviceEvents]. The default is to subscribe to all event identifiers
