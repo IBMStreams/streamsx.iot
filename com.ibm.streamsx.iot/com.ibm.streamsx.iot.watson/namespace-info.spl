@@ -48,14 +48,18 @@
  * parameter or submission time parameter `encrypted` can be set to
  * `false` to use unencrypted connections through port `1883`.
  *
- * **At this point SSL is not supported since the MQTT operators
- * do not yet support TLSv1.2. Use of the operators must set
- * `encrypted` to `false` to see device events and send commands.**
+ * **WARNING**: *At this point SSL is only supported using a version of
+ * `com.ibm.streamsx.messaging` built from the master branch of*
+ * [https://github.com/IBMStreams/streamsx.messaging|streamsx.messaging].
+ * *See* [https://github.com/IBMStreams/streamsx.messaging/issues/216|Issue #216].
+ * *Use of the operators must set `encrypted` to `false` to
+ * see device events and send commands if using a released version
+ * of the messaging toolkit.*
  *
- * **The applications (`IotPlatform` and `SimpleAllDevices`)
- * are defaulted to unecrypted connections
+ * **WARNING**: *The applications (`IotPlatform` and `SimpleAllDevices`)
+ * are defaulted to unencrypted connections
  * to allow them to work out of the box. The default will revert
- * to encrypted in future pre-release.**
+ * to encrypted in future pre-release.*
  *
  * The Watson Iot Platform scalable application model is used
  * when operators interacting with Watson IoT Platform are in a
