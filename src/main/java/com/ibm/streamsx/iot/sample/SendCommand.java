@@ -58,9 +58,9 @@ public class SendCommand {
         final Device device = new Device(typeId, deviceId);
 
         TStream<DeviceCmd> command = topology.periodicSource(() -> {
-            JSONObject payload = new JSONObject();
-            payload.put("msg", message + " @ " + new Date().toString());
-            return new DeviceCmd(device, "display", payload);
+            JSONObject data = new JSONObject();
+            data.put("msg", message + " @ " + new Date().toString());
+            return new DeviceCmd(device, "display", null, data);
         }, 10, SECONDS);
 
         IotStreams.commandPublish(command);

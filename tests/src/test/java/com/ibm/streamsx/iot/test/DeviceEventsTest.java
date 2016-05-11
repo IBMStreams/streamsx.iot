@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -154,9 +155,15 @@ public class DeviceEventsTest {
             assertEquals(event.get("py_device"), result.get("deviceId"));
             assertEquals(event.get("py_event"), result.get("eventId"));
             
-            assertEquals(event.get("py_payload"), result.get("payload"));
+            assertEquals(event.get("py_data"), result.get("d"));
             
-            assertTrue(result.get("ts") instanceof String);
+            if (event.containsKey("py_ts")) {
+                assertTrue(result.containsKey("ts"));
+                Instant expectedTs = Instant.ofEpochMilli((Long) event.get("py_ts"));
+                assertEquals(expectedTs, Instant.parse((String) result.get("ts")));
+            } else {
+                assertFalse(result.containsKey("ts"));
+            }
         }
     }
     
@@ -173,8 +180,13 @@ public class DeviceEventsTest {
             event.put("py_device", "D" + r.nextInt(10));
             event.put("py_event", "E" + r.nextInt(5));
             
+            if (r.nextFloat() > 0.1) {
+                int offset = r.nextInt(20000) - 10000;
+                event.put("py_ts", System.currentTimeMillis() + offset);
+            }
+            
             JSONObject payload = new JSONObject();
-            event.put("py_payload", payload);
+            event.put("py_data", payload);
             payload.put("v1", (long) r.nextInt(1000));
             payload.put("v2", "V2_" + r.nextInt(5000));
         }

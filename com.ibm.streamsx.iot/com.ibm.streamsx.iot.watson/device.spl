@@ -240,7 +240,9 @@ composite DeviceTopic(output Messages)
 		{
 		    logic state: {
 		      rstring _topic = $topic;
-		      rstring _clientId = "a:" + $org + ":" + $appId;
+		      rstring _clientId = 
+         // use scaleable connections when running in parallel
+         (getMaxChannels() >= 2 ? "A:" : "a:") + $org + ":" + $appId;
 		      rstring _userId = $authKey;
 		      rstring _password = $authToken;
 		      rstring _serverURI = getIotfUri($org, $encrypted);

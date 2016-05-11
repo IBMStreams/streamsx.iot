@@ -1,7 +1,6 @@
 package com.ibm.streamsx.iot.test;
 
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.Instant;
 import java.util.Arrays;
 
 import com.ibm.json.java.JSONObject;
@@ -26,9 +25,14 @@ public class Simulate {
                     tuple.setString("eventId", payload.get("py_event").toString());
                     
                     JSONObject ed = new JSONObject();
-                    ed.put("d", payload.get("py_payload"));
+                    ed.put("d", payload.get("py_data"));
+                    
                     // ISO 8601 date
-                    ed.put("ts", ZonedDateTime.now().format( DateTimeFormatter.ISO_INSTANT ));
+                    if (payload.containsKey("py_ts")) {
+                        long ts = (Long) payload.get("py_ts");
+                        ed.put("ts", Instant.ofEpochMilli(ts).toString());
+                    }
+                    
                     try {
                         tuple.setString("jsonString", ed.serialize());
                     } catch (Exception e) {
@@ -53,12 +57,19 @@ public class Simulate {
                     tuple.setString("deviceId", payload.get("py_device").toString());
                     tuple.setString("cmdId", payload.get("py_command").toString());
                     
+                    JSONObject cd = new JSONObject();
+                    cd.put("d", payload.get("py_data"));
+                    // ISO 8601 date
+                    if (payload.containsKey("py_ts")) {
+                        long ts = (Long) payload.get("py_ts");
+                        cd.put("ts", Instant.ofEpochMilli(ts).toString());
+                    }
                     try {
-                        tuple.setString("jsonString",
-                                ((JSONObject) payload.get("py_payload")).serialize());
+                        tuple.setString("jsonString", cd.serialize());
                     } catch (Exception e) {
                         new RuntimeException(e);
                     }
+  
                     return tuple;
                 },
                 Schemas.DEVICE_CMD);

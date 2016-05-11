@@ -5,6 +5,8 @@
 
 namespace com.ibm.streamsx.iot;
 
+use com.ibm.streamsx.datetime::currentTimeMillis;
+use com.ibm.streamsx.datetime.convert::toIso8601;
 use com.ibm.streamsx.json::TupleToJSON;
 
 /**
@@ -60,8 +62,13 @@ public composite CommandTupleToPayload(input Commands; output stream<DeviceCmd> 
     param attribute $payload;
     graph
 
-       stream<DeviceCmd> DeviceCommands = TupleToJSON(Commands) {
+       stream<DeviceCmd> PreCommands = TupleToJSON(Commands) {
           param
             inputAttribute: $payload;
+       }
+       stream<DeviceCmd> DeviceCommands = Functor(PreCommands) {
+         output DeviceCommands: jsonString = '{"d":' + jsonString + ","
+                             + '"ts":"' + toIso8601(currentTimeMillis()) + '"'
+                             + "}";
        }
 }

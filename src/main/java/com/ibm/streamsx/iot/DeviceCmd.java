@@ -6,11 +6,9 @@ package com.ibm.streamsx.iot;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.Instant;
 
-import com.ibm.json.java.JSON;
 import com.ibm.json.java.JSONObject;
-import com.ibm.streams.operator.OutputTuple;
-import com.ibm.streams.operator.Tuple;
 import com.ibm.streamsx.topology.tuple.JSONAble;
 
 /**
@@ -19,43 +17,17 @@ import com.ibm.streamsx.topology.tuple.JSONAble;
 public class DeviceCmd implements JSONAble, Serializable {
     private static final long serialVersionUID = 1L;
 
-    public static final String CMD_ID = "cmdId";
-
     private final Device device;
     private final String cmdId;
-    private final JSONObject payload;
-
-    public DeviceCmd(Device device, String cmdId, JSONObject payload) {
+    private final Instant ts;
+    private final JSONObject data;
+    
+    public DeviceCmd(Device device, String cmdId, Instant ts, JSONObject data) {
         super();
         this.device = device;
         this.cmdId = cmdId;
-        this.payload = payload;
-    }
-
-    public static DeviceCmd newDeviceCmd(Tuple tuple) {
-        return newDeviceCmd(Device.newDevice(tuple), tuple.getString(CMD_ID), tuple.getString(Device.JSON));
-    }
-
-    public static DeviceCmd newDeviceCmd(Device device, String cmdId, String serializedData) {
-        JSONObject payload;
-        try {
-            payload = (JSONObject) JSON.parse(serializedData);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return new DeviceCmd(device, cmdId, payload);
-    }
-
-    public OutputTuple toTuple(OutputTuple tuple) {
-        tuple.setString(Device.TYPE_ID, getDevice().getTypeId());
-        tuple.setString(Device.DEVICE_ID, getDevice().getId());
-        tuple.setString(DeviceCmd.CMD_ID, getCmdId());
-        try {
-            tuple.setString(Device.JSON, getPayload().serialize());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return tuple;
+        this.ts = ts;
+        this.data = data;
     }
 
     public Device getDevice() {
@@ -65,16 +37,22 @@ public class DeviceCmd implements JSONAble, Serializable {
     public String getCmdId() {
         return cmdId;
     }
+    
+    public Instant getTs() {
+        return ts;
+    }
 
-    public JSONObject getPayload() {
-        return payload;
+    public JSONObject getData() {
+        return data;
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject json = getDevice().toJSON();
         json.put("cmdId", getCmdId());
-        json.put("payload", getPayload());
+        json.put("d", getData());
+        if (getTs() != null)
+            json.put("ts", getTs().toString());
         return json;
     }
 
