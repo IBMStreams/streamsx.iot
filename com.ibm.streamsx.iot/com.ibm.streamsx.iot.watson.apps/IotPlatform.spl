@@ -55,9 +55,13 @@ public composite IotPlatform {
     expression<rstring> $authToken : getSubmissionTimeValue("authToken");
     expression<boolean> $encrypted : (boolean) getSubmissionTimeValue("encrypted", "false");
     expression<boolean> $allowFilters : (boolean) getSubmissionTimeValue("allowFilters", "true");
+    expression<int32> $scaleEvents : (int32) getSubmissionTimeValue("scaleEvents", "1");
+    expression<int32> $scaleCommands : (int32) getSubmissionTimeValue("scaleCommands", "1");
+    expression<int32> $scaleStatuses : (int32) getSubmissionTimeValue("scaleStatuses", "1");
 
 graph
 
+  @parallel(width=$scaleEvents)
   () as Events = PublishDeviceEvents() {
      param
        org : $org;
@@ -66,6 +70,8 @@ graph
        encrypted : $encrypted;
        allowFilter : $allowFilters;
   }
+
+  @parallel(width=$scaleCommands)
   () as Commands = PublishDeviceCommands() {
      param
        org : $org;
@@ -74,6 +80,8 @@ graph
        encrypted : $encrypted;
        allowFilter : $allowFilters;
   }
+
+  @parallel(width=$scaleStatuses)
   () as Status = PublishDeviceStatuses() {
      param
        org : $org;
