@@ -22,7 +22,7 @@
 <div class="body refbody">
 <div class="section">
 <p class="p">
-<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iot Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot 0.7.0.commit_commit_2492b9c</a> &gt; com.ibm.streamsx.iot.watson</p>
+<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iot Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot 0.8.0.commit_1756881</a> &gt; com.ibm.streamsx.iot.watson</p>
 
 </div>
 
@@ -74,13 +74,25 @@
 <div class="section"><h2 class="title sectiontitle">Connectivity
 </h2>
 
-<p class="p">Connectivty to IBM Watson IoT Platform is through <a class="xref" href="https://docs.internetofthings.ibmcloud.com/applications/mqtt.html">MQTT</a>. By default operators and applications in this toolkit use encrypted connections through port <tt class="ph tt">8883</tt> with TLSv1.2. Operator parameter or submission time parameter <tt class="ph tt">encrypted</tt> can be set to <tt class="ph tt">false</tt> to use unencrypted connections through port <tt class="ph tt">1883</tt>.
+<p class="p">Connectivty to IBM Watson IoT Platform is through <a class="xref" href="https://docs.internetofthings.ibmcloud.com/applications/mqtt.html">MQTT</a>.
 </p>
 
-<p class="p"><strong class="ph b">At this point SSL is not supported since the MQTT operators do not yet support TLSv1.2. Use of the operators must set <tt class="ph tt">encrypted</tt> to <tt class="ph tt">false</tt> to see device events and send commands.</strong>
+<p class="p">By default operators and applications in this toolkit use encrypted connections through port <tt class="ph tt">8883</tt> with TLSv1.2. Operator parameter or submission time parameter <tt class="ph tt">encrypted</tt> can be set to <tt class="ph tt">false</tt> to use unencrypted connections through port <tt class="ph tt">1883</tt>.
 </p>
 
-<p class="p"><strong class="ph b">The applications (<tt class="ph tt">IotPlatform</tt> and <tt class="ph tt">SimpleAllDevices</tt>) are defaulted to unecrypted connections to allow them to work out of the box. The default will revert to encrypted in future pre-release.</strong>
+<p class="p"><strong class="ph b">WARNING</strong>: <em class="ph i">At this point SSL is only supported using a version of <tt class="ph tt">com.ibm.streamsx.messaging</tt> built from the master branch of</em> <a class="xref" href="https://github.com/IBMStreams/streamsx.messaging">streamsx.messaging</a>. <em class="ph i">See</em> <a class="xref" href="https://github.com/IBMStreams/streamsx.messaging/issues/216">Issue #216</a>. <em class="ph i">Use of the operators must set <tt class="ph tt">encrypted</tt> to <tt class="ph tt">false</tt> to see device events and send commands if using a released version of the messaging toolkit.</em>
+</p>
+
+<p class="p"><strong class="ph b">WARNING</strong>: <em class="ph i">The applications (<tt class="ph tt">IotPlatform</tt> and <tt class="ph tt">SimpleAllDevices</tt>) are defaulted to unencrypted connections to allow them to work out of the box. The default will revert to encrypted in future pre-release.</em>
+</p>
+
+<p class="p">The Watson Iot Platform scalable application model is used when operators interacting with Watson IoT Platform are in a parallel region of width greater that one. This means MQTT messages representing device events, commands and statuses are load balanced across the multiple channels created by the parallel regions.
+</p>
+
+<p class="p">In addition if a connection breaks or the processing element fails messages are routed by Watson IoT Platform to the  remaining active connections. When Streams reconnects or restarts the PE the new connection will be automaticallyy included in the load balancing and start receiving messages.
+</p>
+
+<p class="p"><a class="xref" href="spl$com.ibm.streamsx.iot.watson.apps$IotPlatform.html#spldoc_compilationunit__composite_operator__IotPlatform">com.ibm.streamsx.iot.watson.apps::IotPlatform</a> optionally supports the scalable application mode through submission time values that allow independent setting a scale factor for device events, commands and statuses.
 </p>
 
 </div>
@@ -155,7 +167,19 @@
 <li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iot.watson$device.html#spldoc_compilationunit__composite_operator__DeviceStatuses">DeviceStatuses</a></strong>: Subscribe to device status events for an IBM Watson IoT Platform organization.
 </li>
 
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iot.watson$devicepublish.html#spldoc_compilationunit__composite_operator__PublishDeviceCommands">PublishDeviceCommands</a></strong>: Publishes all device commands for an organization.
+</li>
+
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iot.watson$devicepublish.html#spldoc_compilationunit__composite_operator__PublishDeviceEvents">PublishDeviceEvents</a></strong>: Publishes all device events for an organization.
+</li>
+
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iot.watson$devicepublish.html#spldoc_compilationunit__composite_operator__PublishDeviceStatuses">PublishDeviceStatuses</a></strong>: Publishes all device statuses for an organization.
+</li>
+
 <li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iot.watson$device.html#spldoc_compilationunit__composite_operator__SendCommandToDevice">SendCommandToDevice</a></strong>: Send commands to devices registered for an IBM Watson IoT Platform organization.
+</li>
+
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iot.watson$devicesubscribe.html#spldoc_compilationunit__composite_operator__SubscribeDeviceCommands">SubscribeDeviceCommands</a></strong>: Subsribes to device commands to be sent to devices for an organization.
 </li>
 
 </ul>

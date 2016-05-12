@@ -22,7 +22,7 @@
 <div class="body refbody">
 <div class="section">
 <p class="p">
-<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iot Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot 0.7.0.commit_commit_2492b9c</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iot.watson.apps.html">com.ibm.streamsx.iot.watson.apps</a> &gt; IotPlatform.spl</p>
+<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iot Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot 0.8.0.commit_1756881</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iot.watson.apps.html">com.ibm.streamsx.iot.watson.apps</a> &gt; IotPlatform.spl</p>
 
 </div>
 
@@ -100,33 +100,42 @@
 
 </div>
 
-<div class="p">These submission time parameters must be defined:
-<ul class="ul">
-<li class="li"> <tt class="ph tt">org</tt> - Organization identifier</li>
+<p class="p"><tt class="ph tt">IotPlatform</tt> supports Watson IoT Platform's scalable application mode that distributes messages (device events, commands and statuses) across multiple MQTT subscribers. This is configured by setting the optional parameters <tt class="ph tt">scaleEvents</tt>, <tt class="ph tt">scaleCommands</tt> and <tt class="ph tt">scaleStatuses</tt>. IBM Streams parallel regions are used to instantiate multiple MQTT source operators and publish those events, commands or statuses using multiple streams. Applications that subscribe using <tt class="ph tt">EventsSubscribe</tt>, <tt class="ph tt">CommandsSubscribe</tt>, <tt class="ph tt">StatusesSubscribe</tt> or <tt class="ph tt">Subscribe</tt> will correctly see the required tuples, regardless of the scale factor or if the subscriber is itself using parallel regions.
+</p>
 
-<li class="li"> <tt class="ph tt">authKey</tt> - API key</li>
+<p class="p">Scalable application mode also supports failures of the MQTT source operators or their connections by automatically delivering messages across the remaining active connections. Once a connection from this application is resetablished it will again be included in message delivery.
+</p>
 
-<li class="li"> <tt class="ph tt">authToken</tt> - API Token </li>
-
-</ul>
-
-</div>
+<p class="p">All of this composite's parameters can be set using submission time values at job submission time.
+</p>
 
 </div>
 
 <div class="section"><h2 class="title sectiontitle">Parameters</h2>
 
 <ul class="sl simple">
-<li class="sli"><strong class="ph b">org</strong>
+<li class="sli"><strong class="ph b">org</strong>: Organization identifier (required)
 </li>
 
-<li class="sli"><strong class="ph b">authKey</strong>
+<li class="sli"><strong class="ph b">authKey</strong>: API key (required)
 </li>
 
-<li class="sli"><strong class="ph b">authToken</strong>
+<li class="sli"><strong class="ph b">authToken</strong>: API Token (required)
 </li>
 
-<li class="sli"><strong class="ph b">encrypted</strong>
+<li class="sli"><strong class="ph b">encrypted</strong>: <tt class="ph tt">true</tt> to use encrypted (TLSv1.2) connections to IoT Plaform, <tt class="ph tt">false</tt> to use unencrypted (optional, defaults to <tt class="ph tt">false</tt>)
+</li>
+
+<li class="sli"><strong class="ph b">allowFilters</strong>: <tt class="ph tt">true</tt> to use allow applications subscribing to device events, sent device commands and device statuses to push filtering to this application. <tt class="ph tt">false</tt> to disallow execution of subscriber filters (optional defaults to <tt class="ph tt">true</tt>)
+</li>
+
+<li class="sli"><strong class="ph b">scaleEvents</strong>: Scaling factor for device events (optional, defaults to <tt class="ph tt">1</tt>)
+</li>
+
+<li class="sli"><strong class="ph b">scaleCommands</strong>: Scaling factor for sent device commands. Optional, defaults to <tt class="ph tt">1</tt>)
+</li>
+
+<li class="sli"><strong class="ph b">scaleStatuses</strong>: Scaling factor for device statuses (optional, defaults to <tt class="ph tt">1</tt>)
 </li>
 
 </ul>
@@ -144,7 +153,7 @@
 </div>
 
 <div class="section splgraph">
-  <embed class="image" src="../../image/tk$com.ibm.streamsx.iot/op$com.ibm.streamsx.iot.watson.apps$IotPlatform.svg" width="232" height="245"/>
+  <embed class="image" src="../../image/tk$com.ibm.streamsx.iot/op$com.ibm.streamsx.iot.watson.apps$IotPlatform.svg" width="118" height="244"/>
 </div>
 
 </div>

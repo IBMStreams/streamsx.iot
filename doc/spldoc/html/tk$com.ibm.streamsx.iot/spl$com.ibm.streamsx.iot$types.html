@@ -22,7 +22,7 @@
 <div class="body refbody">
 <div class="section">
 <p class="p">
-<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iot Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot 0.7.0.commit_commit_2492b9c</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot</a> &gt; types.spl</p>
+<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iot Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot 0.8.0.commit_1756881</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot</a> &gt; types.spl</p>
 
 </div>
 
@@ -134,7 +134,7 @@
 
 <li class="li"> <tt class="ph tt">eventId</tt> - Event identifier.</li>
 
-<li class="li"> <tt class="ph tt">jsonString</tt> - Event payload in JSON IBM Watson IoT Platform event format specification.</li>
+<li class="li"> <tt class="ph tt">jsonString</tt> - Event data in JSON IBM Watson IoT Platform event format specification.</li>
 
 </ul>
 
@@ -256,6 +256,16 @@
 <li class="li"> <tt class="ph tt">cmdId</tt> - Command identifier.</li>
 
 <li class="li"> <tt class="ph tt">jsonString</tt> - Command data.</li>
+
+</ul>
+
+</div>
+
+<div class="p">The command data is a JSON object using <a class="xref" href="https://docs.internetofthings.ibmcloud.com/messaging/payload.html">IBM Watson IoT Platform event format specification</a> and thus has two elements:
+<ul class="ul">
+<li class="li"> <tt class="ph tt">d</tt> - Command data, this is the command's data.</li>
+
+<li class="li"> <tt class="ph tt">ts</tt> - Command timestamp. This is an optional element, if included its value should be a valid ISO8601 encoded timestamp string. </li>
 
 </ul>
 
