@@ -170,6 +170,7 @@
      <property name="tksource" value="--include-source"/>
      <echo message="Tookit to SPLDOC: ${tkdir}"/>
      <exec executable="${streams.install}/bin/spl-make-doc">
+        <arg value="--warn-no-comments"/>
         <arg value="--include-composite-operator-diagram"/>
         <arg value="--copy-image-files"/>
 	<arg value="${tksource}"/>
