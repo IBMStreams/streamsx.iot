@@ -46,6 +46,7 @@ public composite EventsSubscribe(output stream<DeviceEvent> Events)
      expression<list<rstring>> $eventIds : [];
 
    type
+       /** @exclude */
        static _EventParam = tuple<list<rstring> typeIds, list<rstring> eventIds>;
 
    graph
@@ -63,9 +64,7 @@ public composite EventsSubscribe(output stream<DeviceEvent> Events)
      }
 }
 
-/**
- @exclude
-*/
+/** @exclude */
 public boolean filterEvents(DeviceEvent e, EventsSubscribe._EventParam p) {
     return
        ((size(p.typeIds) == 0) || (e.typeId in p.typeIds))
@@ -97,6 +96,7 @@ public composite CommandsSubscribe(output stream<DeviceCmd> Commands)
      expression<list<rstring>> $cmdIds : [];
 
    type
+       /** @exclude */
        static _CmdParam = tuple<list<rstring> typeIds, list<rstring> cmdIds>;
 
    graph
@@ -114,9 +114,7 @@ public composite CommandsSubscribe(output stream<DeviceCmd> Commands)
      }
 }
 
-/**
- @exclude
-*/
+/** @exclude */
 public boolean filterCommands(DeviceCmd c, CommandsSubscribe._CmdParam p) {
     return
        ((size(p.typeIds) == 0) || (c.typeId in p.typeIds))
@@ -145,6 +143,7 @@ public composite StatusesSubscribe(output stream<DeviceStatus> Statuses)
      expression<list<rstring>> $typeIds : [];
 
    type
+       /** @exclude */
        static _StatusParam = tuple<list<rstring> typeIds>;
 
    graph
@@ -157,22 +156,6 @@ public composite StatusesSubscribe(output stream<DeviceStatus> Statuses)
           localFilterFunction: com.ibm.streamsx.iot::filterStatuses;
           localFilterParameter: { typeIds = $typeIds};
      }
-/*
-     stream<DeviceStatus> StatusesAll = Subscribe()
-     {
-        param
-          topic: "streamsx/iot/device/statuses";
-          streamType: DeviceStatus;
-     }
-
-     // Currently we are filtering on the subscribe side
-     // filter will be pushed to the publish side in the future
-     stream<DeviceStatus> Statuses = Filter(StatusesAll) {
-       param
-        filter:
-           ((size($typeIds) == 0) || (typeId in $typeIds));
-     }
-*/
 }
 
 /**
@@ -194,6 +177,8 @@ public boolean filterStatuses(DeviceStatus s, StatusesSubscribe._StatusParam p) 
  * sent as a device command assuming
  * [com.ibm.streamsx.iot.watson.apps::IotPlatform]
  * is running, or an equivalant application.
+ *
+ * @input Commands Device commands to be sent to devices.
 */
 public composite CommandPublish(input stream<DeviceCmd> Commands) {
    graph
