@@ -7,9 +7,20 @@ namespace com.ibm.streamsx.iot.sample.quarks;
 
 use com.ibm.streamsx.iot::*;
 
+/**
+ * SPL type for aggregation info in device event.
+*/
 type AggInfo = float64 MAX, float64 MIN, float64 MEAN, float64 STDDEV;
+
+/**
+ * SPL type for aggregation sensor info in device event.
+*/
 type SensorInfo = rstring name, AggInfo reading;
 
+/**
+ * SPL type for device command payload sending
+ * a warning message.
+*/
 type WarningInfo = rstring msg;
 
 /**
