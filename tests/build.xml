@@ -13,6 +13,8 @@
 	   location="${env.HOME}/toolkits"/>
 	<property name="sabs"
 	   location="${basedir}/sabs"/>
+	<property name="quarks"
+	   location="${basedir}/ext/quarks/target/java8"/>
 
   <property name="testsrc.dir" value="src/test/java" />
   <property name="testbuild.dir" value="classes" />
@@ -26,7 +28,13 @@
 
   <path id="cp.compile">
     <path refid="cp.streams" />
+    <path refid="cp.quarks" />
     <pathelement location="../com.ibm.streamsx.iot/lib/com.ibm.streamsx.iot.jar" />
+  </path>
+
+  <path id="cp.quarks">
+    <pathelement location="${quarks}/lib/quarks.providers.direct.jar"/>
+    <pathelement location="${quarks}/connectors/iotf/lib/quarks.connectors.iotf.jar"/>
   </path>
 
        <target name="test" depends="init,unittests,build.spl.apps,build.sample.apps"/>
@@ -46,8 +54,11 @@
     </javac>
    </target>
 
+   <property name="streamsx.iot.test.device.cfg" value="skip"/>
    <target name="unittests" depends="compile">
-   <junit printsummary="yes" haltonfailure="yes">
+   <junit threads=4  fork="yes" printsummary="yes" haltonfailure="yes">
+     <sysproperty key="streamsx.iot.test.device.cfg"
+                  value="${streamsx.iot.test.device.cfg}"/>
      <classpath>
          <pathelement location="${testbuild.dir}"/>
          <path refid="cp.compile"/>
@@ -55,9 +66,9 @@
 
   <formatter type="xml"/>
 
-    <batchtest fork="yes" todir="${testreports.dir}">
+    <batchtest todir="${testreports.dir}">
       <fileset dir="${testsrc.dir}">
-         <include name="**/*Test*.java"/>
+         <include name="**/*Test.java"/>
       </fileset>
     </batchtest>
     </junit>
@@ -69,10 +80,10 @@
   	    namespace="com.ibm.streamsx.iot.watson.apps"
   	    composite="IotPlatform" />
 	  <build.iot.app
-  	    namespace="com.ibm.streamsx.iot.watson.apps"
-  	    composite="SimpleAllDevices" />
+  	    namespace="com.ibm.streamsx.iot.apps"
+  	    composite="ViewAllDevices" />
 	</target>
-	<!-- Compile the smple applications -->
+	<!-- Compile the sample applications -->
 	<target name="build.sample.apps" depends="init">
 	  <build.sample.app
   	    toolkit="${basedir}/../samples/CountEvents"

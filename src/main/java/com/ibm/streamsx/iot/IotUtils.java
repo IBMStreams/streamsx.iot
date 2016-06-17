@@ -1,6 +1,9 @@
 package com.ibm.streamsx.iot;
 
+import static com.ibm.streamsx.datetime.convert.ISO8601.fromIso8601ToMillis;
+
 import java.io.IOException;
+import java.text.ParseException;
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
 
@@ -36,8 +39,10 @@ class IotUtils {
         Instant ts = null;
         if (payload.containsKey("ts")) {
             try {
-                ts = Instant.parse((String) payload.get("ts"));
-            } catch (DateTimeParseException e) {
+                long ms = fromIso8601ToMillis((String) payload.get("ts"));
+                
+                ts = Instant.ofEpochMilli(ms);
+            } catch (ParseException e) {
                 ;
             }
         }     

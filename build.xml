@@ -13,14 +13,20 @@
   <property name="build.dir" value="classes" />
   <property name="lib.dir" value="${toolkit}/lib" />
   <property name="jarfile" value="com.ibm.streamsx.iot.jar" />
+  <property name="iot.manifest" value="${build.dir}/MANIFEST.MF" />
 
   <path id="cp.streams">
     <pathelement location="${streams.install}/lib/com.ibm.streams.operator.samples.jar" />
     <pathelement location="${streams.install}/toolkits/com.ibm.streamsx.topology/lib/com.ibm.streamsx.topology.jar" />
   </path>
 
+  <path id="cp.opt">
+    <path location="${toolkit}/opt/datetime/com.ibm.streamsx.datetime.jar" />
+  </path>
+
   <path id="cp.compile">
     <path refid="cp.streams" />
+    <path refid="cp.opt" />
   </path>
 
 	
@@ -209,7 +215,15 @@
    </target>
 
    <target name="jar" depends="compile">
-	<jar destfile="${lib.dir}/${jarfile}" basedir="${build.dir}" includes="com/ibm/streamsx/iot/**" filesonly="true">
+        <manifestclasspath property="iot.jar.classpath"
+             jarfile="${lib.dir}/${jarfile}">
+                 <classpath refid="cp.opt"/>
+        </manifestclasspath>
+        <manifest file="${iot.manifest}">
+         <attribute name="Class-Path" value="${iot.jar.classpath}"/>
+        </manifest>
+
+	<jar destfile="${lib.dir}/${jarfile}" basedir="${build.dir}" includes="com/ibm/streamsx/iot/**" filesonly="true" manifest="${iot.manifest}">
 	</jar>
 	<delete dir="${build.dir}" />
     </target>
