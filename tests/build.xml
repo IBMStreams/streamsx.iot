@@ -56,7 +56,7 @@
 
    <property name="streamsx.iot.test.device.cfg" value="skip"/>
    <target name="unittests" depends="compile">
-   <junit threads=4  fork="yes" printsummary="yes" haltonfailure="yes">
+   <junit threads="4"  fork="yes" printsummary="yes" haltonfailure="yes">
      <sysproperty key="streamsx.iot.test.device.cfg"
                   value="${streamsx.iot.test.device.cfg}"/>
      <classpath>
