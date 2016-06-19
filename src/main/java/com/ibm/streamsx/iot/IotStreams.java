@@ -4,6 +4,7 @@
  */
 package com.ibm.streamsx.iot;
 
+import com.ibm.streamsx.datetime.convert.ISO8601;
 import com.ibm.streamsx.iot.spl.IotSPLStreams;
 import com.ibm.streamsx.iot.spl.Schemas;
 import com.ibm.streamsx.topology.TStream;
@@ -45,7 +46,7 @@ public class IotStreams {
      * 
      */
     public static TStream<DeviceEvent> eventsSubscribe(TopologyElement te, String... eventId) {
-
+        
         return eventsSubscribe(te, null, eventId);
     }
     
@@ -79,10 +80,11 @@ public class IotStreams {
      * 
      */
     public static TStream<DeviceEvent> eventsSubscribe(TopologyElement te, String[] typeIds, String... eventId) {
+        addDependentClasses(te);
 
         SPLStream splEvents = IotSPLStreams.eventsSubscribe(te, typeIds, eventId);
         TStream<DeviceEvent> events = splEvents.transform(IotUtils::newDeviceEvent);
-        return events;
+        return events.asType(DeviceEvent.class);
     }    
     
 
@@ -108,14 +110,23 @@ public class IotStreams {
         return commandsSubscribe(te, null, cmdId);
     }
     
+    static void addDependentClasses(TopologyElement te) {
+        te.topology().addClassDependency(ISO8601.class);
+        te.topology().addClassDependency(DeviceEvent.class);
+    }
+    
     public static TStream<DeviceCmd> commandsSubscribe(TopologyElement te, String[] typeIds, String... cmdId) {
-
+        addDependentClasses(te);
+        
         SPLStream splCommands = IotSPLStreams.commandsSubscribe(te, typeIds, cmdId);
         TStream<DeviceCmd> commands = splCommands.transform(IotUtils::newDeviceCmd);
-        return commands;
+        return commands.asType(DeviceCmd.class);
     }
 
     public static void commandPublish(TStream<DeviceCmd> commandStream) {
+        addDependentClasses(commandStream);
+        
+        commandStream = commandStream.asType(DeviceCmd.class);
         SPLStream splCommands = SPLStreams.convertStream(commandStream, IotUtils::toTuple,
                 Schemas.DEVICE_CMD);
 
@@ -123,9 +134,10 @@ public class IotStreams {
     }
 
     public static TStream<DeviceStatus> statusesSubscribe(TopologyElement te, String ... typeId) {
-
+        addDependentClasses(te);
+        
         SPLStream splStatuses = IotSPLStreams.statusesSubscribe(te, typeId);
         TStream<DeviceStatus> statuses = splStatuses.transform(DeviceStatus::newDeviceStatus);
-        return statuses;
+        return statuses.asType(DeviceStatus.class);
     }
 }

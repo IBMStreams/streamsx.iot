@@ -194,7 +194,7 @@ public class DeviceEventsTest {
         return events;
     }
 
-    public Condition<List<String>> completeAndValidate(
+    public static Condition<List<String>> completeAndValidate(
             TStream<DeviceEvent> output, int seconds, JSONObject...inputs) throws Exception {
         
         Tester tester = output.topology().getTester();
