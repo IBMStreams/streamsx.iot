@@ -56,7 +56,7 @@
 
    <property name="streamsx.iot.test.device.cfg" value="skip"/>
    <target name="unittests" depends="compile">
-   <junit threads="4"  fork="yes" printsummary="yes" haltonfailure="yes">
+   <junit fork="yes" printsummary="yes" haltonfailure="yes">
      <sysproperty key="streamsx.iot.test.device.cfg"
                   value="${streamsx.iot.test.device.cfg}"/>
      <classpath>
@@ -69,6 +69,7 @@
     <batchtest todir="${testreports.dir}">
       <fileset dir="${testsrc.dir}">
          <include name="**/*Test.java"/>
+         <exclude name="**/Watson*Test.java"/>
       </fileset>
     </batchtest>
     </junit>
