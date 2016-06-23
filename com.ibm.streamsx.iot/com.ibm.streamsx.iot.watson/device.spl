@@ -312,6 +312,7 @@ public composite SendCommandToDevice(input stream<DeviceCmd> Commands) {
 				dataAttributeName: "jsonString";
                             trustStore: getThisToolkitDir() + "/opt/iotf/messaging.ts";
                             trustStorePassword: "streamsx.iotf.123";
+                            qos: 1;
            
         }  
         

@@ -70,14 +70,14 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * @param scaleCommands Scaling factor for sent device commands. Optional, defaults to `1`)
  * @param scaleStatuses Scaling factor for device statuses (optional, defaults to `1`)
  * @param allowFilters `true` to use allow applications subscribing to device events, sent device commands and device statuses to push filtering to this application. `false` to disallow execution of subscriber filters (optional defaults to `true`)
- * @param encrypted `true` to use encrypted (TLSv1.2) connections to IoT Plaform, `false` to use unencrypted (optional, defaults to `false`)
+ * @param encrypted `true` to use encrypted (TLSv1.2) connections to IoT Plaform, `false` to use unencrypted (optional, defaults to `true`)
  */
 public composite IotPlatform {
   param
     expression<rstring> $org : getSubmissionTimeValue("org");
     expression<rstring> $authKey : getSubmissionTimeValue("authKey");
     expression<rstring> $authToken : getSubmissionTimeValue("authToken");
-    expression<boolean> $encrypted : (boolean) getSubmissionTimeValue("encrypted", "false");
+    expression<boolean> $encrypted : (boolean) getSubmissionTimeValue("encrypted", "true");
     expression<boolean> $allowFilters : (boolean) getSubmissionTimeValue("allowFilters", "true");
     expression<int32> $scaleEvents : (int32) getSubmissionTimeValue("scaleEvents", "1");
     expression<int32> $scaleCommands : (int32) getSubmissionTimeValue("scaleCommands", "1");
