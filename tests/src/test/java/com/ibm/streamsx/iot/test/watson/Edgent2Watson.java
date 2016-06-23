@@ -24,6 +24,7 @@ import quarks.connectors.iot.IotDevice;
 import quarks.connectors.iot.QoS;
 import quarks.connectors.iotf.IotfDevice;
 import quarks.execution.Job;
+import quarks.execution.Job.Action;
 import quarks.providers.direct.DirectProvider;
 import quarks.providers.direct.DirectTopology;
 import quarks.topology.TStream;
@@ -32,11 +33,22 @@ import quarks.topology.plumbing.PlumbingStreams;
 public class Edgent2Watson {
     
     public static AtomicBoolean FAILED = new AtomicBoolean();
+    private static volatile Job job;
+    
+    static void stop() throws Exception {
+        if (job != null) {
+            job.stateChange(Action.CLOSE);
+            System.err.println("CLOSED JOB");
+            job = null;
+            Thread.sleep(1000);
+        }
+     
+    }
     
     /**
      * Send a command to tell the Quarks client to release the events!
      */
-    public static void go(Topology topology) {
+    static void go(Topology topology) {
         Device device = new Device("Test", "Test001");
         DeviceCmd goCmd = new DeviceCmd(device, "go", null, new JSONObject());
         com.ibm.streamsx.topology.TStream<DeviceCmd> cmds =
@@ -75,16 +87,12 @@ public class Edgent2Watson {
         
         AtomicBoolean go = new AtomicBoolean();
 
-        // Declare a connection to IoTF
+        // Declare a connection to IoT Platform
         IotDevice device = new IotfDevice(topology, new File(deviceCfg));
         
         TStream<JsonObject> cmds = device.commands("go");
-        cmds.print();
         cmds.sink(e -> go.set(true));
-        
-        TStream<JsonObject> cmds2 = device.commands();
-        cmds2.print();
-       
+               
         TStream<JSONObject> pys = topology.collection(Arrays.asList(payloads));
                 
         JsonParser jp = new JsonParser();
@@ -93,7 +101,6 @@ public class Edgent2Watson {
         pysj = pys.map(ij -> {
             try {
                 while (!go.get()) {
-                    System.out.println("GO:" + go.get());
                     Thread.sleep(1000);
                 }
                 return jp.parse(ij.serialize()).getAsJsonObject();
@@ -111,14 +118,7 @@ public class Edgent2Watson {
         device.events(pysj,
                 e -> e.getAsJsonPrimitive("py_event").getAsString(),
                 e -> e.getAsJsonObject("py_data"), e -> QoS.FIRE_AND_FORGET);
-        
-        // Heartbeat
-        TStream<JsonObject> hb = topology.poll(JsonObject::new, 1, TimeUnit.SECONDS);
-        device.events(hb, "heartbeat", 0);
-        
-        Job job = tp.submit(topology).get();
-        
-        job.complete();
-              
+                
+        job = tp.submit(topology).get();
     }
 }

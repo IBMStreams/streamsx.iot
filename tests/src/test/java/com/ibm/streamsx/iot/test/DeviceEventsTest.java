@@ -45,7 +45,7 @@ public class DeviceEventsTest {
         
         JSONObject[] events = generateEvents(200);
         
-        Simulate.simulateEvents(topology, 5, allowFilter, events);
+        Simulate.simulateEvents(topology, 10, allowFilter, events);
         
         // Subscribe to device events and just print them to standard out.
         TStream<DeviceEvent> eventStream = IotStreams.eventsSubscribe(topology);
@@ -97,7 +97,7 @@ public class DeviceEventsTest {
         
         JSONObject[] events = generateEvents(200);
         
-        Simulate.simulateEvents(topology, 5, allowFilter, events);
+        Simulate.simulateEvents(topology, 10, allowFilter, events);
         
         // Subscribe to device events and just print them to standard out.
         TStream<DeviceEvent> eventStream = IotStreams.eventsSubscribe(topology, typeIds, eventIds);
@@ -195,7 +195,7 @@ public class DeviceEventsTest {
     }
 
     public static Condition<List<String>> completeAndValidate(
-            TStream<DeviceEvent> output, int seconds, JSONObject...inputs) throws Exception {
+            TStream<?> output, int seconds, JSONObject...inputs) throws Exception {
         
         Tester tester = output.topology().getTester();
         
