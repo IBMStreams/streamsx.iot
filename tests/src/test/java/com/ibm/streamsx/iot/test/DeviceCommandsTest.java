@@ -7,12 +7,10 @@ import static org.junit.Assert.assertTrue;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 
@@ -22,11 +20,7 @@ import com.ibm.streamsx.iot.DeviceCmd;
 import com.ibm.streamsx.iot.IotStreams;
 import com.ibm.streamsx.topology.TStream;
 import com.ibm.streamsx.topology.Topology;
-import com.ibm.streamsx.topology.context.StreamsContext.Type;
-import com.ibm.streamsx.topology.context.StreamsContextFactory;
-import com.ibm.streamsx.topology.streams.StringStreams;
 import com.ibm.streamsx.topology.tester.Condition;
-import com.ibm.streamsx.topology.tester.Tester;
 
 public class DeviceCommandsTest {
     
@@ -45,11 +39,11 @@ public class DeviceCommandsTest {
         
         JSONObject[] commands = generateCommands(200);
         
-        Simulate.simulateSentCommands(topology, 5, allowFilter, commands);
+        Simulate.simulateSentCommands(topology, 10, allowFilter, commands);
         
         TStream<DeviceCmd> cmdStream = IotStreams.commandsSubscribe(topology);
         
-        Condition<List<String>> tuples = completeAndValidate(cmdStream, 30, commands);
+        Condition<List<String>> tuples = DeviceEventsTest.completeAndValidate(cmdStream, 30, commands);
         
         List<String> results = tuples.getResult();
         
@@ -96,7 +90,7 @@ public class DeviceCommandsTest {
         
         JSONObject[] cmds = generateCommands(200);
         
-        Simulate.simulateSentCommands(topology, 5, allowFilter, cmds);
+        Simulate.simulateSentCommands(topology, 10, allowFilter, cmds);
         
         TStream<DeviceCmd> cmdStream = IotStreams.commandsSubscribe(topology, typeIds, cmdIds);
         
@@ -135,7 +129,7 @@ public class DeviceCommandsTest {
         }
         cmds = filteredCommandsL.toArray(new JSONObject[filteredCommandsL.size()]);
         
-        Condition<List<String>> tuples = completeAndValidate(cmdStream, 30, cmds);
+        Condition<List<String>> tuples = DeviceEventsTest.completeAndValidate(cmdStream, 30, cmds);
         
         List<String> results = tuples.getResult();
         
@@ -190,26 +184,5 @@ public class DeviceCommandsTest {
         }
         
         return commands;
-    }
-
-    public Condition<List<String>> completeAndValidate(
-            TStream<DeviceCmd> output, int seconds, JSONObject...inputs) throws Exception {
-        
-        Tester tester = output.topology().getTester();
-        
-        TStream<String> json = StringStreams.toString(output);
-        
-        Condition<Long> expectedCount = tester.tupleCount(json, inputs.length);
-        Condition<List<String>> tuples = tester.stringContents(json);
-                
-        tester.complete(
-                StreamsContextFactory.getStreamsContext(Type.DISTRIBUTED_TESTER),
-                new HashMap<>(),
-                expectedCount,
-                seconds, TimeUnit.SECONDS);
-
-        assertTrue(expectedCount.toString(), expectedCount.valid());
-        
-        return tuples;
     }
 }

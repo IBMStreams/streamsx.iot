@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -15,7 +16,9 @@ import com.ibm.streamsx.iot.IotStreams;
 import com.ibm.streamsx.iot.test.DeviceEventsTest;
 import com.ibm.streamsx.topology.TStream;
 import com.ibm.streamsx.topology.Topology;
+import com.ibm.streamsx.topology.streams.StringStreams;
 import com.ibm.streamsx.topology.tester.Condition;
+import com.ibm.streamsx.topology.tester.Tester;
 
 public class WatsonDeviceEventsTest {
        
@@ -30,17 +33,37 @@ public class WatsonDeviceEventsTest {
                 
         // Subscribe to device events and just print them to standard out.
         TStream<DeviceEvent> eventStream = IotStreams.eventsSubscribe(topology);
-        eventStream = eventStream.filter(e -> !e.getEventId().equals("heartbeat"));
         Edgent2Watson.go(topology);
-             
+        
+        String filterEventId = events[7].get("py_event").toString();
+        List<JSONObject> filteredEvents = new ArrayList<>();
+        for (JSONObject event : events) {
+            if (filterEventId.equals(event.get("py_event"))) {
+                filteredEvents.add(event);
+            }      
+        }
+        assertFalse(filteredEvents.isEmpty());
+        JSONObject[] fea = filteredEvents.toArray(new JSONObject[filteredEvents.size()]);
+        
+        // Subscribe to device events and just print them to standard out.
+        TStream<DeviceEvent> eventStreamFiltered = IotStreams.eventsSubscribe(topology, filterEventId);
+        Tester tester = topology.getTester();
+        
+        TStream<String> json = StringStreams.toString(eventStreamFiltered);       
+        Condition<List<String>> tuplesFiltered = tester.stringContents(json);
+
+            
         Edgent2Watson.createEvents(events);
 
-        Condition<List<String>> tuples = DeviceEventsTest.completeAndValidate(eventStream, 3000, events);
+        Condition<List<String>> tuples = DeviceEventsTest.completeAndValidate(eventStream, 30, events);
+        Edgent2Watson.stop();
         assertFalse(Edgent2Watson.FAILED.get());
         
         List<String> results = tuples.getResult();
         
-        assertMatchingEvents(events, results);     
+        assertMatchingEvents(events, results);  
+        
+        assertMatchingEvents(fea, tuplesFiltered.getResult());
     }
     
     private void assertMatchingEvents(JSONObject[] events, List<String> results) throws Exception {
@@ -50,13 +73,9 @@ public class WatsonDeviceEventsTest {
             JSONObject event = events[i];
             JSONObject result = (JSONObject) JSON.parse(results.get(i));
             
-            //assertEquals(event.get("py_type"), result.get("typeId"));
-            //assertEquals(event.get("py_device"), result.get("deviceId"));
             assertEquals(event.get("py_event"), result.get("eventId"));
             
             assertEquals(event.get("py_data"), result.get("d"));
-            
-            System.err.println("RESULT:" + result.toString());
             
             assertTrue(result.containsKey("ts"));
         }

@@ -1,16 +1,13 @@
 package com.ibm.streamsx.iot.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 
@@ -20,11 +17,7 @@ import com.ibm.streamsx.iot.DeviceStatus;
 import com.ibm.streamsx.iot.IotStreams;
 import com.ibm.streamsx.topology.TStream;
 import com.ibm.streamsx.topology.Topology;
-import com.ibm.streamsx.topology.context.StreamsContext.Type;
-import com.ibm.streamsx.topology.context.StreamsContextFactory;
-import com.ibm.streamsx.topology.streams.StringStreams;
 import com.ibm.streamsx.topology.tester.Condition;
-import com.ibm.streamsx.topology.tester.Tester;
 
 public class DeviceStatusTest {
     
@@ -43,11 +36,11 @@ public class DeviceStatusTest {
         
         JSONObject[] statuses = generateStatuses(200);
         
-        Simulate.simulateStatuses(topology, 5, allowFilter, statuses);
+        Simulate.simulateStatuses(topology, 10, allowFilter, statuses);
         
         TStream<DeviceStatus> statusStream = IotStreams.statusesSubscribe(topology);
         
-        Condition<List<String>> tuples = completeAndValidate(statusStream, 30, statuses);
+        Condition<List<String>> tuples = DeviceEventsTest.completeAndValidate(statusStream, 30, statuses);
         
         List<String> results = tuples.getResult();
         
@@ -77,7 +70,7 @@ public class DeviceStatusTest {
         
         JSONObject[] statuses = generateStatuses(200);
         
-        Simulate.simulateStatuses(topology, 5, allowFilter, statuses);
+        Simulate.simulateStatuses(topology, 10, allowFilter, statuses);
         
         TStream<DeviceStatus> statusStream = IotStreams.statusesSubscribe(topology, typeId);
                 
@@ -94,7 +87,7 @@ public class DeviceStatusTest {
         }
         statuses = filteredStatusesL.toArray(new JSONObject[filteredStatusesL.size()]);
         
-        Condition<List<String>> tuples = completeAndValidate(statusStream, 30, statuses);
+        Condition<List<String>> tuples = DeviceEventsTest.completeAndValidate(statusStream, 30, statuses);
         
         List<String> results = tuples.getResult();
         
@@ -134,26 +127,5 @@ public class DeviceStatusTest {
         }
         
         return statuses;
-    }
-
-    public Condition<List<String>> completeAndValidate(
-            TStream<DeviceStatus> output, int seconds, JSONObject...inputs) throws Exception {
-        
-        Tester tester = output.topology().getTester();
-        
-        TStream<String> json = StringStreams.toString(output);
-        
-        Condition<Long> expectedCount = tester.tupleCount(json, inputs.length);
-        Condition<List<String>> tuples = tester.stringContents(json);
-                
-        tester.complete(
-                StreamsContextFactory.getStreamsContext(Type.DISTRIBUTED_TESTER),
-                new HashMap<>(),
-                expectedCount,
-                seconds, TimeUnit.SECONDS);
-
-        assertTrue(expectedCount.toString(), expectedCount.valid());
-        
-        return tuples;
     }
 }
