@@ -1,7 +1,7 @@
 #Ant properties
-#Wed Jun 15 09:25:29 PDT 2016
-DSTAMP=20160615
-TSTAMP=0925
-commithash=f56bf09
+#Thu Jun 23 10:14:21 PDT 2016
+DSTAMP=20160623
+TSTAMP=1014
+commithash=ad806fd
 commithash.error=
 quarks.version=0.4.0
