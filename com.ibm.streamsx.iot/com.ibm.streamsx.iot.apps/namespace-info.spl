@@ -1,0 +1,10 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2016
+ */
+ 
+ /**
+ * Generic IoT device applications.
+ */
+
+namespace com.ibm.streamsx.iot.apps ;

@@ -11,7 +11,7 @@ use com.ibm.streamsx.topology.topic::Subscribe;
 
  /**
  * Application providing integration
- * with an IBM Watson IoT Platform organization.
+ * with an IBM Watson IoT Platform Bluemix service.
  *
  * This application performs the role
  * of ingest and egress (for device commands) for
@@ -63,67 +63,33 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * All of this composite's parameters can be set using submission
  * time values at job submission time.
  *
- * @param org Organization identifier (required)
- * @param authKey API key (required)
- * @param authToken  API Token (required)
+ * @param _config Application configuration name containing the organization and authorization information for the Bluemix service.
  * @param scaleEvents Scaling factor for device events (optional, defaults to `1`)
  * @param scaleCommands Scaling factor for sent device commands. Optional, defaults to `1`)
  * @param scaleStatuses Scaling factor for device statuses (optional, defaults to `1`)
  * @param allowFilters `true` to use allow applications subscribing to device events, sent device commands and device statuses to push filtering to this application. `false` to disallow execution of subscriber filters (optional defaults to `true`)
- * @param encrypted `true` to use encrypted (TLSv1.2) connections to IoT Plaform, `false` to use unencrypted (optional, defaults to `true`)
+ * @param encrypted `true` to use encrypted (TLSv1.2) connections to IoT Plaform, `false` to use unencrypted (optional, defaults to `false`)
  */
-public composite IotPlatform {
+public composite IotPlatformBluemix {
   param
-    expression<rstring> $org : getSubmissionTimeValue("org");
-    expression<rstring> $authKey : getSubmissionTimeValue("authKey");
-    expression<rstring> $authToken : getSubmissionTimeValue("authToken");
-    expression<boolean> $encrypted : (boolean) getSubmissionTimeValue("encrypted", "true");
+    expression<rstring> $_config : getSubmissionTimeValue("config");
+    expression<boolean> $encrypted : (boolean) getSubmissionTimeValue("encrypted", "false");
     expression<boolean> $allowFilters : (boolean) getSubmissionTimeValue("allowFilters", "true");
     expression<int32> $scaleEvents : (int32) getSubmissionTimeValue("scaleEvents", "1");
     expression<int32> $scaleCommands : (int32) getSubmissionTimeValue("scaleCommands", "1");
     expression<int32> $scaleStatuses : (int32) getSubmissionTimeValue("scaleStatuses", "1");
 
 graph
-
-  @parallel(width=$scaleEvents)
-  () as Events = PublishDeviceEvents() {
-     param
-       org : $org;
-       authKey : $authKey;
-       authToken : $authToken;
-       encrypted : $encrypted;
-       allowFilter : $allowFilters;
-     config placement: partitionColocation(getThisCompositeInstanceName()+"_evt");
-  }
-
-  @parallel(width=$scaleCommands)
-  () as Commands = PublishDeviceCommands() {
-     param
-       org : $org;
-       authKey : $authKey;
-       authToken : $authToken;
-       encrypted : $encrypted;
-       allowFilter : $allowFilters;
-     config placement: partitionColocation(getThisCompositeInstanceName()+"_cmd");
-  }
-
-  @parallel(width=$scaleStatuses)
-  () as Status = PublishDeviceStatuses() {
-     param
-       org : $org;
-       authKey : $authKey;
-       authToken : $authToken;
-       encrypted : $encrypted;
-       allowFilter : $allowFilters;
-     config placement: partitionColocation(getThisCompositeInstanceName()+"_mon");
-  }
-
-  () as SendCommandsToDevice = SubscribeDeviceCommands() {
+   () as BluemixIotPlatform = IotPlatform() {
     param
-      org : $org;
-      authKey : $authKey;
-      authToken : $authToken;
-      encrypted : $encrypted;
-     config placement: partitionColocation(getThisCompositeInstanceName());
-  }
+       org:  getApplicationConfigurationProperty($_config, "org", "?");
+       authKey:  getApplicationConfigurationProperty($_config, "auth-key", "?");
+       authToken: getApplicationConfigurationProperty($_config, "auth-token", "?");
+      
+       encrypted: $encrypted;
+       allowFilters: $allowFilters;
+       scaleEvents: $scaleEvents;
+       scaleCommands: $scaleCommands;
+       scaleStatuses: $scaleStatuses;
+   }
 }
