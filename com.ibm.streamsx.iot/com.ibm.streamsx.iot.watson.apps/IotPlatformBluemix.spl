@@ -60,7 +60,7 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * Once a connection from this application
  * is resetablished it will again be included in message delivery.
  *
- * **Note**: This application requires IBM Streams 4.2 Beta or later. If using an earlier version of IBM Streams then use the [IotPlatform] application, explicitly passing organization and authorization tokens using submission time parameters.
+ * **Note**: This application requires IBM Streams 4.2 Beta or later (and is hence subject to change). If using an earlier version of IBM Streams then use the [IotPlatform] application, explicitly passing organization and authorization tokens using submission time parameters.
  *
  * This application is configured using submission time parameters:
  * * `config` : Application configuration name containing the organization and application api authorization information for the Bluemix service (required).
