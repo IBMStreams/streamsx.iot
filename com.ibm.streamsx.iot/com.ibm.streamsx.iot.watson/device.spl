@@ -20,11 +20,13 @@ type RawMsg = Json, tuple<rstring topic>;
  * https://docs.internetofthings.ibmcloud.com/applications/mqtt.html
  * @exclude
  */
-public rstring getIotfUri(rstring org, boolean encrypted) {
+rstring getIotfUri(rstring org, rstring domain, boolean encrypted) {
+    rstring host = org + ".messaging." + domain;
+
     if (encrypted)
-        return "ssl://" + org + ".messaging.internetofthings.ibmcloud.com:8883";
+        return "ssl://" + host + ":8883";
     else
-        return "tcp://" + org + ".messaging.internetofthings.ibmcloud.com:1883";
+        return "tcp://" + host + ":1883";
 }
  
  /**
@@ -35,6 +37,7 @@ public rstring getIotfUri(rstring org, boolean encrypted) {
  * `iot-2/type/`*typeId*`/id/`*deviceId*`/evt/`*eventId*`/fmt/json`
  * 
  * @param org Organization identifier.
+ * @param domain Service domain, used to define the host for the MQTT message hub host, which will be *org*`.messaging.`*domain*. Defaults to `internetofthings.ibmcloud.com` supporting IBM Watson IoT Platform hosted on Bluemix.
  * @param authKey Application key.
  * @param authToken Application authorization token.
  * @param appId Application identifier for the MQTT client identifier, defaults to *jobId*`_evt`.
@@ -49,6 +52,7 @@ public composite DeviceEvents(output stream<DeviceEvent> Events)
 {
     param
         expression<rstring> $org;
+        expression<rstring> $domain : "internetofthings.ibmcloud.com";
         expression<rstring> $authKey;
         expression<rstring> $authToken;
         expression<rstring> $appId : (rstring) jobID() +"_evt";
@@ -63,6 +67,7 @@ public composite DeviceEvents(output stream<DeviceEvent> Events)
 		{		         
 			param	
             org: $org;
+            domain: $domain;
             appId: $appId;
             authKey: $authKey;
             authToken: $authToken;
@@ -109,6 +114,7 @@ public composite Raw2DeviceEvent(input RawEvents; output Events) {
  * `iot-2/type/`*typeId*`/id/`*deviceId*`/mon/`
  * 
  * @param org Organization identifier.
+ * @param domain Service domain, used to define the host for the MQTT message hub host, which will be *org*`.messaging.`*domain*. Defaults to `internetofthings.ibmcloud.com` supporting IBM Watson IoT Platform hosted on Bluemix.
  * @param authKey Application key.
  * @param authToken Application authorization token.
  * @param appId application identifier for the MQTT client identifier, defaults to *jobId*`_mon`.
@@ -122,6 +128,7 @@ public composite DeviceStatuses(output stream<DeviceStatus> Statuses)
 {
     param
         expression<rstring> $org;
+        expression<rstring> $domain : "internetofthings.ibmcloud.com";
         expression<rstring> $appId : (rstring) jobID() + "_mon";
         expression<rstring> $authKey;
         expression<rstring> $authToken;
@@ -134,6 +141,7 @@ public composite DeviceStatuses(output stream<DeviceStatus> Statuses)
 		{		         
 			param
             org: $org;
+            domain: $domain;
             appId: $appId;
             authKey: $authKey;
             authToken: $authToken;
@@ -167,6 +175,7 @@ public composite DeviceStatuses(output stream<DeviceStatus> Statuses)
  * `iot-2/type/`*typeId*`/id/`*deviceId*`/cmd/`*cmdId*`/fmt/json`
  * 
  * @param org Organization identifier.
+ * @param domain Service domain, used to define the host for the MQTT message hub host, which will be *org*`.messaging.`*domain*. Defaults to `internetofthings.ibmcloud.com` supporting IBM Watson IoT Platform hosted on Bluemix.
  * @param authKey Application key.
  * @param authToken Application authorization token.
  * @param appId Application identifier for the MQTT client identifier, defaults to *jobId*`_cmd`.
@@ -181,6 +190,7 @@ public composite DeviceCommands(output stream<DeviceCmd> Commands)
 {
     param
         expression<rstring> $org;
+        expression<rstring> $domain : "internetofthings.ibmcloud.com";
         expression<rstring> $authKey;
         expression<rstring> $authToken;
         expression<rstring> $appId : (rstring) jobID() +"_cmd";
@@ -195,6 +205,7 @@ public composite DeviceCommands(output stream<DeviceCmd> Commands)
 		{	         
 			param	
             org: $org;
+            domain : $domain;
             appId: $authKey + "_" + $appId;
             authKey: $authKey;
             authToken: $authToken;
@@ -230,6 +241,7 @@ composite DeviceTopic(output Messages)
 {
     param
         expression<rstring> $org;
+        expression<rstring> $domain;
         expression<rstring> $appId;
         expression<rstring> $authKey;
         expression<rstring> $authToken;
@@ -246,7 +258,7 @@ composite DeviceTopic(output Messages)
          (getMaxChannels() >= 2 ? "A:" : "a:") + _org + ":" + $appId;
 		      rstring _userId = $authKey;
 		      rstring _password = $authToken;
-		      rstring _serverURI = getIotfUri(_org, $encrypted);
+		      rstring _serverURI = getIotfUri(_org, $domain, $encrypted);
 		    }
 		         
 			param
@@ -273,6 +285,7 @@ composite DeviceTopic(output Messages)
  * `iot-2/type/`*typeId*`/id/`*deviceId*`/cmd/`*cmdId*`/fmt/json`
  * 
  * @param org Organization identifier.
+ * @param domain Service domain, used to define the host for the MQTT message hub host, which will be *org*`.messaging.`*domain*. Defaults to `internetofthings.ibmcloud.com` supporting IBM Watson IoT Platform hosted on Bluemix.
  * @param authKey Application key.
  * @param authToken Application authorization token.
  * @param appId application identifier for the MQTT client identifier, defaults to *jobId*`_snd`.
@@ -283,6 +296,7 @@ composite DeviceTopic(output Messages)
 public composite SendCommandToDevice(input stream<DeviceCmd> Commands) {
    param
         expression<rstring> $org;
+        expression<rstring> $domain : "internetofthings.ibmcloud.com";
         expression<rstring> $appId : (rstring) jobID() + "_snd";
         expression<rstring> $authKey;
         expression<rstring> $authToken;
@@ -299,7 +313,7 @@ public composite SendCommandToDevice(input stream<DeviceCmd> Commands) {
 		      rstring _clientId = "a:" + $org + ":" + $appId;
 		      rstring _userId = $authKey;
 		      rstring _password = $authToken;
-		      rstring _serverURI = getIotfUri($org, $encrypted);
+		      rstring _serverURI = getIotfUri($org, $domain, $encrypted);
 		    }
 		         
 			param
