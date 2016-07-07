@@ -60,24 +60,22 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * Once a connection from this application
  * is resetablished it will again be included in message delivery.
  *
- * All of this composite's parameters can be set using submission
- * time values at job submission time.
+ * **Note**: This application requires IBM Streams 4.2 Beta or later. If using an earlier version of IBM Streams then use the [IotPlatform] application, explicitly passing organization and authorization tokens using submission time parameters.
  *
- * @param _config Application configuration name containing the organization and authorization information for the Bluemix service.
- * @param scaleEvents Scaling factor for device events (optional, defaults to `1`)
- * @param scaleCommands Scaling factor for sent device commands. Optional, defaults to `1`)
- * @param scaleStatuses Scaling factor for device statuses (optional, defaults to `1`)
- * @param allowFilters `true` to use allow applications subscribing to device events, sent device commands and device statuses to push filtering to this application. `false` to disallow execution of subscriber filters (optional defaults to `true`)
- * @param encrypted `true` to use encrypted (TLSv1.2) connections to IoT Plaform, `false` to use unencrypted (optional, defaults to `false`)
+ * This application is configured using submission time parameters:
+ * * `config` : Application configuration name containing the organization and application api authorization information for the Bluemix service (required).
+ * * `scaleEvents` : Scaling factor for device events (optional, defaults to `1`)
+ * * `scaleCommands` : Scaling factor for sent device commands. Optional, defaults to `1`)
+ * * `scaleStatuses` : Scaling factor for device statuses (optional, defaults to `1`)
+ * * `allowFilters` : `true` to use allow applications subscribing to device events, sent device commands and device statuses to push filtering to this application. `false` to disallow execution of subscriber filters (optional defaults to `true`)
+ * * `encrypted` : `true` to use encrypted (TLSv1.2) connections to IoT Plaform, `false` to use unencrypted (optional, defaults to `true`)
+ *
+ * @param _config Application configuration name containing the organization and authorization information for the Bluemix service. Maps to the `config` submisstion time parameter.
+ *
  */
 public composite IotPlatformBluemix {
   param
     expression<rstring> $_config : getSubmissionTimeValue("config");
-    expression<boolean> $encrypted : (boolean) getSubmissionTimeValue("encrypted", "false");
-    expression<boolean> $allowFilters : (boolean) getSubmissionTimeValue("allowFilters", "true");
-    expression<int32> $scaleEvents : (int32) getSubmissionTimeValue("scaleEvents", "1");
-    expression<int32> $scaleCommands : (int32) getSubmissionTimeValue("scaleCommands", "1");
-    expression<int32> $scaleStatuses : (int32) getSubmissionTimeValue("scaleStatuses", "1");
 
 graph
    () as BluemixIotPlatform = IotPlatform() {
@@ -85,11 +83,5 @@ graph
        org:  getApplicationConfigurationProperty($_config, "org", "?");
        authKey:  getApplicationConfigurationProperty($_config, "auth-key", "?");
        authToken: getApplicationConfigurationProperty($_config, "auth-token", "?");
-      
-       encrypted: $encrypted;
-       allowFilters: $allowFilters;
-       scaleEvents: $scaleEvents;
-       scaleCommands: $scaleCommands;
-       scaleStatuses: $scaleStatuses;
    }
 }
