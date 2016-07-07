@@ -239,13 +239,14 @@ composite DeviceTopic(output Messages)
 		stream<RawMsg> Messages = MQTTSource()
 		{
 		    logic state: {
+                      rstring _org = $org;
 		      rstring _topic = $topic;
 		      rstring _clientId = 
          // use scaleable connections when running in parallel
-         (getMaxChannels() >= 2 ? "A:" : "a:") + $org + ":" + $appId;
+         (getMaxChannels() >= 2 ? "A:" : "a:") + _org + ":" + $appId;
 		      rstring _userId = $authKey;
 		      rstring _password = $authToken;
-		      rstring _serverURI = getIotfUri($org, $encrypted);
+		      rstring _serverURI = getIotfUri(_org, $encrypted);
 		    }
 		         
 			param
