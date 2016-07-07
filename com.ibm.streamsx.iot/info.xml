@@ -4,9 +4,13 @@
     <info:name>com.ibm.streamsx.iot</info:name>
     <info:description>IoT integration including connectivity with IBM Watson IoT Platform.
 
-IBM Watson IoT Platform provides a model around devices where devices produce events (for example, sensor data) and subscribe to commands (for example, control instructions, such as reduce maximum rpm for an engine).
+This toolkit provides a model around IoT devices where devices produce events (for example, sensor data) and subscribe to commands (for example, control instructions, such as reduce maximum rpm for an engine).
 
 Streams applications can use this toolkit to provide real time analytics against all the events from potentially thousands of devices, including sending commands to specific devices based upon the analytics.
+
+As well as the general IoT device model, integration with IBM Watson IoT
+Platform is provided allowing ease of connecting IBM Streams to
+a IoT Platform service (including Bluemix).
 
 See [namespace:com.ibm.streamsx.iot] for more details.
 
