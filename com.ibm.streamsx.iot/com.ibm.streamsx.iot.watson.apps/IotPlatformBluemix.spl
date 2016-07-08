@@ -43,7 +43,7 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * * [com.ibm.streamsx.iot::StatusesSubscribe] - Subscribe to device status updates, with filtering on device type.
  * * [com.ibm.streamsx.iot::CommandPublish] - Send a device command that will be sent to the device by this application.
  *
- * `IotPlatform` supports Watson IoT Platform's scalable application
+ * `IotPlatformBluemix` supports Watson IoT Platform's scalable application
  * mode that distributes messages (device events, commands and statuses)
  * across multiple MQTT subscribers. This is configured by setting the
  * optional parameters `scaleEvents`, `scaleCommands` and
@@ -61,6 +61,10 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * is resetablished it will again be included in message delivery.
  *
  * **Note**: This application requires IBM Streams 4.2 Beta or later (and is hence subject to change). If using an earlier version of IBM Streams then use the [IotPlatform] application, explicitly passing organization and authorization tokens using submission time parameters.
+ *
+ * This application has the same functionality as [IotPlatform],
+ * the only difference is that the connection information to IBM IoT Watson
+ * Platform is specified by an application configuration.
  *
  * This application is configured using submission time parameters:
  * * `config` : Application configuration name containing the organization and application api authorization information for the Bluemix service (required).
