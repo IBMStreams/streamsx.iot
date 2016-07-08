@@ -76,7 +76,7 @@ use com.ibm.streamsx.topology.topic::Subscribe;
 public composite IotPlatform {
   param
     expression<rstring> $org : getSubmissionTimeValue("org");
-    expression<rstring> $domain : getSubmissionTimeValue("org", "internetofthings.ibmcloud.com");
+    expression<rstring> $domain : getSubmissionTimeValue("domain", "internetofthings.ibmcloud.com");
     expression<rstring> $authKey : getSubmissionTimeValue("authKey");
     expression<rstring> $authToken : getSubmissionTimeValue("authToken");
     expression<boolean> $encrypted : (boolean) getSubmissionTimeValue("encrypted", "true");

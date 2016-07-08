@@ -87,5 +87,6 @@ graph
        org:  getApplicationConfigurationProperty($_config, "org", "?");
        authKey:  getApplicationConfigurationProperty($_config, "auth-key", "?");
        authToken: getApplicationConfigurationProperty($_config, "auth-token", "?");
+       domain : "internetofthings.ibmcloud.com";
    }
 }
