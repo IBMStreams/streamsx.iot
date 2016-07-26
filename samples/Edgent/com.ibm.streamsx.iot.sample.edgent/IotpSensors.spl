@@ -3,7 +3,7 @@
 # Copyright IBM Corp. 2016
  */
 
-namespace com.ibm.streamsx.iot.sample.quarks;
+namespace com.ibm.streamsx.iot.sample.edgent;
 
 use com.ibm.streamsx.iot::*;
 
@@ -24,8 +24,8 @@ type SensorInfo = rstring name, AggInfo reading;
 type WarningInfo = rstring msg;
 
 /**
- * Application that matches the Quarks sample
- * quarks.samples.connectors.iotf.IotfSensors.
+ * Application that matches the Apache Edgenet Watson IoT Platform sample
+ * `org.apache.edgent.samples.connectors.iotp.IotpSensors`.
  *
  * No analytics are performed, just a warning is echoed
  * back to the device as a device command if a device
@@ -35,11 +35,11 @@ type WarningInfo = rstring msg;
  * a single alert in an eight second period.
  *
  * This uses the publish-subscribe model
- * thus an instance of `com.ibm.streamsx.iotf.apps.IotOrganization`
+ * thus an instance of `com.ibm.streamsx.iot.watson.apps.IotPlatform`
  * must be running within the Streams instance in order to
  * see events.
 */
-public composite IotfSensors {
+public composite IotpSensors {
   graph
 
    stream<DeviceEvent> SensorEventsJson = EventsSubscribe() {

@@ -1,0 +1,29 @@
+/*
+# Licensed Materials - Property of IBM
+# Copyright IBM Corp. 2016
+ */
+ 
+ /**
+ * Integeration with Apache Edgent.
+ *
+ * *Note: Apache Edgent is undergoing a rename so links 
+ * on this page may be broken during the transition.*
+ * 
+ * # Apache Edgent
+ * [http://edgent.apache.org|Apache Edgent] is a programming model and runtime that can be embedded in gateways and devices. An open source solution for implementing and deploying edge analytics on varied data streams and devices.
+ *
+ * Edgent interacts with IBM Streams through IBM Watson IoT Platform.  Edgent locally separates the interesting from the mundane, so you don’t have to send every sensor reading over a network. If 99% of readings are normal, Edgent detects the 1% anomalies and just sends those as device events for further analysis with IBM Streams.
+* 
+* IBM Streams applications analyze device events from Edgent applications and then can control individual devices by sending device commands based upon the analytics.
+ *
+ * # Apache Edgent IBM Watson IoT Platform connector
+ * Edgent provides a connector to IBM Watson IoT Platform to allow
+ * easy submission of device events and reception of device commands.
+ * 
+ * Its API is described here: [http://edgent.apache.org/javadoc/latest/index.html?org/apache/edgent/connectors/iotf/IotfDevice.html|org.apache.edgent.connectors.iotp.IotpDevice]
+
+ *
+ * A sample application is provided: [http://edgent.apache.org/javadoc/latest/index.html?org/apache/edgent/samples/connectors/iotp/IotpSensors.html|org.apache.edgent.samples.connectors.iotp.IotpSensors]
+ */
+
+namespace com.ibm.streamsx.iot.sample.edgent;

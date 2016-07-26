@@ -91,9 +91,9 @@
   	    namespace="com.ibm.streamsx.iot.sample.countevents"
   	    composite="CountEvents" />
 	  <build.sample.app
-  	    toolkit="${basedir}/../samples/Quarks"
-  	    namespace="com.ibm.streamsx.iot.sample.quarks"
-  	    composite="IotfSensors" />
+  	    toolkit="${basedir}/../samples/Edgent"
+  	    namespace="com.ibm.streamsx.iot.sample.edgent"
+  	    composite="IotpSensors" />
 	</target>
 
     <target name="clean">
