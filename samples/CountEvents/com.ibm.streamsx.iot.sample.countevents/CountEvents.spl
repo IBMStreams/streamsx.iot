@@ -21,7 +21,7 @@ type CountInfo = rstring eventId, int32 count;
  * the last minute.
  *
  * This uses the publish-subscribe model
- * thus an instance of `com.ibm.streamsx.iot.watson.apps.IotOrganization`
+ * thus an instance of `com.ibm.streamsx.iot.watson.apps.IotPlatform`
  * must be running within the Streams instance in order to
  * see events.
  *
