@@ -123,6 +123,8 @@
  * The default `appId` ensures that the client identifiers will be unique
  * for an instance if there is only a single invocation of each operator kind in an application. In this case
  * the MQTT client identifier is `a:`*org*`:`*appKey*`_`*jobId*`_xxx` where `xxx` is specific to each operator kind.
+ *
+ * By default the MQTT message hub host is: *org*`.messaging.internetofthings.ibmcloud.com` where *org* is the organization identifier. The `domain` parameter can be used with operators to set the host to *org*`.messaging.`*domain* .
  * 
  * # JSON Message Format
  * 

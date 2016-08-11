@@ -13,7 +13,13 @@
  * to access the device events and to send commands.
  * 
  * # IoT device model
- * TO BE FILLED IN
+ *
+ * A device sends *device events* to the message hub. A device event contains
+ * an event identifier and a payload specific to the identifier.
+ * Streams applications subscribe to device events and send *device commands*
+ * to the device typically based upon analytics of the device events and
+ * other data sources. A device command also has a command identifier
+ * and a payload specific to the identifier.
  *
  * # Microservices architecture
  * 

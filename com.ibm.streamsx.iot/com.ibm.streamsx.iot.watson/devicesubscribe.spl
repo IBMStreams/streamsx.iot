@@ -15,6 +15,7 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * with a tuple type of [DeviceCmd].
  * 
  * @param org Organization identifier.
+ * @param domain Service domain, used to define the host for the MQTT message hub host, which will be *org*`.messaging.`*domain*. Defaults to `internetofthings.ibmcloud.com` supporting IBM Watson IoT Platform hosted on Bluemix.
  * @param authKey Application key.
  * @param authToken Application authorization token.
  * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to `true`.
@@ -23,6 +24,7 @@ use com.ibm.streamsx.topology.topic::Subscribe;
 public composite SubscribeDeviceCommands() {
    param
         expression<rstring> $org;
+        expression<rstring> $domain : "internetofthings.ibmcloud.com";
         expression<rstring> $authKey;
         expression<rstring> $authToken;
         expression<boolean> $encrypted : true;
@@ -36,6 +38,7 @@ public composite SubscribeDeviceCommands() {
       () as SendCommandsToDevice = SendCommandToDevice(CommandsToSend) {
         param
           org : $org;
+          domain : $domain;
           authKey : $authKey;
           authToken : $authToken;
           encrypted : $encrypted;
