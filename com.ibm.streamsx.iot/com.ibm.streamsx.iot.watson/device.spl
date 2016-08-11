@@ -280,7 +280,7 @@ composite DeviceTopic(output Messages)
  * Each tuple is published as a device command to the
  * device specified in the input tuple.
  * 
- * This operator publishes each command to MQTT topic:
+ * This operator publishes each command to MQTT topic at QoS 2:
  * 
  * `iot-2/type/`*typeId*`/id/`*deviceId*`/cmd/`*cmdId*`/fmt/json`
  * 
@@ -326,7 +326,7 @@ public composite SendCommandToDevice(input stream<DeviceCmd> Commands) {
 				dataAttributeName: "jsonString";
                             trustStore: getThisToolkitDir() + "/opt/iotf/messaging.ts";
                             trustStorePassword: "streamsx.iotf.123";
-                            qos: 1;
+                            qos: 2;
            
         }  
         
