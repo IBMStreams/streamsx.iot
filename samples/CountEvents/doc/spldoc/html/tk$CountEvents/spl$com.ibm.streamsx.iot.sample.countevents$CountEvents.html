@@ -22,7 +22,7 @@
 <div class="body refbody">
 <div class="section">
 <p class="p">
-<a class="xref" href="../toolkits/toolkits.html">Toolkits</a> &gt; <a class="xref" href="tk$CountEvents.html">CountEvents 1.0.0</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iotf.sample.countevents.html">com.ibm.streamsx.iotf.sample.countevents</a> &gt; CountEvents.spl</p>
+<a class="xref" href="../toolkits/toolkits.html">Toolkits</a> &gt; <a class="xref" href="tk$CountEvents.html">CountEvents 1.0.0</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iot.sample.countevents.html">com.ibm.streamsx.iot.sample.countevents</a> &gt; CountEvents.spl</p>
 
 </div>
 
@@ -37,7 +37,7 @@
 
       <dd class="dd">
 <ul class="sl simple">
-<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf.sample.countevents$CountEvents.html#spldoc_compilationunit__composite_operator__CountEvents">CountEvents</a></strong>: Sample application that counts device events.
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iot.sample.countevents$CountEvents.html#spldoc_compilationunit__composite_operator__CountEvents">CountEvents</a></strong>: Sample application that counts device events.
 </li>
 
 </ul>
@@ -50,7 +50,7 @@
 
       <dd class="dd">
 <ul class="sl simple">
-<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iotf.sample.countevents$CountEvents.html#spldoc_compilationunit__type__CountInfo">CountInfo</a></strong>: Payload for the device command with identifier <tt class="ph tt">eventCount</tt> sent back to devices.
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iot.sample.countevents$CountEvents.html#spldoc_compilationunit__type__CountInfo">CountInfo</a></strong>: Payload for the device command with identifier <tt class="ph tt">eventCount</tt> sent back to devices.
 </li>
 
 </ul>
@@ -75,7 +75,7 @@
 <p class="p">Sample application that counts device events. Counts events from devices and sends back a device command with aggregated counts over the last minute.
 </p>
 
-<p class="p">This uses the publish-subscribe model thus an instance of <tt class="ph tt">com.ibm.streamsx.iotf.apps.IotOrganization</tt> must be running within the Streams instance in order to see events.
+<p class="p">This uses the publish-subscribe model thus an instance of <tt class="ph tt">com.ibm.streamsx.iot.watson.apps.IotPlatform</tt> must be running within the Streams instance in order to see events.
 </p>
 
 </div>
@@ -94,7 +94,7 @@
 </div>
 
 <div class="section splgraph">
-  <embed class="image" src="../../image/tk$CountEvents/op$com.ibm.streamsx.iotf.sample.countevents$CountEvents.svg" width="547" height="109"/>
+  <embed class="image" src="../../image/tk$CountEvents/op$com.ibm.streamsx.iot.sample.countevents$CountEvents.svg" width="547" height="109"/>
 </div>
 
 <div class="section"><h2 class="title sectiontitle splhead-2">SPL Source Code</h2>
@@ -116,7 +116,7 @@
        {
            window Events: tumbling, time(minutes(1));
            param
-              groupBy: deviceType, deviceId, eventId;
+              groupBy: typeId, deviceId, eventId;
            output EventCounts:
               count = Count();
        }
