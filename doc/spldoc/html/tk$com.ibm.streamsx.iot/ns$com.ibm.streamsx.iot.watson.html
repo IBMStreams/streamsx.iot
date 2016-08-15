@@ -22,7 +22,7 @@
 <div class="body refbody">
 <div class="section">
 <p class="p">
-<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iot Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot 0.8.0.commit_1756881</a> &gt; com.ibm.streamsx.iot.watson</p>
+<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iot Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot 1.0.2.commit_cdc1e1f</a> &gt; com.ibm.streamsx.iot.watson</p>
 
 </div>
 
@@ -80,12 +80,6 @@
 <p class="p">By default operators and applications in this toolkit use encrypted connections through port <tt class="ph tt">8883</tt> with TLSv1.2. Operator parameter or submission time parameter <tt class="ph tt">encrypted</tt> can be set to <tt class="ph tt">false</tt> to use unencrypted connections through port <tt class="ph tt">1883</tt>.
 </p>
 
-<p class="p"><strong class="ph b">WARNING</strong>: <em class="ph i">At this point SSL is only supported using a version of <tt class="ph tt">com.ibm.streamsx.messaging</tt> built from the master branch of</em> <a class="xref" href="https://github.com/IBMStreams/streamsx.messaging">streamsx.messaging</a>. <em class="ph i">See</em> <a class="xref" href="https://github.com/IBMStreams/streamsx.messaging/issues/216">Issue #216</a>. <em class="ph i">Use of the operators must set <tt class="ph tt">encrypted</tt> to <tt class="ph tt">false</tt> to see device events and send commands if using a released version of the messaging toolkit.</em>
-</p>
-
-<p class="p"><strong class="ph b">WARNING</strong>: <em class="ph i">The applications (<tt class="ph tt">IotPlatform</tt> and <tt class="ph tt">SimpleAllDevices</tt>) are defaulted to unencrypted connections to allow them to work out of the box. The default will revert to encrypted in future pre-release.</em>
-</p>
-
 <p class="p">The Watson Iot Platform scalable application model is used when operators interacting with Watson IoT Platform are in a parallel region of width greater that one. This means MQTT messages representing device events, commands and statuses are load balanced across the multiple channels created by the parallel regions.
 </p>
 
@@ -140,6 +134,9 @@
 </p>
 
 <p class="p">Each invocation of an operator in this toolkit (e.g. <a class="xref" href="spl$com.ibm.streamsx.iot.watson$device.html#spldoc_compilationunit__composite_operator__DeviceEvents">DeviceEvents</a>, <a class="xref" href="spl$com.ibm.streamsx.iot.watson$device.html#spldoc_compilationunit__composite_operator__DeviceStatuses">DeviceStatuses</a>) makes its own MQTT connection using a client identifier of <tt class="ph tt">a:</tt><em class="ph i">org</em><tt class="ph tt">:</tt><em class="ph i">appKey</em><tt class="ph tt">_</tt><em class="ph i">appId</em>. A Streams application must ensure that each operator invocation uses a client identifier that is unique for its <tt class="ph tt">org</tt>. Reuse of client identifiers, even across multiple applications, is not allowed and will result in unexpected disconnection of clients. The default <tt class="ph tt">appId</tt> ensures that the client identifiers will be unique for an instance if there is only a single invocation of each operator kind in an application. In this case the MQTT client identifier is <tt class="ph tt">a:</tt><em class="ph i">org</em><tt class="ph tt">:</tt><em class="ph i">appKey</em><tt class="ph tt">_</tt><em class="ph i">jobId</em><tt class="ph tt">_xxx</tt> where <tt class="ph tt">xxx</tt> is specific to each operator kind.
+</p>
+
+<p class="p">By default the MQTT message hub host is: <em class="ph i">org</em><tt class="ph tt">.messaging.internetofthings.ibmcloud.com</tt> where <em class="ph i">org</em> is the organization identifier. The <tt class="ph tt">domain</tt> parameter can be used with operators to set the host to <em class="ph i">org</em><tt class="ph tt">.messaging.</tt><em class="ph i">domain</em> .
 </p>
 
 </div>

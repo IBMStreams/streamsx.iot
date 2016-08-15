@@ -22,7 +22,7 @@
 <div class="body refbody">
 <div class="section">
 <p class="p">
-<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iot Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot 0.8.0.commit_1756881</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot</a> &gt; pubsub.spl</p>
+<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iot Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot 1.0.2.commit_cdc1e1f</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot</a> &gt; pubsub.spl</p>
 
 </div>
 
@@ -60,25 +60,6 @@
 </li>
 
 <li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iot$pubsub.html#spldoc_compilationunit__composite_operator__StatusesSubscribe">StatusesSubscribe</a></strong>: Subscribe to device status updates published under the streams topic <tt class="ph tt">streamsx/iot/device/statuses</tt>.
-</li>
-
-</ul>
-
-      </dd>
-
-    
-    
-      <dt class="dt dlterm splhead-2">Types</dt>
-
-      <dd class="dd">
-<ul class="sl simple">
-<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iot$pubsub.html#spldoc_compilationunit__composite_type__CommandsSubscribe._CmdParam">CommandsSubscribe._CmdParam</a></strong>
-</li>
-
-<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iot$pubsub.html#spldoc_compilationunit__composite_type__EventsSubscribe._EventParam">EventsSubscribe._EventParam</a></strong>
-</li>
-
-<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iot$pubsub.html#spldoc_compilationunit__composite_type__StatusesSubscribe._StatusParam">StatusesSubscribe._StatusParam</a></strong>
 </li>
 
 </ul>
@@ -141,18 +122,6 @@
   
 </div>
 
-   <div class="section" id="spldoc_compilationunit__composite_type__EventsSubscribe._EventParam">
-     <dl class="dl">
-       
-         <dt class="dt dlterm">EventsSubscribe._EventParam = tuple&lt;list&lt;rstring&gt; typeIds, list&lt;rstring&gt; eventIds&gt;;</dt>
-
-         <dd class="dd"/>
-
-       
-     </dl>
-
-   </div>
-
 <div class="section"><h2 class="title sectiontitle splhead-2">Composite Operator Graph</h2>
   
 </div>
@@ -208,18 +177,6 @@
   
 </div>
 
-   <div class="section" id="spldoc_compilationunit__composite_type__CommandsSubscribe._CmdParam">
-     <dl class="dl">
-       
-         <dt class="dt dlterm">CommandsSubscribe._CmdParam = tuple&lt;list&lt;rstring&gt; typeIds, list&lt;rstring&gt; cmdIds&gt;;</dt>
-
-         <dd class="dd"/>
-
-       
-     </dl>
-
-   </div>
-
 <div class="section"><h2 class="title sectiontitle splhead-2">Composite Operator Graph</h2>
   
 </div>
@@ -272,18 +229,6 @@
   
 </div>
 
-   <div class="section" id="spldoc_compilationunit__composite_type__StatusesSubscribe._StatusParam">
-     <dl class="dl">
-       
-         <dt class="dt dlterm">StatusesSubscribe._StatusParam = tuple&lt;list&lt;rstring&gt; typeIds&gt;;</dt>
-
-         <dd class="dd"/>
-
-       
-     </dl>
-
-   </div>
-
 <div class="section"><h2 class="title sectiontitle splhead-2">Composite Operator Graph</h2>
   
 </div>
@@ -304,7 +249,7 @@
 <p class="p">This matches the streams topic subscribed to by <a class="xref" href="spl$com.ibm.streamsx.iot.watson.apps$IotPlatform.html#spldoc_compilationunit__composite_operator__IotPlatform">com.ibm.streamsx.iot.watson.apps::IotPlatform</a>.
 </p>
 
-<p class="p">Any command on the input stream will be sent as a device command assuming <a class="xref" href="spl$com.ibm.streamsx.iot.watson.apps$IotPlatform.html#spldoc_compilationunit__composite_operator__IotPlatform">com.ibm.streamsx.iot.watson.apps::IotPlatform</a> is running, or an equivalant application. 
+<p class="p">Any command on the input stream will be sent as a device command assuming <a class="xref" href="spl$com.ibm.streamsx.iot.watson.apps$IotPlatform.html#spldoc_compilationunit__composite_operator__IotPlatform">com.ibm.streamsx.iot.watson.apps::IotPlatform</a> is running, or an equivalant application.
 </p>
 
 </div>
@@ -315,7 +260,7 @@
 <div class="section"><h2 class="title sectiontitle">Input Ports</h2>
 
 <ul class="sl simple">
-<li class="sli"><strong class="ph b">Commands</strong>
+<li class="sli"><strong class="ph b">Commands</strong>: Device commands to be sent to devices.
 </li>
 
 </ul>
