@@ -59,10 +59,11 @@
 			<group>
 				<!-- Range for IoT Toolkit: CDIST3100 – CDIST3199 -->
 
-				<trans-unit id="StreamsJsonToolkitMessages_CDIST3199E" extraData="IOT_TEST" resname="CDIST3199E">
+<!--
+				<trans-unit id="StreamsIotToolkitMessages_CDIST3199E" extraData="IOT_TEST" resname="CDIST3199E">
 					<source>This is just a test message.</source>
 				</trans-unit>
-
+-->
 
 			</group>
 		</body>

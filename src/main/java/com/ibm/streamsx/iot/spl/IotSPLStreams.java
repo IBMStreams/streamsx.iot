@@ -8,9 +8,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import com.ibm.streams.operator.Attribute;
 import com.ibm.streams.operator.Type;
+import com.ibm.streams.operator.logging.LogLevel;
+import com.ibm.streamsx.iot.i18n.Messages;
 import com.ibm.streamsx.topology.TopologyElement;
 import com.ibm.streamsx.topology.spl.SPL;
 import com.ibm.streamsx.topology.spl.SPLStream;
@@ -25,6 +28,8 @@ import com.ibm.streamsx.topology.spl.SPLStream;
  *
  */
 public class IotSPLStreams {
+	
+	private static Logger l = Logger.getLogger(IotSPLStreams.class.getCanonicalName());
 
     private IotSPLStreams() {
     }
@@ -53,21 +58,21 @@ public class IotSPLStreams {
 
         Map<String, Object> params = new HashMap<>();
         if (typeIds != null && typeIds.length != 0)
-            params.put("typeIds", listRStringParam(typeIds));
+            params.put("typeIds", listRStringParam(typeIds)); //$NON-NLS-1$
 
         if (eventId != null && eventId.length != 0)
-            params.put("eventIds", listRStringParam(eventId));    
+            params.put("eventIds", listRStringParam(eventId));     //$NON-NLS-1$
 
-        return SPL.invokeSource(te, "com.ibm.streamsx.iot::EventsSubscribe", params, Schemas.DEVICE_EVENT);
+        return SPL.invokeSource(te, "com.ibm.streamsx.iot::EventsSubscribe", params, Schemas.DEVICE_EVENT); //$NON-NLS-1$
     }
     
     public static SPLStream statusesSubscribe(TopologyElement te, String ... typeId) {
 
         Map<String, Object> params = new HashMap<>();
         if (typeId != null && typeId.length != 0)
-            params.put("typeIds", listRStringParam(typeId));
+            params.put("typeIds", listRStringParam(typeId)); //$NON-NLS-1$
  
-        return SPL.invokeSource(te, "com.ibm.streamsx.iot::StatusesSubscribe", params, Schemas.DEVICE_STATUS);
+        return SPL.invokeSource(te, "com.ibm.streamsx.iot::StatusesSubscribe", params, Schemas.DEVICE_STATUS); //$NON-NLS-1$
     }
 
     /**
@@ -95,18 +100,18 @@ public class IotSPLStreams {
 
         Map<String, Object> params = new HashMap<>();
         if (typeIds != null && typeIds.length != 0)
-            params.put("typeIds", listRStringParam(typeIds));
+            params.put("typeIds", listRStringParam(typeIds)); //$NON-NLS-1$
 
         if (cmdId != null && cmdId.length != 0)
-            params.put("cmdIds", listRStringParam(cmdId));
+            params.put("cmdIds", listRStringParam(cmdId)); //$NON-NLS-1$
 
-        return SPL.invokeSource(te, "com.ibm.streamsx.iot::CommandsSubscribe", params, Schemas.DEVICE_CMD);
+        return SPL.invokeSource(te, "com.ibm.streamsx.iot::CommandsSubscribe", params, Schemas.DEVICE_CMD); //$NON-NLS-1$
     }
 
     private static Object listRStringParam(String[] values) {
         List<String> literals = new ArrayList<>(values.length);
         for (String v : values)
-            literals.add("\"" + v + "\"");
+            literals.add("\"" + v + "\""); //$NON-NLS-1$ //$NON-NLS-2$
 
         return new Attribute() {
 
@@ -137,7 +142,10 @@ public class IotSPLStreams {
 
     public static void commandPublish(SPLStream commandStream) {
         if (!commandStream.getSchema().equals(Schemas.DEVICE_CMD))
-            throw new IllegalArgumentException("Schema is invalid:" + commandStream.getSchema().getLanguageType());
-        SPL.invokeSink("com.ibm.streamsx.iot::CommandPublish", commandStream, null);
+        {
+        	l.log(LogLevel.ERROR, Messages.getString("SCHEMA_IS_INVALID"), new Object[]{commandStream.getSchema().getLanguageType()}); //$NON-NLS-1$
+            throw new IllegalArgumentException("Schema is invalid: " + commandStream.getSchema().getLanguageType()); //$NON-NLS-1$
+        }
+        SPL.invokeSink("com.ibm.streamsx.iot::CommandPublish", commandStream, null); //$NON-NLS-1$
     }
 }

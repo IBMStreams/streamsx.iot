@@ -59,8 +59,8 @@ public class SendCommand {
 
         TStream<DeviceCmd> command = topology.periodicSource(() -> {
             JSONObject data = new JSONObject();
-            data.put("msg", message + " @ " + new Date().toString());
-            return new DeviceCmd(device, "display", null, data);
+            data.put("msg", message + " @ " + new Date().toString()); //$NON-NLS-1$ //$NON-NLS-2$
+            return new DeviceCmd(device, "display", null, data); //$NON-NLS-1$
         }, 10, SECONDS);
 
         IotStreams.commandPublish(command);

@@ -18,8 +18,11 @@ doc
 com.ibm.streamsx.iot/bin
 com.ibm.streamsx.iot/impl/nl/IoTResource.dat
 com.ibm.streamsx.iot/impl/nl/include
+com.ibm.streamsx.iot/lib
+src/main/bin
 *.war
 *.ear
+
 
 ## C++ excludes
 # Compiled Object files
@@ -40,3 +43,4 @@ com.ibm.streamsx.iot/impl/nl/include
 tmp
 
 
+/.gitignore~
