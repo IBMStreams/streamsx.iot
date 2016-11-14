@@ -5,25 +5,33 @@
 -->
 
 <project name="com.ibm.streamsx.iot" basedir="." default="all">
-  <property environment="env" />
-  <property name="streams.install" value="${env.STREAMS_INSTALL}" />
 
- <target name="all">
-    <!-- nothing to do yet! -->
- </target>
-  <target name="clean" depends="cleanToolkitxml">
-     <delete dir="${basedir}/doc/spldoc" quiet="true"/>
-     <delete dir="${basedir}/doc/javadoc" quiet="true"/>
-     <delete dir="output"/>
-  </target>
-  <target name="indextoolkit" >
-     <echo message="Tookit to index: ${basedir}"/>
-     <exec executable="${streams.install}/bin/spl-make-toolkit">
-        <arg value="--directory"/>
-        <arg value="${basedir}"/>
-        <arg value="-m"/>
-     </exec>
-     </target>
+
+	<property environment="env" />
+	<property name="streams.install" value="${env.STREAMS_INSTALL}" />
+
+
+	<target name="all" depends="indextoolkit">
+		<!-- nothing to do yet! -->
+	</target>
+
+
+	<target name="indextoolkit" >
+		<echo message="Tookit to index: ${basedir}"/>
+		<exec executable="${streams.install}/bin/spl-make-toolkit">
+			<arg value="--directory"/>
+			<arg value="${basedir}"/>
+			<arg value="-m"/>
+		</exec>
+	</target>
+
+
+	<target name="clean" depends="cleanToolkitxml">
+		<delete dir="${basedir}/doc/spldoc" quiet="true"/>
+		<delete dir="${basedir}/doc/javadoc" quiet="true"/>
+		<delete dir="output"/>
+	</target>
+
 
 	<target name="cleanToolkitxml">
 		<delete>
@@ -32,4 +40,6 @@
 			</fileset>
 		</delete>
 	</target>
+
+
 </project>
