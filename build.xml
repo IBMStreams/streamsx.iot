@@ -223,9 +223,12 @@
          <attribute name="Class-Path" value="${iot.jar.classpath}"/>
         </manifest>
 
-	<jar destfile="${lib.dir}/${jarfile}" basedir="${build.dir}" includes="com/ibm/streamsx/iot/**" filesonly="true" manifest="${iot.manifest}">
+	<jar destfile="${lib.dir}/${jarfile}" filesonly="true" manifest="${iot.manifest}">
+			<fileset dir="${build.dir}" includes="com/ibm/streamsx/iot/**"/>
+			<fileset dir="${src.dir}" includes="com/ibm/streamsx/iot/i18n/*.properties"/>
 	</jar>
 	<delete dir="${build.dir}" />
+
     </target>
 
     <target name="javadoc">
