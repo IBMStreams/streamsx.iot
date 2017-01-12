@@ -8,7 +8,7 @@ including:
  * IoT device model
  * Separation of device connectivty and analytics.
  * Application integration with IBM Watson IoT Platform
- * Application integration with Apache Quarks
+ * Application integration with Apache Edgent
 
 ## IoT device model.
 
@@ -21,7 +21,7 @@ Devices typically communicate through an internet of things scale message hub to
 
 IBM Streams applications subscribe to device events and device commands to perform analytics against the state of device and other revelant data (such as weather, systems of record etc.). The result of these analytics may result in *device commands* being sent to the device to alter its behaviour etc.
 
-The device model matches the ones used by Apache Quarks and IBM Watson IoT Platform for devices connected to Streams through a message hub.
+The device model matches the ones used by Apache Edgent and IBM Watson IoT Platform for devices connected to Streams through a message hub.
 
 ## Microservice architecture
 
@@ -45,10 +45,10 @@ Streams applications can use this toolkit to
 provide real time analytics against all the events from potentially
 thousands of devices, including sending commands to specific devices based upon the analytics.
 
-## Quarks
+## Apache Edgent
 
-[Quarks](http://quarks-edge.github.io/) is a programming model and runtime that can be embedded in gateways and devices. An open source solution for implementing and deploying edge analytics on varied data streams and devices.
+[Edgent](http://edgent.apache.org/) is a programming model and runtime that can be embedded in gateways and devices. An open source solution for implementing and deploying edge analytics on varied data streams and devices.
 
-Quarks interacts with IBM Streams through IBM Watson IoT Plaform.  Quarks locally separates the interesting from the mundane, so you don’t have to send every sensor reading over a network. If 99% of readings are normal, Quarks detects the 1% anomalies and just sends those as device events for further analysis with IBM Streams.
+Edgent interacts with IBM Streams through IBM Watson IoT Plaform.  Edgent locally separates the interesting from the mundane, so you don’t have to send every sensor reading over a network. If 99% of readings are normal, Edgent detects the 1% anomalies and just sends those as device events for further analysis with IBM Streams.
 
-IBM Streams applications analyze device events from Quarks applications and then can control individual devices by sending device commands based upon the analytics.
+IBM Streams applications analyze device events from Edgent applications and then can control individual devices by sending device commands based upon the analytics.
