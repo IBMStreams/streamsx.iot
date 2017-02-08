@@ -46,6 +46,18 @@ This toolkit depends on these toolkits:
   <info:resources>
     <info:messageSet name="IoTResource">
       <info:lang default="true">en_US/IoTResource.xlf</info:lang>
+<!--
+      <info:lang>de_DE/IoTResource.xlf</info:lang>
+      <info:lang>es_ES/IoTResource.xlf</info:lang>
+-->
+      <info:lang>fr_FR/IoTResource.xlf</info:lang>
+      <info:lang>it_IT/IoTResource.xlf</info:lang>
+      <info:lang>ja_JP/IoTResource.xlf</info:lang>
+      <info:lang>ko_KR/IoTResource.xlf</info:lang>
+      <info:lang>pt_BR/IoTResource.xlf</info:lang>
+      <info:lang>ru_RU/IoTResource.xlf</info:lang>
+      <info:lang>zh_CN/IoTResource.xlf</info:lang>
+      <info:lang>zh_TW/IoTResource.xlf</info:lang>
     </info:messageSet>
   </info:resources>
 
