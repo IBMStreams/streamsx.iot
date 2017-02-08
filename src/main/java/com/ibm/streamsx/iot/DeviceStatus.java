@@ -55,7 +55,7 @@ public class DeviceStatus implements JSONAble, Serializable {
     @Override
     public JSONObject toJSON() {
         JSONObject json = getDevice().toJSON();
-        json.put("payload", getPayload());
+        json.put("payload", getPayload()); //$NON-NLS-1$
         return json;
     }
 

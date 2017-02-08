@@ -18,17 +18,17 @@ import com.ibm.streamsx.topology.spl.SPLSchemas;
 public class Schemas {
     public static final String JSON_STRING = SPLSchemas.JSON.getAttribute(0).getName();
 
-    public static final String TYPE_ID = "typeId";
-    public static final String DEVICE_ID = "deviceId";
+    public static final String TYPE_ID = "typeId"; //$NON-NLS-1$
+    public static final String DEVICE_ID = "deviceId"; //$NON-NLS-1$
     
-    public static final String EVENT_ID = "eventId";
-    public static final String CMD_ID = "cmdId";
+    public static final String EVENT_ID = "eventId"; //$NON-NLS-1$
+    public static final String CMD_ID = "cmdId"; //$NON-NLS-1$
 
 
     /**
      * A device. Matches {@code com.ibm.streamsx.iot::Device}.
      */
-    public static final StreamSchema DEVICE = getStreamSchema("tuple<rstring typeId, rstring deviceId>");
+    public static final StreamSchema DEVICE = getStreamSchema("tuple<rstring typeId, rstring deviceId>"); //$NON-NLS-1$
 
     /**
      * A device event. Matches {@code com.ibm.streamsx.iot::DeviceEvent}.

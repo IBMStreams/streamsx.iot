@@ -34,12 +34,12 @@ class IotUtils {
             throw new RuntimeException(e);
         }
         
-        JSONObject data = (JSONObject) payload.get("d");
+        JSONObject data = (JSONObject) payload.get("d"); //$NON-NLS-1$
         
         Instant ts = null;
-        if (payload.containsKey("ts")) {
+        if (payload.containsKey("ts")) { //$NON-NLS-1$
             try {
-                long ms = fromIso8601ToMillis((String) payload.get("ts"));
+                long ms = fromIso8601ToMillis((String) payload.get("ts")); //$NON-NLS-1$
                 
                 ts = Instant.ofEpochMilli(ms);
             } catch (ParseException e) {
@@ -58,13 +58,13 @@ class IotUtils {
         
         
         JSONObject payload = new JSONObject();
-        payload.put("d", cmd.getData());
+        payload.put("d", cmd.getData()); //$NON-NLS-1$
         
         Instant ts = cmd.getTs();
         
         if (ts == null)
             ts = Instant.now();        
-        payload.put("ts", ts.toString());
+        payload.put("ts", ts.toString()); //$NON-NLS-1$
         
         try {
             tuple.setString(Schemas.JSON_STRING, payload.serialize());
@@ -88,12 +88,12 @@ class IotUtils {
             throw new RuntimeException(e);
         }
         
-        JSONObject data = (JSONObject) payload.get("d");
+        JSONObject data = (JSONObject) payload.get("d"); //$NON-NLS-1$
         
         Instant ts = null;
-        if (payload.containsKey("ts")) {
+        if (payload.containsKey("ts")) { //$NON-NLS-1$
             try {
-                ts = Instant.parse((String) payload.get("ts"));
+                ts = Instant.parse((String) payload.get("ts")); //$NON-NLS-1$
             } catch (DateTimeParseException e) {
                 ;
             }

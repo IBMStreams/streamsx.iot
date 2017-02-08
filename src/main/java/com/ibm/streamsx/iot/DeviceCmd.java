@@ -49,10 +49,10 @@ public class DeviceCmd implements JSONAble, Serializable {
     @Override
     public JSONObject toJSON() {
         JSONObject json = getDevice().toJSON();
-        json.put("cmdId", getCmdId());
-        json.put("d", getData());
+        json.put("cmdId", getCmdId()); //$NON-NLS-1$
+        json.put("d", getData()); //$NON-NLS-1$
         if (getTs() != null)
-            json.put("ts", getTs().toString());
+            json.put("ts", getTs().toString()); //$NON-NLS-1$
         return json;
     }
 

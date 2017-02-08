@@ -1,0 +1,47 @@
+# streams-specific excludes
+toolkit.xml
+*.pm
+.settings
+.toolkitList
+doc
+# If you want to include a perl module, do
+# !foo.pm
+
+
+## java excludes
+*.class
+
+# exclude generated Java primitive operator model files
+*$StreamsModel.java
+
+# Package Files #
+com.ibm.streamsx.iot/bin
+com.ibm.streamsx.iot/impl/nl/IoTResource.dat
+com.ibm.streamsx.iot/impl/nl/include
+com.ibm.streamsx.iot/lib
+src/main/bin
+*.war
+*.ear
+
+
+## C++ excludes
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# temporary directories
+tmp
+
+
+/.gitignore~
+/build.xml~

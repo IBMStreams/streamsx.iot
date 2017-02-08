@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="/com.ibm.streamsx.iot/opt/datetime/com.ibm.streamsx.datetime.jar"/>
+	<classpathentry kind="var" path="STREAMS_INSTALL/toolkits/com.ibm.streamsx.topology/lib/com.ibm.streamsx.topology.jar"/>
+	<classpathentry kind="var" path="STREAMS_INSTALL/ext/lib/JSON4J.jar"/>
+	<classpathentry kind="var" path="STREAMS_INSTALL/lib/com.ibm.streams.operator.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -53,8 +53,8 @@ public class DeviceEvent implements JSONAble, Serializable {
         JSONObject json = getDevice().toJSON();
         json.put(Schemas.EVENT_ID, getEventId());
         if (getTs() != null)
-            json.put("ts", getTs().toString());
-        json.put("d", getData());
+            json.put("ts", getTs().toString()); //$NON-NLS-1$
+        json.put("d", getData()); //$NON-NLS-1$
         return json;
     }
 
