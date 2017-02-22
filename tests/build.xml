@@ -3,7 +3,6 @@
 
 	<property environment="env"/>
 	<property name="streams.install" value="${env.STREAMS_INSTALL}"/>
-	<taskdef resource="com/ibm/streamsx/ant/streams.xml"/>
 
 	<property name="iot.tk"
 	   location="${basedir}/../com.ibm.streamsx.iot"/>
@@ -15,6 +14,9 @@
 	   location="${basedir}/sabs"/>
 	<property name="quarks"
 	   location="${basedir}/ext/quarks/target/java8"/>
+
+<!-- read WatsonIoT application-credentials from properties file -->
+  <property file="${basedir}/iotf.properties"/>
 
   <property name="testsrc.dir" value="src/test/java" />
   <property name="testbuild.dir" value="classes" />
@@ -30,6 +32,11 @@
     <path refid="cp.streams" />
     <path refid="cp.quarks" />
     <pathelement location="../com.ibm.streamsx.iot/lib/com.ibm.streamsx.iot.jar" />
+    <!-- when called in production the toolkit will be available already in 
+         STREAMS_INSTALL environment 
+    TODO: insert printout which jar is used local or STREAMS_INSTALL
+    -->
+    <pathelement location="${streams.install}/toolkits/com.ibm.streamsx.iot/lib/com.ibm.streamsx.iot.jar" />
   </path>
 
   <path id="cp.quarks">
@@ -37,7 +44,7 @@
     <pathelement location="${quarks}/connectors/iotf/lib/quarks.connectors.iotf.jar"/>
   </path>
 
-       <target name="test" depends="init,unittests,build.spl.apps,build.sample.apps"/>
+       <target name="test" depends="init,build.spl.apps,build.sample.apps,unittests,e2etests"/>
 
        <target name="init" depends="clean">
           <mkdir dir="${sabs}"/>
@@ -54,9 +61,10 @@
     </javac>
    </target>
 
-   <property name="streamsx.iot.test.device.cfg" value="skip"/>
+
    <target name="unittests" depends="compile">
-   <junit fork="yes" printsummary="yes" haltonfailure="yes">
+   <property name="streamsx.iot.test.device.cfg" value="skip"/>
+   <junit fork="yes" printsummary="yes" haltonfailure="no" dir="${sabs}">
      <sysproperty key="streamsx.iot.test.device.cfg"
                   value="${streamsx.iot.test.device.cfg}"/>
      <classpath>
@@ -75,6 +83,32 @@
     </junit>
     </target>
 
+
+   <!-- perform tests which use Bluemix WatsonIoT platform           --> 
+   <!-- precondition is a running PlatformIoT HUB application         -->
+   <!-- event test create an Edgent application which works as device -->
+   <!-- result received by topology application is checked against    -->
+   <!-- the expected values derived from Edgent sent data             -->
+   <target name="e2etests" depends="compile,submit.hubapp">
+      <!-- WatsonIot device-ceredentials for fix DeviceType: Test, DeviceId:Test001-->
+      <property name="streamsx.iot.test.device.cfg" value="${basedir}/device.cfg"/>
+      <junit fork="yes" printsummary="yes" haltonfailure="no" dir="${sabs}">
+         <sysproperty key="streamsx.iot.test.device.cfg"
+                     value="${streamsx.iot.test.device.cfg}"/>
+         <classpath>
+            <pathelement location="${testbuild.dir}"/>
+            <path refid="cp.compile"/>
+         </classpath>
+         <formatter type="xml"/>
+         <batchtest todir="${testreports.dir}">
+            <fileset dir="${testsrc.dir}">
+               <include name="**/Watson*Test.java"/>
+            </fileset>
+         </batchtest>
+      </junit>
+      <antcall target="cancel.hubapp"/>
+   </target>
+
 	<!-- Compile the applications within the toolkit -->
 	<target name="build.spl.apps" depends="init">
 	  <build.iot.app
@@ -84,6 +118,7 @@
   	    namespace="com.ibm.streamsx.iot.apps"
   	    composite="ViewAllDevices" />
 	</target>
+
 	<!-- Compile the sample applications -->
 	<target name="build.sample.apps" depends="init">
 	  <build.sample.app
@@ -103,41 +138,87 @@
         <delete dir="${testreports.dir}"/>
     </target>
 
-    <macrodef name="build.iot.app">
-     <attribute name="namespace"/>
-     <attribute name="composite"/>
-     <sequential>
-         <splcompile
-  	    mainComposite="@{namespace}::@{composite}"
-  	      optimize="true" noToolkitIndexing="true">
-	   <toolkit location="${iot.tk}" />
-	   <toolkit location="${extra.tk}" />
-           <toolkit location="${streams.tk}" />
-        </splcompile>
-        <move file="${basedir}/output/@{namespace}.@{composite}.sab"
-             toDir="${sabs}"/>
-        <delete dir="${basedir}/output"/>
-     </sequential>
+   <!-- submit SAB file by executing streamtool direct from ant -->
+	<macrodef name="submit.iot.app">
+      <attribute name="namespace"/>
+      <attribute name="composite"/>
+      <sequential>
+   	   <exec executable="streamtool" dir="${basedir}" failonerror="true">
+            <arg value="submitjob"/>
+            <arg value="--outfile"/>
+            <arg value="jobids.out"/>
+            <arg value="--P"/>
+            <arg value="org=${iot.org}"/>
+            <arg value="--P"/>
+	         <arg value="authKey=${iot.authKey}"/>
+            <arg value="--P"/>
+	         <arg value="authToken=${iot.authToken}"/>
+	         <arg value="${sabs}/@{namespace}.@{composite}.sab"/>
+         </exec>
+      </sequential>
    </macrodef>
 
-    <macrodef name="build.sample.app">
-     <attribute name="toolkit"/>
-     <attribute name="namespace"/>
-     <attribute name="composite"/>
-     <sequential>
-         <splcompile
-  	    mainComposite="@{namespace}::@{composite}"
-  	      optimize="true" noToolkitIndexing="true">
-           <toolkit location="@{toolkit}" />
-	   <toolkit location="${iot.tk}" />
-	   <toolkit location="${extra.tk}" />
-           <toolkit location="${streams.tk}" />
-        </splcompile>
-        <move file="${basedir}/output/@{namespace}.@{composite}.sab"
-             toDir="${sabs}"/>
-        <delete dir="${basedir}/output"/>
-     </sequential>
+   <!-- SPL compile by execute sc direct from ant -->
+   <macrodef name="splcompile">
+      <attribute name="toolkitlocations"/>
+      <attribute name="maincomposite"/>
+      <sequential>
+         <exec executable="sc" failonerror="true">
+            <arg value="-M"/>
+            <arg value="@{maincomposite}"/>
+            <arg value="-t"/>
+	         <arg value="@{toolkitlocations}"/>
+            <arg value="--no-toolkit-indexing"/>
+      		<arg value="--optimized-code-generation"/>
+         </exec>
+      </sequential>
    </macrodef>
+
+   <!-- compile sample applications -->
+   <macrodef name="build.sample.app">
+      <attribute name="toolkit"/>
+      <attribute name="namespace"/>
+      <attribute name="composite"/>
+      <sequential>
+         <splcompile 
+			   mainComposite="@{namespace}::@{composite}"
+			   toolkitlocations="@{toolkit}:${iot.tk}:${extra.tk}:${streams.tk}"/>
+         <move file="${basedir}/output/@{namespace}.@{composite}.sab"
+             toDir="${sabs}"/>
+         <delete dir="${basedir}/output"/>
+      </sequential>
+   </macrodef>
+
+   <!-- compile application being part of toolkit -->
+   <macrodef name="build.iot.app">
+      <attribute name="namespace"/>
+      <attribute name="composite"/>
+      <sequential>
+         <splcompile
+            mainComposite="@{namespace}::@{composite}"
+            toolkitlocations="${iot.tk}:${extra.tk}:${streams.tk}"/>
+         <move file="${basedir}/output/@{namespace}.@{composite}.sab"
+             toDir="${sabs}"/>
+         <delete dir="${basedir}/output"/>
+      </sequential>
+   </macrodef>
+
+	<!-- Submit the IoTPlatform HUB applications -->
+	<target name="submit.hubapp" depends="build.spl.apps"> 
+	  <submit.iot.app
+  	    namespace="com.ibm.streamsx.iot.watson.apps"
+  	    composite="IotPlatform" />
+	</target>
+
+	<!-- Cancel the IoTPlatform HUB application job -->
+   <target name="cancel.hubapp">
+      <exec executable="streamtool" dir="${basedir}" failonerror="true">
+         <arg value="canceljob"/>
+         <arg value="-f"/>
+         <arg value="jobids.out"/>
+      </exec>
+      <delete file="jobids.out"/>
+   </target>
 
 </project>
 
