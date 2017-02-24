@@ -32,6 +32,7 @@
     <path refid="cp.streams" />
     <path refid="cp.quarks" />
     <pathelement location="../com.ibm.streamsx.iot/lib/com.ibm.streamsx.iot.jar" />
+    <pathelement location="../../../github/streamsx.iot/com.ibm.streamsx.iot/lib/com.ibm.streamsx.iot.jar" />
     <!-- when called in production the toolkit will be available already in 
          STREAMS_INSTALL environment 
     TODO: insert printout which jar is used local or STREAMS_INSTALL
