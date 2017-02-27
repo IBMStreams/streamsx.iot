@@ -15,6 +15,16 @@
 	<property name="quarks"
 	   location="${basedir}/ext/quarks/target/java8"/>
 
+   <!-- get junit jars path if it is not set in global CLASSPATH -->
+   <!-- local environment may hav set the junit.jar and hamcrest-core.jar -->
+   <!-- in their environment CLASSPATH variable             -->
+   <!-- in nested build setup it may be defined at ant call -->
+	<condition property="junit.home"
+			   value="${JUNIT_HOME}"
+			   else="">
+		<isset property="JUNIT_HOME" />
+	</condition>
+
 <!-- read WatsonIoT application-credentials from properties file -->
   <property file="${basedir}/iotf.properties"/>
 
@@ -28,9 +38,15 @@
     <pathelement location="${streams.install}/toolkits/com.ibm.streamsx.topology/lib/com.ibm.streamsx.topology.jar" />
   </path>
 
+   <path id="cp.junit">
+		<pathelement location="${junit.home}/junit.jar" />
+		<pathelement location="${junit.home}/org.hamcrest.core.jar" />
+   </path>
+
   <path id="cp.compile">
     <path refid="cp.streams" />
     <path refid="cp.quarks" />
+    <path refid="cp.junit" />
     <pathelement location="../com.ibm.streamsx.iot/lib/com.ibm.streamsx.iot.jar" />
     <pathelement location="../../../github/streamsx.iot/com.ibm.streamsx.iot/lib/com.ibm.streamsx.iot.jar" />
     <!-- when called in production the toolkit will be available already in 
