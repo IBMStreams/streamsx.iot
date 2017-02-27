@@ -1,0 +1,8 @@
+# WatsonIoT application-credentials used in hub-application
+#
+# enter your own application credentials here
+#
+iot.org=your_org_id
+iot.authKey=your_authKey
+iot.authToken=your_authToken
+

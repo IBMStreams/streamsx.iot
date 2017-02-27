@@ -1,0 +1,6 @@
+org=your_org_id
+type=Test
+id=Test001
+auth-method=token
+auth-token=your_device_auth_token
+
