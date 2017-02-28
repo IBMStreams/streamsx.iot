@@ -19,10 +19,15 @@
    <!-- local environment may hav set the junit.jar and hamcrest-core.jar -->
    <!-- in their environment CLASSPATH variable             -->
    <!-- in nested build setup it may be defined at ant call -->
-	<condition property="junit.home"
-			   value="${JUNIT_HOME}"
+	<condition property="junit.jar.location"
+			   value="${JUNIT_JAR}"
 			   else="">
-		<isset property="JUNIT_HOME" />
+		<isset property="JUNIT_JAR" />
+	</condition>
+	<condition property="hamcrest.jar.location"
+			   value="${HAMCREST_JAR}"
+			   else="">
+		<isset property="HAMCREST_JAR" />
 	</condition>
 
 <!-- read WatsonIoT application-credentials from properties file -->
@@ -39,8 +44,8 @@
   </path>
 
    <path id="cp.junit">
-		<pathelement location="${junit.home}/junit.jar" />
-		<pathelement location="${junit.home}/org.hamcrest.core.jar" />
+		<pathelement location="${junit.jar.location}" />
+		<pathelement location="${hamcrest.jar.location}" />
    </path>
 
   <path id="cp.compile">
