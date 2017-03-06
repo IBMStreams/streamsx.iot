@@ -76,7 +76,7 @@
 
   <target name="compile" depends="init">
     <javac srcdir="${testsrc.dir}" destdir="${testbuild.dir}" debug="true"
-	includeantruntime="yes">
+	includeantruntime="yes" source="1.8" target="1.8">
 	<classpath>
           <path refid="cp.compile" />
 	</classpath>
