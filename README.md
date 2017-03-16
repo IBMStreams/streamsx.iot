@@ -52,3 +52,7 @@ thousands of devices, including sending commands to specific devices based upon 
 Edgent interacts with IBM Streams through IBM Watson IoT Plaform.  Edgent locally separates the interesting from the mundane, so you don’t have to send every sensor reading over a network. If 99% of readings are normal, Edgent detects the 1% anomalies and just sends those as device events for further analysis with IBM Streams.
 
 IBM Streams applications analyze device events from Edgent applications and then can control individual devices by sending device commands based upon the analytics.
+
+## NLS feature
+
+This toolkit implements the NLS feature. Use the guidelines for the message bundle that are described in [The messages and the NLS for toolkits](https://github.com/IBMStreams/administration/wiki/The-messages-and-the-NLS-for-toolkits)
