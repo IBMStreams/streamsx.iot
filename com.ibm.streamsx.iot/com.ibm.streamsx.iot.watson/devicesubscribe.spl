@@ -1,6 +1,6 @@
 /*
 # Licensed Materials - Property of IBM
-# Copyright IBM Corp. 2016
+# Copyright IBM Corp. 2017
  */
 
 namespace com.ibm.streamsx.iot.watson;
@@ -11,7 +11,7 @@ use com.ibm.streamsx.json::JSONToTuple;
 use com.ibm.streamsx.json::Json;
 
 /**
- * Subsribes to device commands to be sent to devices for an organization.
+ * Subscribes to device commands to be sent to devices for an organization.
  *
  * Subscribes to the topic `streamsx/iot/device/commands/send`
  * with a tuple type of [DeviceCmd], or a JSON string that can be converted to a [DeviceCmd]
@@ -49,10 +49,22 @@ public composite SubscribeDeviceCommands() {
 				streamType: Json;
 		}
 
-		stream<DeviceCmd> JsonCommandTuples =
+		(stream<DeviceCmd> JsonCommandTuples ; stream<Json> errors) =
 			JSONToTuple(JsonCommands)
 		{
 		}
+
+		() as JsonParsingErrors = Custom(errors as in0)
+		{
+			logic
+				onTuple in0 :
+				{
+					appTrc(Trace.error, "Error parsing JSON command: " + errors.jsonString,
+						"JsonParsingErrors") ;
+				}
+
+		}
+
 		
       () as SendCommandsToDevice = SendCommandToDevice(CommandsToSend ,JsonCommandTuples) {
         param
