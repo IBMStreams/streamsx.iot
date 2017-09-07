@@ -91,6 +91,8 @@
     </javac>
    </target>
 
+   <target name="test-full" depends="e2etests,unittests">
+   </target>
 
    <target name="unittests" depends="compile">
    <property name="streamsx.iot.test.device.cfg" value="skip"/>
