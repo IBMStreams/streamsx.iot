@@ -35,7 +35,15 @@
 
   <property name="testsrc.dir" value="src/test/java" />
   <property name="testbuild.dir" value="classes" />
-  <property name="testreports.dir" value="reports" />
+
+<!-- 
+  if this build.xml is called from another build.xml the reports directory can be set from outside
+-->
+	<condition property="testreports.dir"
+			   value="${TESTREPORT_DIR}"
+			   else="reports">
+		<isset property="TESTREPORT_DIR" />
+	</condition>
 
   <path id="cp.streams">
     <pathelement location="${streams.install}/lib/com.ibm.streams.operator.samples.jar" />
@@ -93,9 +101,8 @@
          <pathelement location="${testbuild.dir}"/>
          <path refid="cp.compile"/>
      </classpath>
-
-  <formatter type="xml"/>
-
+    <!-- <formatter type="xml"/> -->
+    <formatter type="plain"/>
     <batchtest todir="${testreports.dir}">
       <fileset dir="${testsrc.dir}">
          <include name="**/*Test.java"/>
@@ -121,7 +128,8 @@
             <pathelement location="${testbuild.dir}"/>
             <path refid="cp.compile"/>
          </classpath>
-         <formatter type="xml"/>
+         <!-- <formatter type="xml"/> -->
+         <formatter type="plain"/>
          <batchtest todir="${testreports.dir}">
             <fileset dir="${testsrc.dir}">
                <include name="**/Watson*Test.java"/>
