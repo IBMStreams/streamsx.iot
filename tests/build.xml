@@ -101,9 +101,8 @@
          <pathelement location="${testbuild.dir}"/>
          <path refid="cp.compile"/>
      </classpath>
-
-  <formatter type="xml"/>
-
+    <!-- <formatter type="xml"/> -->
+    <formatter type="plain"/>
     <batchtest todir="${testreports.dir}">
       <fileset dir="${testsrc.dir}">
          <include name="**/*Test.java"/>
