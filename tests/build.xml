@@ -91,6 +91,23 @@
     </javac>
    </target>
 
+   <target name="test-full" depends="compile">
+      <property name="streamsx.iot.test.device.cfg" value="skip"/>
+      <junit fork="yes" printsummary="yes" haltonfailure="no" dir="${sabs}">
+         <sysproperty key="streamsx.iot.test.device.cfg" value="${streamsx.iot.test.device.cfg}"/>
+         <classpath>
+            <pathelement location="${testbuild.dir}"/>
+            <path refid="cp.compile"/>
+         </classpath>
+         <!--<formatter type="xml"/>-->
+         <formatter type="plain"/>
+         <batchtest todir="${testreports.dir}">
+            <fileset dir="${testsrc.dir}">
+               <include name="**/*Test.java"/>
+            </fileset>
+         </batchtest>
+      </junit>
+   </target>	
 
    <target name="unittests" depends="compile">
    <property name="streamsx.iot.test.device.cfg" value="skip"/>
