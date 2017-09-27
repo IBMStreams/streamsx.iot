@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import java.io.File;
+
 import org.junit.Test;
 
 import com.ibm.json.java.JSON;
@@ -22,13 +24,19 @@ import com.ibm.streamsx.iot.test.Simulate;
 import com.ibm.streamsx.topology.TStream;
 import com.ibm.streamsx.topology.Topology;
 import com.ibm.streamsx.topology.tester.Condition;
+import com.ibm.streamsx.topology.spl.SPL;
 
 public class WatsonDeviceCommandsTest {
     
     @Test
     public void testDeviceCmdsAll() throws Exception {
                 
+        File iotTkLocation = new File(System.getProperty("streamsx.iot.toolkitlocation"));
+
         Topology topology = new Topology();
+        
+        System.out.printf ("IOT ToolkitLocation used in Topology: %s", iotTkLocation);
+        SPL.addToolkit(topology, iotTkLocation);
         
         JSONObject[] commands = DeviceCommandsTest.generateCommands(20);
         
@@ -55,8 +63,13 @@ public class WatsonDeviceCommandsTest {
     @Test
     public void testDeviceCmdsFilter() throws Exception {
                 
+        File iotTkLocation = new File(System.getProperty("streamsx.iot.toolkitlocation"));
+
         Topology topology = new Topology();
         
+        System.out.printf ("IOT ToolkitLocation used in Topology: %s", iotTkLocation);
+        SPL.addToolkit(topology, iotTkLocation);
+
         JSONObject[] commands = DeviceCommandsTest.generateCommands(40);
         
         TStream<JSONObject> rawCmds = topology.constants(Arrays.asList(commands));
