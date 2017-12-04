@@ -14,6 +14,8 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import java.io.File;
+
 import com.ibm.json.java.JSON;
 import com.ibm.json.java.JSONObject;
 import com.ibm.streamsx.iot.DeviceCmd;
@@ -21,6 +23,7 @@ import com.ibm.streamsx.iot.IotStreams;
 import com.ibm.streamsx.topology.TStream;
 import com.ibm.streamsx.topology.Topology;
 import com.ibm.streamsx.topology.tester.Condition;
+import com.ibm.streamsx.topology.spl.SPL;
 
 public class DeviceCommandsTest {
     
@@ -36,6 +39,10 @@ public class DeviceCommandsTest {
     private void testDeviceCmdsAll(boolean allowFilter) throws Exception {
         
         Topology topology = new Topology();
+
+        File iotTkLocation = new File(System.getProperty("streamsx.iot.toolkitlocation"));
+    	System.out.printf ("IOT ToolkitLocation used in Topology: %s", iotTkLocation);
+    	SPL.addToolkit(topology, iotTkLocation);
         
         JSONObject[] commands = generateCommands(200);
         
@@ -87,6 +94,10 @@ public class DeviceCommandsTest {
     private void testDeviceCmdsCommandId(boolean allowFilter, String[] typeIds, String...cmdIds) throws Exception {
         
         Topology topology = new Topology();
+
+        File iotTkLocation = new File(System.getProperty("streamsx.iot.toolkitlocation"));
+    	System.out.printf ("IOT ToolkitLocation used in Topology: %s", iotTkLocation);
+    	SPL.addToolkit(topology, iotTkLocation);
         
         JSONObject[] cmds = generateCommands(200);
         

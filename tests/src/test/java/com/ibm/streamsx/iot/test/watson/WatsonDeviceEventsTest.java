@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.io.File;
+
 import org.junit.Test;
 
 import com.ibm.json.java.JSON;
@@ -19,14 +21,20 @@ import com.ibm.streamsx.topology.Topology;
 import com.ibm.streamsx.topology.streams.StringStreams;
 import com.ibm.streamsx.topology.tester.Condition;
 import com.ibm.streamsx.topology.tester.Tester;
+import com.ibm.streamsx.topology.spl.SPL;
 
 public class WatsonDeviceEventsTest {
        
     @Test
     public void testDeviceEventsAll() throws Exception {
         
-        Topology topology = new Topology();
+        File iotTkLocation = new File(System.getProperty("streamsx.iot.toolkitlocation"));
         
+        Topology topology = new Topology();
+
+        System.out.printf ("IOT ToolkitLocation used in Topology: %s", iotTkLocation);
+        SPL.addToolkit(topology,iotTkLocation);
+       
         // Generate events, but this test will ignore the device id and type
         // since it is fixed by the deviceCfg.
         JSONObject[] events = DeviceEventsTest.generateEvents(20);
