@@ -1,7 +1,6 @@
 # streams-specific excludes
 toolkit.xml
 *.pm
-.settings
 .toolkitList
 doc
 # If you want to include a perl module, do
