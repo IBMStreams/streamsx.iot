@@ -23,8 +23,8 @@ IBM Streams applications can use this toolkit to connect to IBM Watson IoT Platf
 
 There is SPLDOC as well as JAVADOC documentation available.
 
-["com.ibm.streamsx.iot SPLDOC"]({{site.url}}/streamsx.iot/doc/spldoc/html/index.html)
-["JAVA Application API support (JAVADOC)"]({{site.url}}/streamsx.iot/doc/javadoc/index.html)
+* ["com.ibm.streamsx.iot SPLDOC"]({{site.url}}/streamsx.iot/doc/spldoc/html/index.html)
+* ["JAVA Application API support (JAVADOC)"]({{site.url}}/streamsx.iot/doc/javadoc/index.html)
 
 
 # Samples
