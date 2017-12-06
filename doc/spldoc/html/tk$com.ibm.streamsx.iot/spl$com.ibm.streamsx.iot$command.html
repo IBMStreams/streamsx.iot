@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="reference"/>
+<meta name="DC.Title" content="SPL File command.spl"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="spldoc_compilationunit"/>
+<link rel="stylesheet" type="text/css" href="../../html/commonltr.css"/>
+<link rel="stylesheet" type="text/css" href="../../html/spldoc.css"/>
+<title>SPL File command.spl</title>
+</head>
+<body id="spldoc_compilationunit">
+
+
+<h1 class="title topictitle1">SPL File <tt class="ph tt">command.spl</tt></h1>
+
+<div class="body refbody">
+<div class="section">
+<p class="p">
+<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iot Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot 1.0.2.commit_cdc1e1f</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot</a> &gt; command.spl</p>
+
+</div>
+
+<div class="section"><h2 class="title sectiontitle splhead-1">Content</h2>
+  
+  <dl class="dl">
+    <dt class="dt dlterm"/>
+<dd class="dd"/>
+
+    
+      <dt class="dt dlterm splhead-2">Operators</dt>
+
+      <dd class="dd">
+<ul class="sl simple">
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iot$command.html#spldoc_compilationunit__composite_operator__CommandTupleToPayload">CommandTupleToPayload</a></strong>: Convert tuples to device commands.
+</li>
+
+</ul>
+
+      </dd>
+
+    
+  </dl>
+
+</div>
+
+<div class="section"><h2 class="title sectiontitle splhead-1">Composites</h2>
+  
+</div>
+
+<div class="section" id="spldoc_compilationunit__composite_operator__CommandTupleToPayload"><h2 class="title sectiontitle splpart">composite CommandTupleToPayload(output DeviceCommands; input Commands)</h2>
+  
+</div>
+
+<div class="section">
+
+<div class="p">Convert tuples to device commands. Convert input tuples to device commands that can be submitted to <a class="xref" href="spl$com.ibm.streamsx.iot$pubsub.html#spldoc_compilationunit__composite_operator__CommandPublish">CommandPublish</a> or <a class="xref" href="spl$com.ibm.streamsx.iot.watson$device.html#spldoc_compilationunit__composite_operator__SendCommandToDevice">SendCommandToDevice</a>. The input port schema must include:
+<ul class="ul">
+<li class="li"> Attributes defining the device to receive a command matching <a class="xref" href="spl$com.ibm.streamsx.iot$types.html#spldoc_compilationunit__type__DeviceCmdId">DeviceCmdId</a>.</li>
+
+<li class="li"> A nested tuple with attribute name specified by the <tt class="ph tt">payload</tt> parameter.</li>
+
+</ul>
+
+</div>
+
+<p class="p">The contents of the nested tuple are converted to JSON and used as the payload of the device command.
+</p>
+
+<p class="p">An example of how to invoke this operator. First have an SPL type that forms the content of the command's payload. The values in the type will be converted to JSON and used as the command's payload.
+</p>
+
+<div class="p">
+<pre class="pre codeblock">
+type StatusMsg = rstring message, rstring severity;
+</pre>
+
+
+</div>
+
+<p class="p">The input schema to this operator requires <a class="xref" href="spl$com.ibm.streamsx.iot$types.html#spldoc_compilationunit__type__DeviceCmdId">DeviceCmdId</a> and the payload type as a nested tuple, for example:
+</p>
+
+<div class="p">
+<pre class="pre codeblock">
+stream&lt;DeviceCmdId, tuple&lt;StatusMsg msgs&gt;&gt; StatusMsgCommands = ...
+</pre>
+
+
+</div>
+
+<p class="p">Stream <tt class="ph tt">StatusMsgCommands</tt> is fed into this operator and then <a class="xref" href="spl$com.ibm.streamsx.iot$pubsub.html#spldoc_compilationunit__composite_operator__CommandPublish">CommandPublish</a> or <a class="xref" href="spl$com.ibm.streamsx.iot.watson$device.html#spldoc_compilationunit__composite_operator__SendCommandToDevice">SendCommandToDevice</a>. The invocation of this operator specifies which nested tuple attribute maps to the command payload using the <tt class="ph tt">payload</tt> parameter. In this case setting <tt class="ph tt">payload</tt> to <tt class="ph tt">msgs</tt>.
+</p>
+
+<div class="p">
+<pre class="pre codeblock">
+// Convert them into the required schema
+stream&lt;DeviceCmd&gt; StatusMsgCommandsJson = CommandTupleToPayload(StatusMsgCommands)
+{
+  param
+    payload: msgs;
+}
+
+// And then publish them
+() as PublishStatusMsgCmds = CommandPublish(StatusMsgCommandsJson) {}
+</pre>
+
+
+</div>
+
+<p class="p">This will result in a device command payload of:
+</p>
+
+<div class="p">
+<pre class="pre codeblock">
+{"message": "Warning Black Ice Ahead", "severity": "HIGH"}
+</pre>
+
+
+</div>
+
+</div>
+
+<div class="section"><h2 class="title sectiontitle">Parameters</h2>
+
+<ul class="sl simple">
+<li class="sli"><strong class="ph b">payload</strong>: Attribute of nested tuple that will be the command payload. 
+</li>
+
+</ul>
+
+</div>
+
+<div class="section"><h2 class="title sectiontitle">Input Ports</h2>
+
+<ul class="sl simple">
+<li class="sli"><strong class="ph b">Commands</strong>: Input stream of commands, must be a super-set of <a class="xref" href="spl$com.ibm.streamsx.iot$types.html#spldoc_compilationunit__type__DeviceCmdId">DeviceCmdId</a>.
+</li>
+
+</ul>
+
+</div>
+
+<div class="section"><h2 class="title sectiontitle">Output Ports</h2>
+
+<ul class="sl simple">
+<li class="sli"><strong class="ph b">DeviceCommands</strong>: Device commands that can be submitted to <a class="xref" href="spl$com.ibm.streamsx.iot$pubsub.html#spldoc_compilationunit__composite_operator__CommandPublish">CommandPublish</a> or <a class="xref" href="spl$com.ibm.streamsx.iot.watson$device.html#spldoc_compilationunit__composite_operator__SendCommandToDevice">SendCommandToDevice</a>. Must be of type <a class="xref" href="spl$com.ibm.streamsx.iot$types.html#spldoc_compilationunit__type__DeviceCmd">DeviceCmd</a>.
+</li>
+
+</ul>
+
+</div>
+
+<div class="section"><h2 class="title sectiontitle splhead-2">Composite Operator Graph</h2>
+  
+</div>
+
+<div class="section splgraph">
+  <embed class="image" src="../../image/tk$com.ibm.streamsx.iot/op$com.ibm.streamsx.iot$CommandTupleToPayload.svg" width="248" height="109"/>
+</div>
+
+</div>
+
+
+</body>
+</html>
