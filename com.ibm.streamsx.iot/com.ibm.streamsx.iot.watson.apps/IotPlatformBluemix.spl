@@ -11,7 +11,7 @@ use com.ibm.streamsx.topology.topic::Subscribe;
 
  /**
  * Application providing integration
- * with an IBM Watson IoT Platform Bluemix service.
+ * with an IBM Watson IoT Platform service on IBM Cloud.
  *
  * This application performs the role
  * of ingest and egress (for device commands) for
@@ -67,14 +67,14 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * Platform is specified by an application configuration.
  *
  * This application is configured using submission time parameters:
- * * `config` : Application configuration name containing the organization and application api authorization information for the Bluemix service (required).
+ * * `config` : Application configuration name containing the organization and application api authorization information for the IBM Cloud service (required).
  * * `scaleEvents` : Scaling factor for device events (optional, defaults to `1`)
  * * `scaleCommands` : Scaling factor for sent device commands. Optional, defaults to `1`)
  * * `scaleStatuses` : Scaling factor for device statuses (optional, defaults to `1`)
  * * `allowFilters` : `true` to use allow applications subscribing to device events, sent device commands and device statuses to push filtering to this application. `false` to disallow execution of subscriber filters (optional defaults to `true`)
  * * `encrypted` : `true` to use encrypted (TLSv1.2) connections to IoT Plaform, `false` to use unencrypted (optional, defaults to `true`)
  *
- * @param _config Application configuration name containing the organization and authorization information for the Bluemix service. Maps to the `config` submisstion time parameter.
+ * @param _config Application configuration name containing the organization and authorization information for the IBM Cloud service. Maps to the `config` submisstion time parameter.
  *
  */
 public composite IotPlatformBluemix {

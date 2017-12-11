@@ -145,7 +145,7 @@
     </target>
 
 
-   <!-- perform tests which use Bluemix WatsonIoT platform           --> 
+   <!-- perform tests which use IBM Cloud WatsonIoT platform          --> 
    <!-- precondition is a running PlatformIoT HUB application         -->
    <!-- event test create an Edgent application which works as device -->
    <!-- result received by topology application is checked against    -->
@@ -215,7 +215,7 @@
 
    <!-- submit SAB file by executing streamtool direct from ant -->
    <!-- properties read from iotf.properties file defining the credentials
-        for an application acessing the Bluemix IOTF service:
+        for an application acessing the IBM Cloud IOTF service:
          iot.org : organzation
          iot.authKey : application key
          iot.authToken : application authentiocation token
