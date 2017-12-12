@@ -37,7 +37,7 @@ rstring getIotfUri(rstring org, rstring domain, boolean encrypted) {
  * `iot-2/type/`*typeId*`/id/`*deviceId*`/evt/`*eventId*`/fmt/json`
  * 
  * @param org Organization identifier.
- * @param domain Service domain, used to define the host for the MQTT message hub host, which will be *org*`.messaging.`*domain*. Defaults to `internetofthings.ibmcloud.com` supporting IBM Watson IoT Platform hosted on Bluemix.
+ * @param domain Service domain, used to define the host for the MQTT message hub host, which will be *org*`.messaging.`*domain*. Defaults to `internetofthings.ibmcloud.com` supporting IBM Watson IoT Platform hosted on IBM Cloud.
  * @param authKey Application key.
  * @param authToken Application authorization token.
  * @param appId Application identifier for the MQTT client identifier, defaults to *jobId*`_evt`.
@@ -114,7 +114,7 @@ public composite Raw2DeviceEvent(input RawEvents; output Events) {
  * `iot-2/type/`*typeId*`/id/`*deviceId*`/mon/`
  * 
  * @param org Organization identifier.
- * @param domain Service domain, used to define the host for the MQTT message hub host, which will be *org*`.messaging.`*domain*. Defaults to `internetofthings.ibmcloud.com` supporting IBM Watson IoT Platform hosted on Bluemix.
+ * @param domain Service domain, used to define the host for the MQTT message hub host, which will be *org*`.messaging.`*domain*. Defaults to `internetofthings.ibmcloud.com` supporting IBM Watson IoT Platform hosted on IBM Cloud.
  * @param authKey Application key.
  * @param authToken Application authorization token.
  * @param appId application identifier for the MQTT client identifier, defaults to *jobId*`_mon`.
@@ -175,7 +175,7 @@ public composite DeviceStatuses(output stream<DeviceStatus> Statuses)
  * `iot-2/type/`*typeId*`/id/`*deviceId*`/cmd/`*cmdId*`/fmt/json`
  * 
  * @param org Organization identifier.
- * @param domain Service domain, used to define the host for the MQTT message hub host, which will be *org*`.messaging.`*domain*. Defaults to `internetofthings.ibmcloud.com` supporting IBM Watson IoT Platform hosted on Bluemix.
+ * @param domain Service domain, used to define the host for the MQTT message hub host, which will be *org*`.messaging.`*domain*. Defaults to `internetofthings.ibmcloud.com` supporting IBM Watson IoT Platform hosted on IBM Cloud.
  * @param authKey Application key.
  * @param authToken Application authorization token.
  * @param appId Application identifier for the MQTT client identifier, defaults to *jobId*`_cmd`.
@@ -285,7 +285,7 @@ composite DeviceTopic(output Messages)
  * `iot-2/type/`*typeId*`/id/`*deviceId*`/cmd/`*cmdId*`/fmt/json`
  * 
  * @param org Organization identifier.
- * @param domain Service domain, used to define the host for the MQTT message hub host, which will be *org*`.messaging.`*domain*. Defaults to `internetofthings.ibmcloud.com` supporting IBM Watson IoT Platform hosted on Bluemix.
+ * @param domain Service domain, used to define the host for the MQTT message hub host, which will be *org*`.messaging.`*domain*. Defaults to `internetofthings.ibmcloud.com` supporting IBM Watson IoT Platform hosted on IBM Cloud.
  * @param authKey Application key.
  * @param authToken Application authorization token.
  * @param appId application identifier for the MQTT client identifier, defaults to *jobId*`_snd`.

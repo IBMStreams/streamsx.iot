@@ -24,7 +24,7 @@
  * `sc -M com.ibm.streamsx.iot.watson.quickstart::Quickstart`
  * 
  * Submit the Streams application bundle (`.sab` file) to an IBM Streams instance or your
- * [https://console.ng.bluemix.net/catalog/services/streaming-analytics/|Bluemix Streaming Analytics Service]
+ * [https://console.ng.bluemix.net/catalog/services/streaming-analytics/|IBM Cloud Streaming Analytics Service]
  * setting the submission value `deviceId` to the device id of the simulator. The device id is
  * at the top right of the simulator.
  * {../doc/images/iotf_quickstart_simulator.png|Simulator}

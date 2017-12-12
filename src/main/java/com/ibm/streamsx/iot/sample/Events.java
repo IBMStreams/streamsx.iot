@@ -29,7 +29,7 @@ public class Events {
     }
 
     /**
-     * Execute this application against a Bluemix Streaming Analytic Service.
+     * Execute this application against a IBM Cloud Streaming Analytic Service.
      * 
      * Usage: <BR>
      * {@code java com.ibm.streamsx.iot.sample.Events vcapFile serviceName [eventId ...]}
@@ -56,7 +56,7 @@ public class Events {
         TStream<DeviceEvent> events = IotStreams.eventsSubscribe(topology, eventIds);
         events.print();
 
-        // Submit to BlueMix
+        // Submit to IBM Cloud
         Map<String, Object> config = new HashMap<>();
         config.put(AnalyticsServiceProperties.VCAP_SERVICES, new File(vcapFile));
         config.put(AnalyticsServiceProperties.SERVICE_NAME, serviceName);

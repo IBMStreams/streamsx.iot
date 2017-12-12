@@ -17,7 +17,7 @@ use com.ibm.streamsx.json::Json;
  * with a tuple type of [DeviceCmd], or a JSON string that can be converted to a [DeviceCmd]
  * 
  * @param org Organization identifier.
- * @param domain Service domain, used to define the host for the MQTT message hub host, which will be *org*`.messaging.`*domain*. Defaults to `internetofthings.ibmcloud.com` supporting IBM Watson IoT Platform hosted on Bluemix.
+ * @param domain Service domain, used to define the host for the MQTT message hub host, which will be *org*`.messaging.`*domain*. Defaults to `internetofthings.ibmcloud.com` supporting IBM Watson IoT Platform hosted on IBM Cloud.
  * @param authKey Application key.
  * @param authToken Application authorization token.
  * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to `true`.

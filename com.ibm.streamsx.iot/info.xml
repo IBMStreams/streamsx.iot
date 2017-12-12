@@ -10,7 +10,7 @@ Streams applications can use this toolkit to provide real time analytics against
 
 As well as the general IoT device model, integration with IBM Watson IoT
 Platform is provided allowing ease of connecting IBM Streams to
-a IoT Platform service (including Bluemix).
+a IoT Platform service (including IBM Cloud).
 
 See [namespace:com.ibm.streamsx.iot] for more details.
 
@@ -31,7 +31,7 @@ This toolkit depends on these toolkits:
     </info:toolkit>
     <info:toolkit>
       <common:name>com.ibm.streamsx.json</common:name>
-      <common:version>[1.1.1,2.0.0)</common:version>
+      <common:version>[1.1.1,3.0.0)</common:version>
     </info:toolkit>
     <info:toolkit>
       <common:name>com.ibm.streamsx.datetime</common:name>
