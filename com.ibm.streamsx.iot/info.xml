@@ -15,7 +15,7 @@ a IoT Platform service (including IBM Cloud).
 See [namespace:com.ibm.streamsx.iot] for more details.
 
 This toolkit depends on these toolkits:
-* `com.ibm.streamsx.messaging`
+* `com.ibm.streamsx.mqtt`
 * `com.ibm.streamsx.json` 
 * `com.ibm.streamsx.datetime`
 * `com.ibm.streamsx.topology`
@@ -26,8 +26,8 @@ This toolkit depends on these toolkits:
   </info:identity>
   <info:dependencies>
     <info:toolkit>
-      <common:name>com.ibm.streamsx.messaging</common:name>
-      <common:version>[5.0.0,6.0.0)</common:version>
+      <common:name>com.ibm.streamsx.mqtt</common:name>
+      <common:version>[1.0.0,2.0.0)</common:version>
     </info:toolkit>
     <info:toolkit>
       <common:name>com.ibm.streamsx.json</common:name>
