@@ -53,7 +53,7 @@ public class WatsonDeviceCommandsTest {
                 
         TStream<DeviceCmd> cmdStream = IotStreams.commandsSubscribe(topology);
         
-        Condition<List<String>> tuples = DeviceEventsTest.completeAndValidate(cmdStream, 30, commands);
+        Condition<List<String>> tuples = DeviceEventsTest.completeAndValidate(cmdStream, 60, commands);
         
         List<String> results = tuples.getResult();
         
@@ -98,7 +98,7 @@ public class WatsonDeviceCommandsTest {
                 
         TStream<DeviceCmd> cmdStream = IotStreams.commandsSubscribe(topology, filterCmdId);
         
-        Condition<List<String>> tuples = DeviceEventsTest.completeAndValidate(cmdStream, 30, fca);
+        Condition<List<String>> tuples = DeviceEventsTest.completeAndValidate(cmdStream, 60, fca);
         
         List<String> results = tuples.getResult();
         

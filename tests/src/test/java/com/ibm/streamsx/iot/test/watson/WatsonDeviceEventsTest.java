@@ -63,7 +63,7 @@ public class WatsonDeviceEventsTest {
             
         Edgent2Watson.createEvents(events);
 
-        Condition<List<String>> tuples = DeviceEventsTest.completeAndValidate(eventStream, 30, events);
+        Condition<List<String>> tuples = DeviceEventsTest.completeAndValidate(eventStream, 60, events);
         Edgent2Watson.stop();
         assertFalse(Edgent2Watson.FAILED.get());
         
