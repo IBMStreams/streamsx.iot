@@ -21,7 +21,7 @@ There is no precondition to run the unit tests.
 Change to 'test' directory and run "ant unittests".
 
 ##2. End-toEnd test
-For this test one needs to have a Watson IoT service running on IBM Bluemix. 
+For this test one needs to have a Watson IoT service running on IBM Cloud. 
 For the Edgent device a one need to create a device in The Watson IoT service with DeviceType "Test" and DeviceId "Test001". 
 In the 'test' directory rename the device.cfg.template to device.cfg and change "org" with your org-id and "auth-token" with the token you got for your device "Test:Test001"
 
@@ -36,7 +36,7 @@ auth-token=your_device_auth_token
 This file is used for the Edgent thread to act as your device.
 
 
-The IoTPlatform application needs also credential informations to connect to your Bluemix Watson IoT service. You need to create an application key within your Bluemix Watson IoT service.
+The IoTPlatform application needs also credential informations to connect to your IBM Cloud Watson IoT service. You need to create an application key within your IBM Cloud Watson IoT service.
 Change the file iotf.properties.template to iotf.properties and enter your data.
 
 Content of the file iotf.properties.template

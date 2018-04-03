@@ -34,7 +34,7 @@ public class SendCommand {
     }
 
     /**
-     * Execute this application against a Bluemix Streaming Analytic Service.
+     * Execute this application against a IBM Cloud Streaming Analytic Service.
      * 
      * Usage: <BR>
      * {@code java com.ibm.streamsx.iot.sample.SendCommand vcapFile serviceName typeId deviceId message}
@@ -65,7 +65,7 @@ public class SendCommand {
 
         IotStreams.commandPublish(command);
 
-        // Submit to BlueMix
+        // Submit to IBM Cloud
         Map<String, Object> config = new HashMap<>();
         config.put(AnalyticsServiceProperties.VCAP_SERVICES, new File(vcapFile));
         config.put(AnalyticsServiceProperties.SERVICE_NAME, serviceName);

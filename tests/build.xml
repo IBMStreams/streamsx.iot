@@ -4,12 +4,35 @@
 	<property environment="env"/>
 	<property name="streams.install" value="${env.STREAMS_INSTALL}"/>
 
+  <!-- *****************************************************
+       To be flexible in testing following properties are to be set
+       depending on test enviornment or test context
+
+       The default test context is the test during development.
+       The "iot.tk" 'under test' is the build one in the repository.
+       The "topology.tk" used for test is the one from the installed
+       Streams product.
+       Additional toolkits "streams.tk", which iot.tk depends on 
+       are taken also from the Streams product.
+
+       So in development environment nothing special has to be set.
+      
+      ****************************************************** -->
 	<property name="iot.tk"
 	   location="${basedir}/../com.ibm.streamsx.iot"/>
+	<property name="topology.tk"
+	   location="${streams.install}/toolkits/com.ibm.streamsx.topology"/>
 	<property name="streams.tk"
 	   location="${streams.install}/toolkits"/>
-	<property name="extra.tk"
-	   location="${env.HOME}/toolkits"/>
+
+
+   <target name="print-tklocations" >
+   <echo message="iot.tk : ${iot.tk}"/>
+   <echo message="topology.tk : ${topology.tk}"/>
+   <echo message="streams.tk : ${streams.tk}"/>
+   </target>
+
+
 	<property name="sabs"
 	   location="${basedir}/sabs"/>
 	<property name="quarks"
@@ -35,12 +58,19 @@
 
   <property name="testsrc.dir" value="src/test/java" />
   <property name="testbuild.dir" value="classes" />
-  <property name="testreports.dir" value="reports" />
+
+<!-- 
+  if this build.xml is called from another build.xml the reports directory can be set from outside
+-->
+	<condition property="testreports.dir"
+			   value="${TESTREPORT_DIR}"
+			   else="reports">
+		<isset property="TESTREPORT_DIR" />
+	</condition>
 
   <path id="cp.streams">
     <pathelement location="${streams.install}/lib/com.ibm.streams.operator.samples.jar" />
-    <pathelement location="${user.home}/toolkits/com.ibm.streamsx.topology/lib/com.ibm.streamsx.topology.jar" />
-    <pathelement location="${streams.install}/toolkits/com.ibm.streamsx.topology/lib/com.ibm.streamsx.topology.jar" />
+    <pathelement location="${topology.tk}/lib/com.ibm.streamsx.topology.jar" />
   </path>
 
    <path id="cp.junit">
@@ -52,13 +82,7 @@
     <path refid="cp.streams" />
     <path refid="cp.quarks" />
     <path refid="cp.junit" />
-    <pathelement location="../com.ibm.streamsx.iot/lib/com.ibm.streamsx.iot.jar" />
-    <pathelement location="../../../github/streamsx.iot/com.ibm.streamsx.iot/lib/com.ibm.streamsx.iot.jar" />
-    <!-- when called in production the toolkit will be available already in 
-         STREAMS_INSTALL environment 
-    TODO: insert printout which jar is used local or STREAMS_INSTALL
-    -->
-    <pathelement location="${streams.install}/toolkits/com.ibm.streamsx.iot/lib/com.ibm.streamsx.iot.jar" />
+    <pathelement location="${iot.tk}/lib/com.ibm.streamsx.iot.jar" />
   </path>
 
   <path id="cp.quarks">
@@ -83,19 +107,34 @@
     </javac>
    </target>
 
+   <target name="test-full" depends="e2etests,unittests">
+   </target>
 
-   <target name="unittests" depends="compile">
+
+   <!-- *******************************************************
+        following properties are needed in this target
+        1. as systemproperties which are read by the java/topology app
+           streamsx.iot.test.device.cfg - cfg file name of IoT device cfg
+           streamsx.iot.toolkitlocation - iot toolkit under test
+        2. as environment variable 
+           STREAMS_SPLPATH - this env-var is used by topology to determine
+                             standard toolit location for tks used by
+                             iot toolkit under test
+        ******************************************************* -->
+   <target name="unittests" depends="print-tklocations,compile">
    <property name="streamsx.iot.test.device.cfg" value="skip"/>
    <junit fork="yes" printsummary="yes" haltonfailure="no" dir="${sabs}">
+     <env key="STREAMS_SPLPATH" value="${streams.tk}"/>
      <sysproperty key="streamsx.iot.test.device.cfg"
                   value="${streamsx.iot.test.device.cfg}"/>
+     <sysproperty key="streamsx.iot.toolkitlocation"
+                 value="${iot.tk}"/>
      <classpath>
          <pathelement location="${testbuild.dir}"/>
          <path refid="cp.compile"/>
      </classpath>
-
-  <formatter type="xml"/>
-
+    <!-- <formatter type="xml"/> -->
+    <formatter type="plain"/>
     <batchtest todir="${testreports.dir}">
       <fileset dir="${testsrc.dir}">
          <include name="**/*Test.java"/>
@@ -106,22 +145,36 @@
     </target>
 
 
-   <!-- perform tests which use Bluemix WatsonIoT platform           --> 
+   <!-- perform tests which use IBM Cloud WatsonIoT platform          --> 
    <!-- precondition is a running PlatformIoT HUB application         -->
    <!-- event test create an Edgent application which works as device -->
    <!-- result received by topology application is checked against    -->
    <!-- the expected values derived from Edgent sent data             -->
-   <target name="e2etests" depends="compile,submit.hubapp">
+   <!-- *******************************************************
+        following properties are needed in this task
+        1. as systemproperties which are read by the java/topology app
+           streamsx.iot.test.device.cfg - cfg file name of IoT device cfg
+           streamsx.iot.toolkitlocation - iot toolkit location under test
+        2. as environment variable 
+           STREAMS_SPLPATH - this env-var is used by topology to determine
+                             a standard toolit location for tk used by
+                             iot toolkit location under test
+        ******************************************************* -->
+   <target name="e2etests" depends="print-tklocations,compile,submit.hubapp">
       <!-- WatsonIot device-ceredentials for fix DeviceType: Test, DeviceId:Test001-->
       <property name="streamsx.iot.test.device.cfg" value="${basedir}/device.cfg"/>
       <junit fork="yes" printsummary="yes" haltonfailure="no" dir="${sabs}">
+         <env key="STREAMS_SPLPATH" value="${streams.tk}"/>
          <sysproperty key="streamsx.iot.test.device.cfg"
                      value="${streamsx.iot.test.device.cfg}"/>
+         <sysproperty key="streamsx.iot.toolkitlocation"
+                    value="${iot.tk}"/>
          <classpath>
             <pathelement location="${testbuild.dir}"/>
             <path refid="cp.compile"/>
          </classpath>
-         <formatter type="xml"/>
+         <!-- <formatter type="xml"/> -->
+         <formatter type="plain"/>
          <batchtest todir="${testreports.dir}">
             <fileset dir="${testsrc.dir}">
                <include name="**/Watson*Test.java"/>
@@ -161,6 +214,12 @@
     </target>
 
    <!-- submit SAB file by executing streamtool direct from ant -->
+   <!-- properties read from iotf.properties file defining the credentials
+        for an application acessing the IBM Cloud IOTF service:
+         iot.org : organzation
+         iot.authKey : application key
+         iot.authToken : application authentiocation token
+   -->
 	<macrodef name="submit.iot.app">
       <attribute name="namespace"/>
       <attribute name="composite"/>
@@ -204,7 +263,7 @@
       <sequential>
          <splcompile 
 			   mainComposite="@{namespace}::@{composite}"
-			   toolkitlocations="@{toolkit}:${iot.tk}:${extra.tk}:${streams.tk}"/>
+			   toolkitlocations="@{toolkit}:${iot.tk}:${streams.tk}"/>
          <move file="${basedir}/output/@{namespace}.@{composite}.sab"
              toDir="${sabs}"/>
          <delete dir="${basedir}/output"/>
@@ -218,7 +277,7 @@
       <sequential>
          <splcompile
             mainComposite="@{namespace}::@{composite}"
-            toolkitlocations="${iot.tk}:${extra.tk}:${streams.tk}"/>
+            toolkitlocations="${iot.tk}:${streams.tk}"/>
          <move file="${basedir}/output/@{namespace}.@{composite}.sab"
              toDir="${sabs}"/>
          <delete dir="${basedir}/output"/>

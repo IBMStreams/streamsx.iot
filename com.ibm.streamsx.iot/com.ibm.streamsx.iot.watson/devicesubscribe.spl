@@ -1,21 +1,23 @@
 /*
 # Licensed Materials - Property of IBM
-# Copyright IBM Corp. 2016
+# Copyright IBM Corp. 2017
  */
 
 namespace com.ibm.streamsx.iot.watson;
 
 use com.ibm.streamsx.iot::*;
 use com.ibm.streamsx.topology.topic::Subscribe;
+use com.ibm.streamsx.json::JSONToTuple;
+use com.ibm.streamsx.json::Json;
 
 /**
- * Subsribes to device commands to be sent to devices for an organization.
+ * Subscribes to device commands to be sent to devices for an organization.
  *
  * Subscribes to the topic `streamsx/iot/device/commands/send`
- * with a tuple type of [DeviceCmd].
+ * with a tuple type of [DeviceCmd], or a JSON string that can be converted to a [DeviceCmd]
  * 
  * @param org Organization identifier.
- * @param domain Service domain, used to define the host for the MQTT message hub host, which will be *org*`.messaging.`*domain*. Defaults to `internetofthings.ibmcloud.com` supporting IBM Watson IoT Platform hosted on Bluemix.
+ * @param domain Service domain, used to define the host for the MQTT message hub host, which will be *org*`.messaging.`*domain*. Defaults to `internetofthings.ibmcloud.com` supporting IBM Watson IoT Platform hosted on IBM Cloud.
  * @param authKey Application key.
  * @param authToken Application authorization token.
  * @param encrypted True to use encrypted connections to IBM Watson IoT Platform, false to use unencrypted , defaults to `true`.
@@ -35,7 +37,36 @@ public composite SubscribeDeviceCommands() {
           topic: "streamsx/iot/device/commands/send";
           streamType: DeviceCmd;
       }
-      () as SendCommandsToDevice = SendCommandToDevice(CommandsToSend) {
+      
+      
+      /*
+       * Subscribe to commands sent as JSON
+       */
+      stream<Json>JsonCommands = Subscribe()
+		{
+			param
+				topic : "streamsx/iot/device/commands/send" ;
+				streamType: Json;
+		}
+
+		(stream<DeviceCmd> JsonCommandTuples ; stream<Json> errors) =
+			JSONToTuple(JsonCommands)
+		{
+		}
+
+		() as JsonParsingErrors = Custom(errors as in0)
+		{
+			logic
+				onTuple in0 :
+				{
+					appTrc(Trace.error, "Error parsing JSON command: " + errors.jsonString,
+						"JsonParsingErrors") ;
+				}
+
+		}
+
+		
+      () as SendCommandsToDevice = SendCommandToDevice(CommandsToSend ,JsonCommandTuples) {
         param
           org : $org;
           domain : $domain;

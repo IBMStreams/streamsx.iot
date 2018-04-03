@@ -14,6 +14,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import java.io.File;
+
 import org.junit.Test;
 
 import com.ibm.json.java.JSON;
@@ -27,6 +29,7 @@ import com.ibm.streamsx.topology.context.StreamsContextFactory;
 import com.ibm.streamsx.topology.streams.StringStreams;
 import com.ibm.streamsx.topology.tester.Condition;
 import com.ibm.streamsx.topology.tester.Tester;
+import com.ibm.streamsx.topology.spl.SPL;
 
 public class DeviceEventsTest {
     
@@ -42,7 +45,11 @@ public class DeviceEventsTest {
     private void testDeviceEventsAll(boolean allowFilter) throws Exception {
         
         Topology topology = new Topology();
-        
+
+        File iotTkLocation = new File(System.getProperty("streamsx.iot.toolkitlocation"));
+        System.out.printf ("IOT ToolkitLocation used in Topology: %s", iotTkLocation);
+        SPL.addToolkit(topology, iotTkLocation);
+       
         JSONObject[] events = generateEvents(200);
         
         Simulate.simulateEvents(topology, 10, allowFilter, events);
@@ -94,6 +101,10 @@ public class DeviceEventsTest {
     private void testDeviceEventsEventId(boolean allowFilter, String[] typeIds, String...eventIds) throws Exception {
         
         Topology topology = new Topology();
+  
+        File iotTkLocation = new File(System.getProperty("streamsx.iot.toolkitlocation"));
+    	System.out.printf ("IOT ToolkitLocation used in Topology: %s", iotTkLocation);
+    	SPL.addToolkit(topology, iotTkLocation);
         
         JSONObject[] events = generateEvents(200);
         

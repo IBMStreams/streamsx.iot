@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import java.io.File;
+
 import org.junit.Test;
 
 import com.ibm.json.java.JSON;
@@ -18,6 +20,7 @@ import com.ibm.streamsx.iot.IotStreams;
 import com.ibm.streamsx.topology.TStream;
 import com.ibm.streamsx.topology.Topology;
 import com.ibm.streamsx.topology.tester.Condition;
+import com.ibm.streamsx.topology.spl.SPL;
 
 public class DeviceStatusTest {
     
@@ -33,6 +36,10 @@ public class DeviceStatusTest {
     private void testDeviceStatussAll(boolean allowFilter) throws Exception {
         
         Topology topology = new Topology();
+
+        File iotTkLocation = new File(System.getProperty("streamsx.iot.toolkitlocation"));
+    	System.out.printf ("IOT ToolkitLocation used in Topology: %s", iotTkLocation);
+    	SPL.addToolkit(topology, iotTkLocation);
         
         JSONObject[] statuses = generateStatuses(200);
         
@@ -68,6 +75,10 @@ public class DeviceStatusTest {
         
         Topology topology = new Topology();
         
+        File iotTkLocation = new File(System.getProperty("streamsx.iot.toolkitlocation"));
+    	System.out.printf ("IOT ToolkitLocation used in Topology: %s", iotTkLocation);
+    	SPL.addToolkit(topology, iotTkLocation);
+
         JSONObject[] statuses = generateStatuses(200);
         
         Simulate.simulateStatuses(topology, 10, allowFilter, statuses);

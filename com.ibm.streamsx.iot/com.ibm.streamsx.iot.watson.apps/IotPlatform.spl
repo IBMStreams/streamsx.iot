@@ -66,7 +66,7 @@ use com.ibm.streamsx.topology.topic::Subscribe;
  * @param org Organization identifier (required)
  * @param authKey API key (required)
  * @param authToken  API Token (required)
- * @param domain Service domain, used to define the host for the MQTT message hub host, which will be *org*`.messaging.`*domain* (optional, defaults to `internetofthings.ibmcloud.com` supporting IBM Watson IoT Platform hosted on Bluemix).
+ * @param domain Service domain, used to define the host for the MQTT message hub host, which will be *org*`.messaging.`*domain* (optional, defaults to `internetofthings.ibmcloud.com` supporting IBM Watson IoT Platform hosted on IBM Cloud).
  * @param scaleEvents Scaling factor for device events (optional, defaults to `1`)
  * @param scaleCommands Scaling factor for sent device commands. Optional, defaults to `1`)
  * @param scaleStatuses Scaling factor for device statuses (optional, defaults to `1`)

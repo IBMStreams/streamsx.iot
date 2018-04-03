@@ -31,7 +31,7 @@ In addition the message hub connectivity application subscribes to streams publi
 
 ## Integration with IBM Watson IoT Platform
 
-Provide the ability to have an IBM Streams application easily interact with IBM Watson IoT Platform, either in Bluemix (Streaming Analytics Service) or on-premises (IBM Streams).
+Provide the ability to have an IBM Streams application easily interact with IBM Watson IoT Platform, either on IBM Cloud (Streaming Analytics Service) or on-premises (IBM Streams).
 
 ## IBM Watson IoT Platform
 The IBM [Watson IoT Platform](https://internetofthings.ibmcloud.com/) service lets
@@ -55,4 +55,4 @@ IBM Streams applications analyze device events from Edgent applications and then
 
 ## NLS feature
 
-This toolkit implements the NLS feature. Use the guidelines for the message bundle that are described in [The messages and the NLS for toolkits](https://github.com/IBMStreams/administration/wiki/The-messages-and-the-NLS-for-toolkits)
+This toolkit implements the NLS feature. Use the guidelines for the message bundle that are described in [The messages and the NLS for toolkits](https://github.com/IBMStreams/administration/wiki/Messages-and-National-Language-Support-for-toolkits)
