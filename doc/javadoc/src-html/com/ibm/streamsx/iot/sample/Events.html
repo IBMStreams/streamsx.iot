@@ -37,7 +37,7 @@
 <span class="sourceLineNo">029</span>    }<a name="line.29"></a>
 <span class="sourceLineNo">030</span><a name="line.30"></a>
 <span class="sourceLineNo">031</span>    /**<a name="line.31"></a>
-<span class="sourceLineNo">032</span>     * Execute this application against a Bluemix Streaming Analytic Service.<a name="line.32"></a>
+<span class="sourceLineNo">032</span>     * Execute this application against a IBM Cloud Streaming Analytic Service.<a name="line.32"></a>
 <span class="sourceLineNo">033</span>     * <a name="line.33"></a>
 <span class="sourceLineNo">034</span>     * Usage: &lt;BR&gt;<a name="line.34"></a>
 <span class="sourceLineNo">035</span>     * {@code java com.ibm.streamsx.iot.sample.Events vcapFile serviceName [eventId ...]}<a name="line.35"></a>
@@ -64,7 +64,7 @@
 <span class="sourceLineNo">056</span>        TStream&lt;DeviceEvent&gt; events = IotStreams.eventsSubscribe(topology, eventIds);<a name="line.56"></a>
 <span class="sourceLineNo">057</span>        events.print();<a name="line.57"></a>
 <span class="sourceLineNo">058</span><a name="line.58"></a>
-<span class="sourceLineNo">059</span>        // Submit to BlueMix<a name="line.59"></a>
+<span class="sourceLineNo">059</span>        // Submit to IBM Cloud<a name="line.59"></a>
 <span class="sourceLineNo">060</span>        Map&lt;String, Object&gt; config = new HashMap&lt;&gt;();<a name="line.60"></a>
 <span class="sourceLineNo">061</span>        config.put(AnalyticsServiceProperties.VCAP_SERVICES, new File(vcapFile));<a name="line.61"></a>
 <span class="sourceLineNo">062</span>        config.put(AnalyticsServiceProperties.SERVICE_NAME, serviceName);<a name="line.62"></a>

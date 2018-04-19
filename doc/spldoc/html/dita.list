@@ -1,4 +1,4 @@
-#Mon Aug 15 12:14:55 PDT 2016
+#Thu Apr 19 14:47:31 CEST 2018
 copytosourcelist=
 hreftargetslist=dita/tk$com.ibm.streamsx.iot/spl$com.ibm.streamsx.iot$pubsub.xml,dita/tk$com.ibm.streamsx.iot/ix$Namespace.xml,dita/tk$com.ibm.streamsx.iot/spl$com.ibm.streamsx.iot.apps$ViewAllDevices.xml,dita/tk$com.ibm.streamsx.iot/spl$com.ibm.streamsx.iot.watson$device.xml,dita/tk$com.ibm.streamsx.iot/spl$com.ibm.streamsx.iot.watson.apps$IotPlatformBluemix.xml,dita/tk$com.ibm.streamsx.iot/spl$com.ibm.streamsx.iot.watson$alldevices.xml,dita/tk$com.ibm.streamsx.iot/spl$com.ibm.streamsx.iot$extract.xml,dita/tk$com.ibm.streamsx.iot/ns$com.ibm.streamsx.iot.watson.xml,dita/tk$com.ibm.streamsx.iot/ns$com.ibm.streamsx.iot.hub.xml,dita/tk$com.ibm.streamsx.iot/spl$com.ibm.streamsx.iot$command.xml,dita/tk$com.ibm.streamsx.iot/tk$com.ibm.streamsx.iot.xml,dita/tk$com.ibm.streamsx.iot/spl$com.ibm.streamsx.iot.watson.apps$IotPlatform.xml,dita/toolkits/ix$Namespace.xml,dita/toolkits/ix$Operator.xml,dita/tk$com.ibm.streamsx.iot/ns$com.ibm.streamsx.iot.apps.xml,dita/tk$com.ibm.streamsx.iot/spl$com.ibm.streamsx.iot.watson.quickstart$quickstart.xml,dita/tk$com.ibm.streamsx.iot/spl$com.ibm.streamsx.iot.watson$devicepublish.xml,dita/tk$com.ibm.streamsx.iot/spl$com.ibm.streamsx.iot.watson$devicesubscribe.xml,dita/tk$com.ibm.streamsx.iot/ix$Operator.xml,dita/tk$com.ibm.streamsx.iot/spl$com.ibm.streamsx.iot$types.xml,dita/toolkits/ix$Type.xml,dita/tk$com.ibm.streamsx.iot/ns$com.ibm.streamsx.iot.xml,dita/tk$com.ibm.streamsx.iot/ns$com.ibm.streamsx.iot.watson.quickstart.xml,dita/toolkits/toolkits.xml,dita/tk$com.ibm.streamsx.iot/ix$Type.xml,dita/tk$com.ibm.streamsx.iot/ns$com.ibm.streamsx.iot.watson.apps.xml,dita/tk$com.ibm.streamsx.iot/spl$com.ibm.streamsx.iot.hub$hub.xml
 fullditatopicfile=fullditatopic.list
@@ -37,7 +37,7 @@ codereffile=coderef.list
 keylist=
 codereflist=
 user.input.file.listfile=usr.input.file.list
-user.input.dir=/home/streamsadmin/iot/release/streamsx.iot/com.ibm.streamsx.iot/doc/spldoc
+user.input.dir=/home/rolandno/dev/git_public/streamsx.iot.master/com.ibm.streamsx.iot/doc/spldoc
 uplevels=../
 tempdirToinputmapdir.relative.value=dita/
 conrefpushfile=conrefpush.list

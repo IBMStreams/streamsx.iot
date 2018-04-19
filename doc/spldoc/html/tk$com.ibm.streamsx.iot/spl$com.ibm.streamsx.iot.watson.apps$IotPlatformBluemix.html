@@ -22,7 +22,7 @@
 <div class="body refbody">
 <div class="section">
 <p class="p">
-<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iot Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot 1.0.2.commit_cdc1e1f</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iot.watson.apps.html">com.ibm.streamsx.iot.watson.apps</a> &gt; IotPlatformBluemix.spl</p>
+<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iot Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot 1.2.0</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iot.watson.apps.html">com.ibm.streamsx.iot.watson.apps</a> &gt; IotPlatformBluemix.spl</p>
 
 </div>
 
@@ -37,7 +37,7 @@
 
       <dd class="dd">
 <ul class="sl simple">
-<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iot.watson.apps$IotPlatformBluemix.html#spldoc_compilationunit__composite_operator__IotPlatformBluemix">IotPlatformBluemix</a></strong>: Application providing integration with an IBM Watson IoT Platform Bluemix service.
+<li class="sli"><strong class="ph b"><a class="xref" href="spl$com.ibm.streamsx.iot.watson.apps$IotPlatformBluemix.html#spldoc_compilationunit__composite_operator__IotPlatformBluemix">IotPlatformBluemix</a></strong>: Application providing integration with an IBM Watson IoT Platform service on IBM Cloud.
 </li>
 
 </ul>
@@ -57,9 +57,13 @@
   
 </div>
 
+<div class="section splgraph">
+  <embed class="image" src="../../image/tk$com.ibm.streamsx.iot/op$com.ibm.streamsx.iot.watson.apps$IotPlatformBluemix.svg" width="118" height="109"/>
+</div>
+
 <div class="section">
 
-<p class="p">Application providing integration with an IBM Watson IoT Platform Bluemix service.
+<p class="p">Application providing integration with an IBM Watson IoT Platform service on IBM Cloud.
 </p>
 
 <p class="p">This application performs the role of ingest and egress (for device commands) for IBM Watson IoT Platform. Multiple independent analytic applications can then subscribe to the published streams as required. Thus these applications are isolated from having to have knowledge of connection details for the IBM Watson IoT Platform organization.
@@ -114,7 +118,7 @@
 
 <div class="p">This application is configured using submission time parameters:
 <ul class="ul">
-<li class="li"> <tt class="ph tt">config</tt> : Application configuration name containing the organization and application api authorization information for the Bluemix service (required).</li>
+<li class="li"> <tt class="ph tt">config</tt> : Application configuration name containing the organization and application api authorization information for the IBM Cloud service (required).</li>
 
 <li class="li"> <tt class="ph tt">scaleEvents</tt> : Scaling factor for device events (optional, defaults to <tt class="ph tt">1</tt>)</li>
 
@@ -135,7 +139,7 @@
 <div class="section"><h2 class="title sectiontitle">Parameters</h2>
 
 <ul class="sl simple">
-<li class="sli"><strong class="ph b">_config</strong>: Application configuration name containing the organization and authorization information for the Bluemix service. Maps to the <tt class="ph tt">config</tt> submisstion time parameter. 
+<li class="sli"><strong class="ph b">_config</strong>: Application configuration name containing the organization and authorization information for the IBM Cloud service. Maps to the <tt class="ph tt">config</tt> submisstion time parameter. 
 </li>
 
 </ul>
@@ -146,14 +150,6 @@
 </div>
 
 <div class="section">
-</div>
-
-<div class="section"><h2 class="title sectiontitle splhead-2">Composite Operator Graph</h2>
-  
-</div>
-
-<div class="section splgraph">
-  <embed class="image" src="../../image/tk$com.ibm.streamsx.iot/op$com.ibm.streamsx.iot.watson.apps$IotPlatformBluemix.svg" width="118" height="109"/>
 </div>
 
 </div>

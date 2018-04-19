@@ -22,7 +22,7 @@
 <div class="body refbody">
 <div class="section">
 <p class="p">
-<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iot Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot 1.0.2.commit_cdc1e1f</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iot.watson.html">com.ibm.streamsx.iot.watson</a> &gt; alldevices.spl</p>
+<a class="xref" href="../toolkits/toolkits.html">IBMStreams com.ibm.streamsx.iot Toolkit</a> &gt; <a class="xref" href="tk$com.ibm.streamsx.iot.html">com.ibm.streamsx.iot 1.2.0</a> &gt; <a class="xref" href="ns$com.ibm.streamsx.iot.watson.html">com.ibm.streamsx.iot.watson</a> &gt; alldevices.spl</p>
 
 </div>
 
@@ -53,8 +53,12 @@
   
 </div>
 
-<div class="section" id="spldoc_compilationunit__composite_operator__AllDevices"><h2 class="title sectiontitle splpart">composite AllDevices(output Statuses, Events, Commands)</h2>
+<div class="section" id="spldoc_compilationunit__composite_operator__AllDevices"><h2 class="title sectiontitle splpart">composite AllDevices(output stream&lt;DeviceStatus&gt; Statuses, stream&lt;DeviceEvent&gt; Events, stream&lt;DeviceCmd&gt; Commands)</h2>
   
+</div>
+
+<div class="section splgraph">
+  <embed class="image" src="../../image/tk$com.ibm.streamsx.iot/op$com.ibm.streamsx.iot.watson$AllDevices.svg" width="151" height="199"/>
 </div>
 
 <div class="section">
@@ -70,7 +74,7 @@
 <li class="sli"><strong class="ph b">org</strong>: Organization identifier.
 </li>
 
-<li class="sli"><strong class="ph b">domain</strong>: Service domain, used to define the host for the MQTT message hub host, which will be <em class="ph i">org</em><tt class="ph tt">.messaging.</tt><em class="ph i">domain</em>. Defaults to <tt class="ph tt">internetofthings.ibmcloud.com</tt> supporting IBM Watson IoT Platform hosted on Bluemix.
+<li class="sli"><strong class="ph b">domain</strong>: Service domain, used to define the host for the MQTT message hub host, which will be <em class="ph i">org</em><tt class="ph tt">.messaging.</tt><em class="ph i">domain</em>. Defaults to <tt class="ph tt">internetofthings.ibmcloud.com</tt> supporting IBM Watson IoT Platform hosted on IBM Cloud.
 </li>
 
 <li class="sli"><strong class="ph b">authKey</strong>: Application key.
@@ -103,14 +107,6 @@
 
 </ul>
 
-</div>
-
-<div class="section"><h2 class="title sectiontitle splhead-2">Composite Operator Graph</h2>
-  
-</div>
-
-<div class="section splgraph">
-  <embed class="image" src="../../image/tk$com.ibm.streamsx.iot/op$com.ibm.streamsx.iot.watson$AllDevices.svg" width="151" height="199"/>
 </div>
 
 </div>
