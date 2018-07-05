@@ -193,7 +193,10 @@ public class DeviceEventsTest {
             
             if (r.nextFloat() > 0.1) {
                 int offset = r.nextInt(20000) - 10000;
-                event.put("py_ts", System.currentTimeMillis() + offset);
+                //be sure to have ms fraction 
+                long ts = System.currentTimeMillis() + offset;
+                if ((ts % 1000) == 0 ) ts++;
+                event.put("py_ts", ts );
             }
             
             JSONObject payload = new JSONObject();
