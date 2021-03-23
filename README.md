@@ -1,4 +1,4 @@
-This toolkit is deprecated. Please use (streamsx.mqtt)[https://github.com/IBMStreams/streamsx.mqtt] directly.
+# This toolkit is deprecated. Please use [streamsx.mqtt](https://github.com/IBMStreams/streamsx.mqtt) directly.
 
 
 
