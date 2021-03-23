@@ -1,3 +1,7 @@
+This toolkit is deprecated. Please use (streamsx.mqtt)[https://github.com/IBMStreams/streamsx.mqtt] directly.
+
+
+
 # com.ibm.streamsx.iot
 
 ## Overview
