@@ -2,7 +2,8 @@
 toolkit.xml
 *.pm
 .toolkitList
-doc
+doc/spldoc
+samples/*/doc
 # If you want to include a perl module, do
 # !foo.pm
 
